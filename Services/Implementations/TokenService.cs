@@ -22,7 +22,7 @@ namespace KixPlay_Backend.Services.Implementations
             _key = new SymmetricSecurityKey(tokenKeyBytes);
         }
 
-        public string CreateToken(User user)
+        public async Task<string> CreateToken(User user)
         {
             var claims = new List<Claim>
             {

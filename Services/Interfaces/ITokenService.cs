@@ -4,6 +4,6 @@ namespace KixPlay_Backend.Services.Interfaces
 {
     public interface ITokenService
     {
-        string CreateToken(User user);
+        Task<string> CreateToken(User user);
     }
 }
