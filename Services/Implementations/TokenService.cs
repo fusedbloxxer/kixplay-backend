@@ -1,5 +1,6 @@
 ﻿using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Services.Interfaces;
+using KixPlay_Backend.Settings.Application;
 using KixPlay_Backend.Settings.Secrets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -12,18 +13,25 @@ namespace KixPlay_Backend.Services.Implementations
 {
     public class TokenService : ITokenService
     {
-        private readonly SymmetricSecurityKey _key;
+        private readonly JwtSettings _jwtSettings;
 
+        private readonly SymmetricSecurityKey _key;
+        
         private readonly UserManager<User> _userManager;
 
-        public TokenService(IOptions<SecretsSettings> secrets, UserManager<User> userManager)
-        {
+        public TokenService(
+            IOptions<JwtSettings> jwtSettings,
+            IOptions<SecretsSettings> secrets,
+            UserManager<User> userManager
+        ) {
             string tokenKey = secrets.Value.Authentication.Jwt.TokenKey;
 
             byte[] tokenKeyBytes = Encoding.UTF8.GetBytes(tokenKey);
 
             _key = new SymmetricSecurityKey(tokenKeyBytes);
 
+            _jwtSettings = jwtSettings.Value;
+            
             _userManager = userManager;
         }
 
@@ -32,6 +40,7 @@ namespace KixPlay_Backend.Services.Implementations
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
             };
 
@@ -44,8 +53,10 @@ namespace KixPlay_Backend.Services.Implementations
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = creds,
+                Issuer = _jwtSettings.ValidIssuer,
+                Audience = _jwtSettings.ValidAudience,
+                Expires = DateTime.Now.AddDays(7),
                 IssuedAt = DateTime.Now,
             };
 

@@ -13,11 +13,18 @@ namespace KixPlay_Backend.Validators
 
         public string InvalidAgeError => $"The age of the person should be at least {_minimumAge}";
 
+        public string NoValueError(string propName) => $"The {propName} must have a value.";
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            DateTime dateOfBirth = (DateTime)value;
+            DateTime? dateOfBirth = (DateTime?)value;
 
-            var age = CalculateAge(dateOfBirth);
+            if (!dateOfBirth.HasValue)
+            {
+                return new ValidationResult(NoValueError(validationContext.MemberName));
+            }
+
+            var age = CalculateAge(dateOfBirth.Value);
 
             if (age < _minimumAge)
             {
@@ -31,7 +38,7 @@ namespace KixPlay_Backend.Validators
         {
             if (minimumAge < 0 || minimumAge > 123)
             {
-                throw new ArgumentOutOfRangeException("minimumAge", minimumAge, "The value of the age is outside 0 and 123.");
+                throw new ArgumentOutOfRangeException(nameof(minimumAge), minimumAge, "The value of the age is outside 0 and 123.");
             }
 
             return minimumAge;

@@ -4,6 +4,7 @@ using KixPlay_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211230140944_MakeDateTimeNullable")]
+    partial class MakeDateTimeNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,36 +49,6 @@ namespace KixPlay_Backend.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3368fa57-184b-4ee9-a7ed-2783f2d78896",
-                            ConcurrencyStamp = "a95d3bf7-2a34-4df9-978d-0f87421546de",
-                            Name = "Contributor",
-                            NormalizedName = "CONTRIBUTOR"
-                        },
-                        new
-                        {
-                            Id = "e668cc28-b44a-43c6-8e9a-5e46380a2676",
-                            ConcurrencyStamp = "235b365b-acc7-46ae-93cf-42c5b4bc89a4",
-                            Name = "Moderator",
-                            NormalizedName = "MODERATOR"
-                        },
-                        new
-                        {
-                            Id = "69814655-a1d4-4396-9a2d-3b0ed488b3b3",
-                            ConcurrencyStamp = "afe1ff57-6868-4fe4-968e-a73aa60cabe1",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
-                        },
-                        new
-                        {
-                            Id = "f8b6c168-eb0d-48f3-8196-7367e27cf90f",
-                            ConcurrencyStamp = "b2883840-4291-4506-a065-5257104804c5",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.User", b =>

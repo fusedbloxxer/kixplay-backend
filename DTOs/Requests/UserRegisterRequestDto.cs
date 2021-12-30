@@ -1,9 +1,9 @@
 ﻿using KixPlay_Backend.Validators;
 using System.ComponentModel.DataAnnotations;
 
-namespace KixPlay_Backend.DTOs
+namespace KixPlay_Backend.DTOs.Requests
 {
-    public class UserRegisterDto
+    public class UserRegisterRequestDto
     {
         [Required]
         [EmailAddress]
@@ -21,6 +21,6 @@ namespace KixPlay_Backend.DTOs
 
         [Required]
         [MinimumAge(18)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KixPlay_Backend.DTOs
+namespace KixPlay_Backend.DTOs.Requests
 {
-    public class UserLoginDto
+    public class UserLoginRequestDto
     {
         [Required]
         [EmailAddress]

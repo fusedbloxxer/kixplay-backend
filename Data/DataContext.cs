@@ -22,6 +22,8 @@ namespace KixPlay_Backend.Data
             AddRelations(builder);
             
             RenameTables(builder);
+
+            SeedWithData(builder);
         }
 
         private static void AddRelations(ModelBuilder builder)
@@ -63,6 +65,11 @@ namespace KixPlay_Backend.Data
 
             builder.Entity<IdentityUserToken<string>>()
                 .ToTable("UserTokens");
+        }
+
+        private static void SeedWithData(ModelBuilder builder)
+        {
+            builder.Entity<Role>().HasData(Role.Roles);
         }
     }
 }

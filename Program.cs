@@ -1,5 +1,9 @@
 using KixPlay_Backend.Data;
+using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Extensions;
+using KixPlay_Backend.Services.Repositories.Implementations;
+using KixPlay_Backend.Services.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +14,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add automapping in this assembly to convert between models and dtos
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // Configure the connection to the database by specifying the connection string
 builder.Services.AddDbContext<DataContext>(contextOptions =>
@@ -22,8 +29,8 @@ builder.Services.AddDbContext<DataContext>(contextOptions =>
 // Add Authentication & Authorization
 builder.Services.AddAuthServices(builder.Configuration);
 
-// Add automapping in this assembly to convert between models and dtos
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+// Add Services
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Build the application using the configured services
 var app = builder.Build();

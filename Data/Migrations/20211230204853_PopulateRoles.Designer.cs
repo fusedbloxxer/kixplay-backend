@@ -4,6 +4,7 @@ using KixPlay_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211230204853_PopulateRoles")]
+    partial class PopulateRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,31 +53,27 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3368fa57-184b-4ee9-a7ed-2783f2d78896",
-                            ConcurrencyStamp = "a95d3bf7-2a34-4df9-978d-0f87421546de",
-                            Name = "Contributor",
-                            NormalizedName = "CONTRIBUTOR"
+                            Id = "5bdffb7a-a1bc-4d17-9edb-909cacd3a7d5",
+                            ConcurrencyStamp = "0cd0279d-4050-4aa1-8d47-06ad96a0fb5a",
+                            Name = "Contributor"
                         },
                         new
                         {
-                            Id = "e668cc28-b44a-43c6-8e9a-5e46380a2676",
-                            ConcurrencyStamp = "235b365b-acc7-46ae-93cf-42c5b4bc89a4",
-                            Name = "Moderator",
-                            NormalizedName = "MODERATOR"
+                            Id = "5e6e69a5-13d3-4b7a-9986-3b86858ac1e7",
+                            ConcurrencyStamp = "401710c9-62c3-4ab8-a462-e08db720f808",
+                            Name = "Moderator"
                         },
                         new
                         {
-                            Id = "69814655-a1d4-4396-9a2d-3b0ed488b3b3",
-                            ConcurrencyStamp = "afe1ff57-6868-4fe4-968e-a73aa60cabe1",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
+                            Id = "73967f48-7110-4ca7-9dd0-1010b9836bf8",
+                            ConcurrencyStamp = "a44f45f7-11c6-489c-ae11-96d1035fcf15",
+                            Name = "Member"
                         },
                         new
                         {
-                            Id = "f8b6c168-eb0d-48f3-8196-7367e27cf90f",
-                            ConcurrencyStamp = "b2883840-4291-4506-a065-5257104804c5",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Id = "8cf09eb2-550c-4c98-8b57-1a09d68c69ca",
+                            ConcurrencyStamp = "a3223307-df9c-4e6a-b2f8-b75552bb27f6",
+                            Name = "Admin"
                         });
                 });
 

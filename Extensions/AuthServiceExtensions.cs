@@ -1,7 +1,9 @@
-﻿using KixPlay_Backend.Data;
+﻿using AutoMapper;
+using KixPlay_Backend.Data;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Services.Implementations;
 using KixPlay_Backend.Services.Interfaces;
+using KixPlay_Backend.Settings.Application;
 using KixPlay_Backend.Settings.Secrets;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -14,11 +16,17 @@ namespace KixPlay_Backend.Extensions
     {
         public static void AddAuthServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // Retrieve secrets information using Secret Manager:
-            // https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
-            var secretsSettingsSection = configuration.GetSection(SecretsSettings.SECTION_NAME);
-            var secretsSettings = secretsSettingsSection.Get<SecretsSettings>();
-            services.Configure<SecretsSettings>(secretsSettingsSection);
+            // Retrieve settings from config files
+            ReadAuthSettings(
+                services,
+                configuration,
+                out SecretsSettings secretsSettings,
+                out JwtSettings jwtSettings
+            );
+
+            // Build service provider scope to use mapper dependency
+            var serviceProvider = services.BuildServiceProvider();
+            var mapper = serviceProvider.GetRequiredService<IMapper>();
 
             // Configure Jwt Authentication & Authorization
             services
@@ -29,13 +37,8 @@ namespace KixPlay_Backend.Extensions
 
                     var tokenKeyBytes = Encoding.UTF8.GetBytes(tokenKey);
 
-                    jwtOptions.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        IssuerSigningKey = new SymmetricSecurityKey(tokenKeyBytes),
-                        ValidateIssuerSigningKey = true,
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
-                    };
+                    jwtOptions.TokenValidationParameters = mapper
+                        .Map<JwtSettings, TokenValidationParameters>(jwtSettings);
                 });
 
             // Add and configure the Identity Service
@@ -53,6 +56,19 @@ namespace KixPlay_Backend.Extensions
 
             // Use Jwt to generate tokens for authentication & authorization
             services.AddScoped<ITokenService, TokenService>();
+        }
+
+        private static void ReadAuthSettings(IServiceCollection services, IConfiguration configuration, out SecretsSettings secretsSettings, out JwtSettings jwtSettings)
+        {
+            // https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
+            var secretsSettingsSection = configuration.GetSection(SecretsSettings.SECTION_NAME);
+            secretsSettings = secretsSettingsSection.Get<SecretsSettings>();
+            services.Configure<SecretsSettings>(secretsSettingsSection);
+
+            // Retrieve JwtSettings from appsettings
+            var jwtSettingsSection = configuration.GetSection(JwtSettings.SECTION_NAME);
+            jwtSettings = jwtSettingsSection.Get<JwtSettings>();
+            services.Configure<JwtSettings>(jwtSettingsSection);
         }
     }
 }
