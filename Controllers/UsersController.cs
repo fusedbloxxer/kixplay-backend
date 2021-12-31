@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace KixPlay_Backend.Controllers
 {
@@ -72,7 +75,7 @@ namespace KixPlay_Backend.Controllers
 
             var token = await _tokenService.CreateToken(userResult.Result);
 
-            return Ok(new UserRegisterResponseDto
+            return StatusCode(StatusCodes.Status201Created, new UserRegisterResponseDto
             {
                 Token = token,
             });
@@ -84,9 +87,9 @@ namespace KixPlay_Backend.Controllers
         {
             var user = await _userRepository.GetByEmail(userLoginDto.Email);
 
-            if (user == null)
+            if (user.Result == null)
             {
-                return NotFound($"The user with the email {userLoginDto.Email} does not exist.");
+                return NotFound(new ErrorResponse($"The user with the email {userLoginDto.Email} does not exist."));
             }
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(
@@ -97,17 +100,17 @@ namespace KixPlay_Backend.Controllers
 
             if (!signInResult.Succeeded)
             {
-                return BadRequest($"Could not sign in the user with the email {userLoginDto.Email}.");
+                return BadRequest(new ErrorResponse($"Could not sign in the user with the email {userLoginDto.Email}."));
             }
 
             if (signInResult.IsLockedOut)
             {
-                return Unauthorized($"Access to the user with the email {userLoginDto.Email} is blocked temporarily.");
+                return Unauthorized(new ErrorResponse($"Access to the user with the email {userLoginDto.Email} is blocked temporarily."));
             }
 
             if (signInResult.IsNotAllowed)
             {
-                return Unauthorized($"The user with the email {userLoginDto.Email} has not been authorized.");
+                return Unauthorized(new ErrorResponse($"The user with the email {userLoginDto.Email} has not been authorized."));
             }
 
             var token = await _tokenService.CreateToken(user.Result);
@@ -116,6 +119,55 @@ namespace KixPlay_Backend.Controllers
             {
                 Token = token,
             });
+        }
+
+        [HttpDelete("{userId}/remove")]
+        public async Task<ActionResult> DeleteUser([FromRoute] string userId)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
+            }
+
+            var user = await _userRepository.GetAsync(userId);
+
+            if (user.Result == null)
+            {
+                return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity == null)
+            {
+                return BadRequest(new ErrorResponse($"Invalid jwt token: {HttpContext?.Request?.Headers["Authorize"]}."));
+            }
+
+            var claims = identity.Claims;
+
+            var nameId = claims.FirstOrDefault(claim => claim.Type.EndsWith("nameidentifier"));
+
+            if (nameId == null)
+            {
+                return BadRequest(new ErrorResponse($"The token does not contain a name id."));
+            }
+
+            if (nameId.Value != userId)
+            {
+                return Unauthorized(new ErrorResponse($"User with id {nameId.Value} cannot delete another user with the id {userId}."));
+            }
+
+            var deleteResult = await _userRepository.DeleteAsync(userId);
+
+            if (!deleteResult.IsSuccessful)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = deleteResult.Errors,
+                });
+            }
+
+            return Ok();
         }
     }
 }
