@@ -63,7 +63,7 @@ namespace KixPlay_Backend.Controllers
                 });
             }
 
-            var userResult = await _userRepository.GetByUsername(userRegisterDto.UserName);
+            var userResult = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
 
             if (!userResult.IsSuccessful)
             {
@@ -85,7 +85,7 @@ namespace KixPlay_Backend.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> LoginUser([FromBody] UserLoginRequestDto userLoginDto)
         {
-            var user = await _userRepository.GetByEmail(userLoginDto.Email);
+            var user = await _userRepository.GetByEmailAsync(userLoginDto.Email);
 
             if (user.Result == null)
             {
@@ -121,6 +121,7 @@ namespace KixPlay_Backend.Controllers
             });
         }
 
+        [Authorize(Policy = "IsSameUser")]
         [HttpDelete("{userId}/remove")]
         public async Task<ActionResult> DeleteUser([FromRoute] string userId)
         {
@@ -129,32 +130,11 @@ namespace KixPlay_Backend.Controllers
                 return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
             }
 
-            var user = await _userRepository.GetAsync(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
 
             if (user.Result == null)
             {
                 return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
-            }
-
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-
-            if (identity == null)
-            {
-                return BadRequest(new ErrorResponse($"Invalid jwt token: {HttpContext?.Request?.Headers["Authorize"]}."));
-            }
-
-            var claims = identity.Claims;
-
-            var nameId = claims.FirstOrDefault(claim => claim.Type.EndsWith("nameidentifier"));
-
-            if (nameId == null)
-            {
-                return BadRequest(new ErrorResponse($"The token does not contain a name id."));
-            }
-
-            if (nameId.Value != userId)
-            {
-                return Unauthorized(new ErrorResponse($"User with id {nameId.Value} cannot delete another user with the id {userId}."));
             }
 
             var deleteResult = await _userRepository.DeleteAsync(userId);

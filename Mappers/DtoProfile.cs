@@ -13,6 +13,9 @@ namespace KixPlay_Backend.Mappers
 
             CreateMap<User, UserLoginRequestDto>();
             CreateMap<UserLoginRequestDto, User>();
+
+            CreateMap<User, UserUpdateRequestDto>();
+            CreateMap<UserUpdateRequestDto, User>();
         }
     }
 }

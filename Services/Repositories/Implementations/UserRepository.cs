@@ -124,21 +124,21 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return new OperationResult<bool>(user != null);
         }
 
-        public async Task<IOperationResult<User>> GetAsync(string id)
+        public async Task<IOperationResult<User>> GetByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
             return new OperationResult<User>(user);
         }
 
-        public async Task<IOperationResult<User>> GetByUsername(string username)
+        public async Task<IOperationResult<User>> GetByUsernameAsync(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
 
             return new OperationResult<User>(user);
         }
 
-        public async Task<IOperationResult<User>> GetByEmail(string email)
+        public async Task<IOperationResult<User>> GetByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 

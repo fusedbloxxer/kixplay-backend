@@ -1,8 +1,11 @@
+using KixPlay_Backend.Authorization.Handlers;
+using KixPlay_Backend.Authorization.Requirements;
 using KixPlay_Backend.Data;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Extensions;
 using KixPlay_Backend.Services.Repositories.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +31,18 @@ builder.Services.AddDbContext<DataContext>(contextOptions =>
 
 // Add Authentication & Authorization
 builder.Services.AddAuthServices(builder.Configuration);
+
+// Create Custom Authorization Policies
+builder.Services.AddAuthorizationCore(options =>
+{
+    options.AddPolicy("IsSameUser", policy =>
+    {
+        policy.Requirements.Add(new IsSameUserRequirement());
+    });
+});
+
+// Add authorization handlers
+builder.Services.AddSingleton<IAuthorizationHandler, IsSameUserHandler>();
 
 // Add Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();

@@ -10,10 +10,10 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
         
         Task<IOperationResult<bool>> UpdateAsync(TEntity entity);
 
+        Task<IOperationResult<TEntity>> GetByIdAsync(TKey id);
+
         Task<IOperationResult<bool>> DeleteAsync(TKey id);
 
         Task<IOperationResult<bool>> ExistsAsync(TKey id);
-
-        Task<IOperationResult<TEntity>> GetAsync(TKey id);
     }
 }
