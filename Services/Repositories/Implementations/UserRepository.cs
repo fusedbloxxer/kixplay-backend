@@ -138,6 +138,13 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return new OperationResult<User>(user);
         }
 
+        public async Task<IOperationResult<User>> GetByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            return new OperationResult<User>(user);
+        }
+
         public async Task<IOperationResult<bool>> UpdateAsync(User user)
         {
             var result = await _userManager.UpdateAsync(user);

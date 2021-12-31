@@ -5,6 +5,8 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
     public interface IUserRepository : IGenericRepository<string, User>
     {
+        Task<IOperationResult<User>> GetByEmail(string email);
+
         Task<IOperationResult<User>> GetByUsername(string username);
 
         Task<IOperationResult<bool>> CreateWithOptions(User user, UserOptions options);

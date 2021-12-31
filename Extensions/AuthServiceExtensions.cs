@@ -49,7 +49,7 @@ namespace KixPlay_Backend.Extensions
                 .AddIdentityCore<User>(identityOptions =>
                 {
                     identityOptions.User.RequireUniqueEmail = true;
-                    identityOptions.SignIn.RequireConfirmedEmail = true;
+                    // identityOptions.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddRoles<Role>()
                 .AddRoleManager<RoleManager<Role>>()

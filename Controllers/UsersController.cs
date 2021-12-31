@@ -8,6 +8,7 @@ using KixPlay_Backend.Services.Repositories.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KixPlay_Backend.Controllers
@@ -21,13 +22,17 @@ namespace KixPlay_Backend.Controllers
 
         private readonly IUserRepository _userRepository;
 
+        private readonly SignInManager<User> _signInManager;
+
         public UsersController(
             IMapper mapper,
             ITokenService tokenService,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            SignInManager<User> signInManager
         )
         {
             _userRepository = userRepository;
+            _signInManager = signInManager;
             _tokenService = tokenService;
             _mapper = mapper;
         }
@@ -38,7 +43,7 @@ namespace KixPlay_Backend.Controllers
         {
             var createResult = await _userRepository.CreateWithOptions(
                 _mapper.Map<UserRegisterRequestDto, User>(userRegisterDto),
-                new UserOptions
+                new Services.Repositories.Implementations.UserOptions
                 {
                     Password = userRegisterDto.Password,
                     Roles = new List<Role> {
@@ -68,6 +73,46 @@ namespace KixPlay_Backend.Controllers
             var token = await _tokenService.CreateToken(userResult.Result);
 
             return Ok(new UserRegisterResponseDto
+            {
+                Token = token,
+            });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginUser([FromBody] UserLoginRequestDto userLoginDto)
+        {
+            var user = await _userRepository.GetByEmail(userLoginDto.Email);
+
+            if (user == null)
+            {
+                return NotFound($"The user with the email {userLoginDto.Email} does not exist.");
+            }
+
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(
+                _mapper.Map<User>(userLoginDto),
+                userLoginDto.Password,
+                false
+            );
+
+            if (!signInResult.IsNotAllowed)
+            {
+                return Unauthorized($"The user with the email {userLoginDto.Email} has not been authorized.");
+            }
+
+            if (signInResult.IsLockedOut)
+            {
+                return Unauthorized($"Access to the user with the email {userLoginDto.Email} is blocked temporarily.");
+            }
+
+            if (!signInResult.Succeeded)
+            {
+                return BadRequest($"Could not sign in the user with the email {userLoginDto.Email}.");
+            }
+
+            var token = await _tokenService.CreateToken(user.Result);
+
+            return Ok(new UserLoginResponseDto
             {
                 Token = token,
             });
