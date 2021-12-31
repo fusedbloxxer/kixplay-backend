@@ -10,20 +10,20 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
     {
         private readonly IMapper _mapper;
         
-        private readonly RoleManager<Role> _roleManager;
-        
         private readonly UserManager<User> _userManager;
+        
+        private readonly IRoleRepository _roleRepository;
 
         private readonly SignInManager<User> _signInManager;
 
         public UserRepository(
             SignInManager<User> signInManager,
-            RoleManager<Role> roleManager,
+            IRoleRepository roleRepository,
             UserManager<User> userManager,
             IMapper mapper
         ) {
+            _roleRepository = roleRepository;
             _signInManager = signInManager;
-            _roleManager = roleManager;
             _userManager = userManager;
             _mapper = mapper;
         }
@@ -53,9 +53,9 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             {
                 foreach (var role in options.Roles)
                 {
-                    var roles = _roleManager.Roles.ToList();
+                    var roleResult = await _roleRepository.GetByNameAsync(role.Name);
 
-                    var roleExists = await _roleManager.RoleExistsAsync(role.Name);
+                    var roleExists = roleResult.IsSuccessful && roleResult.Result != null;
 
                     if (!roleExists)
                     {

@@ -46,6 +46,7 @@ builder.Services.AddSingleton<IAuthorizationHandler, IsSameUserHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, AdminHandler>();
 
 // Add Services
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Build the application using the configured services
