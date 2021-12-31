@@ -90,14 +90,14 @@ namespace KixPlay_Backend.Controllers
             }
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(
-                _mapper.Map<User>(userLoginDto),
+                user.Result,
                 userLoginDto.Password,
                 false
             );
 
-            if (!signInResult.IsNotAllowed)
+            if (!signInResult.Succeeded)
             {
-                return Unauthorized($"The user with the email {userLoginDto.Email} has not been authorized.");
+                return BadRequest($"Could not sign in the user with the email {userLoginDto.Email}.");
             }
 
             if (signInResult.IsLockedOut)
@@ -105,9 +105,9 @@ namespace KixPlay_Backend.Controllers
                 return Unauthorized($"Access to the user with the email {userLoginDto.Email} is blocked temporarily.");
             }
 
-            if (!signInResult.Succeeded)
+            if (signInResult.IsNotAllowed)
             {
-                return BadRequest($"Could not sign in the user with the email {userLoginDto.Email}.");
+                return Unauthorized($"The user with the email {userLoginDto.Email} has not been authorized.");
             }
 
             var token = await _tokenService.CreateToken(user.Result);
