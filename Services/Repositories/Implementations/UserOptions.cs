@@ -1,5 +1,4 @@
 ﻿using KixPlay_Backend.Data.Entities;
-using KixPlay_Backend.Services.Repositories.Interfaces;
 
 namespace KixPlay_Backend.Services.Repositories.Implementations
 {

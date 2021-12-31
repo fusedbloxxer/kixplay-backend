@@ -2,22 +2,27 @@
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace KixPlay_Backend.Services.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
         private readonly IMapper _mapper;
-
+        
         private readonly RoleManager<Role> _roleManager;
         
         private readonly UserManager<User> _userManager;
 
+        private readonly SignInManager<User> _signInManager;
+
         public UserRepository(
+            SignInManager<User> signInManager,
             RoleManager<Role> roleManager,
             UserManager<User> userManager,
             IMapper mapper
         ) {
+            _signInManager = signInManager;
             _roleManager = roleManager;
             _userManager = userManager;
             _mapper = mapper;
@@ -150,6 +155,39 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             var result = await _userManager.UpdateAsync(user);
 
             return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+        }
+
+        public async Task<IOperationResult<bool>> IsUserLoginValid(User user, string password)
+        {
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(
+                user,
+                password,
+                false
+            );
+
+            if (!signInResult.Succeeded)
+            {
+                return new OperationResult<bool>($"Could not sign in the user with the email {user.Email}.");
+            }
+
+            if (signInResult.IsLockedOut)
+            {
+                return new OperationResult<bool>($"Access to the user with the email {user.Email} is blocked temporarily.");
+            }
+
+            if (signInResult.IsNotAllowed)
+            {
+                return new OperationResult<bool>($"The user with the email {user.Email} has not been authorized.");
+            }
+
+            return new OperationResult<bool>(true);
+        }
+
+        public async Task<IOperationResult<IEnumerable<User>>> GetAllAsync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            return new OperationResult<IEnumerable<User>>(users);
         }
     }
 }

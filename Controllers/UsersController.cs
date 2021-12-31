@@ -1,22 +1,15 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data.Entities;
-using KixPlay_Backend.DTOs;
 using KixPlay_Backend.DTOs.Requests;
 using KixPlay_Backend.DTOs.Responses;
 using KixPlay_Backend.Services.Interfaces;
-using KixPlay_Backend.Services.Repositories.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 
 namespace KixPlay_Backend.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Member,Contributor,Moderator")]
     public class UsersController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -25,19 +18,104 @@ namespace KixPlay_Backend.Controllers
 
         private readonly IUserRepository _userRepository;
 
-        private readonly SignInManager<User> _signInManager;
-
         public UsersController(
             IMapper mapper,
             ITokenService tokenService,
-            IUserRepository userRepository,
-            SignInManager<User> signInManager
+            IUserRepository userRepository
         )
         {
             _userRepository = userRepository;
-            _signInManager = signInManager;
             _tokenService = tokenService;
             _mapper = mapper;
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<ActionResult> GetAllUsers()
+        {
+            var usersResult = await _userRepository.GetAllAsync();
+
+            if (!usersResult.IsSuccessful)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponse
+                {
+                    Errors = usersResult.Errors,
+                });
+            }
+
+            var usersDto = _mapper.ProjectTo<UserGetResponseDto>(usersResult.Result.AsQueryable());
+
+            return Ok(usersDto);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{userId}")]
+        public async Task<ActionResult> GetUserById([FromRoute] string userId)
+        {
+            var userResult = await _userRepository.GetByIdAsync(userId);
+
+            if (!userResult.IsSuccessful)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = userResult.Errors
+                });
+            }
+
+            return Ok(_mapper.Map<UserGetResponseDto>(userResult.Result));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("findBy")]
+        public async Task<ActionResult> GetUser([FromQuery] string userId, [FromQuery] string email, [FromQuery] string userName)
+        {
+            int countParams = 0;
+
+            foreach (var param in new List<string> { userId, email, userName })
+            {
+                if (!string.IsNullOrWhiteSpace(param))
+                {
+                    ++countParams;
+                }
+            }
+
+            if (countParams > 1)
+            {
+                return BadRequest(new ErrorResponse("You can search a user only by either userId, email or username."));
+            }
+
+            var usersResult = await _userRepository.GetAllAsync();
+
+            if (!usersResult.IsSuccessful)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = usersResult.Errors,
+                });
+            }
+
+            var user = usersResult.Result.FirstOrDefault(user =>
+            {
+                bool isMatch = false;
+
+                isMatch |= !string.IsNullOrWhiteSpace(userName)
+                    && user.NormalizedUserName.Equals(userName.ToUpperInvariant());
+
+                isMatch |= !string.IsNullOrWhiteSpace(email)
+                    && user.NormalizedEmail.Equals(email.ToUpperInvariant());
+
+                isMatch |= !string.IsNullOrWhiteSpace(userId)
+                    && user.Id.ToUpperInvariant().Equals(userId.ToUpper());
+
+                return isMatch;
+            });
+
+            if (user == null)
+            {
+                return NotFound(new ErrorResponse("No user was found with the provided information."));
+            }
+
+            return Ok(_mapper.Map<UserGetResponseDto>(user));
         }
 
         [AllowAnonymous]
@@ -92,25 +170,17 @@ namespace KixPlay_Backend.Controllers
                 return NotFound(new ErrorResponse($"The user with the email {userLoginDto.Email} does not exist."));
             }
 
-            var signInResult = await _signInManager.CheckPasswordSignInAsync(
+            var signInResult = await _userRepository.IsUserLoginValid(
                 user.Result,
-                userLoginDto.Password,
-                false
+                userLoginDto.Password
             );
 
-            if (!signInResult.Succeeded)
+            if (!signInResult.IsSuccessful)
             {
-                return BadRequest(new ErrorResponse($"Could not sign in the user with the email {userLoginDto.Email}."));
-            }
-
-            if (signInResult.IsLockedOut)
-            {
-                return Unauthorized(new ErrorResponse($"Access to the user with the email {userLoginDto.Email} is blocked temporarily."));
-            }
-
-            if (signInResult.IsNotAllowed)
-            {
-                return Unauthorized(new ErrorResponse($"The user with the email {userLoginDto.Email} has not been authorized."));
+                return BadRequest(new ErrorResponse
+                {
+                    Errors = signInResult.Errors
+                });
             }
 
             var token = await _tokenService.CreateToken(user.Result);
@@ -148,6 +218,36 @@ namespace KixPlay_Backend.Controllers
             }
 
             return Ok();
+        }
+
+        [Authorize(Policy = "IsSameUser")]
+        [HttpPut("{userId}/update")]
+        public async Task<ActionResult> UpdateUser([FromRoute] string userId, [FromBody] UserUpdateRequestDto userUpdateDto)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+                return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
+
+            var userResult = await _userRepository.GetByIdAsync(userId);
+            var user = userResult.Result;
+
+            if (userResult.Result == null)
+            {
+                return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
+            }
+
+            var updatedUser = _mapper.Map(userUpdateDto, user);
+
+            var updateResult = await _userRepository.UpdateAsync(updatedUser);
+
+            if (!updateResult.IsSuccessful)
+            {
+                return BadRequest(new ErrorResponse()
+                {
+                    Errors = updateResult.Errors
+                });
+            }
+
+            return NoContent();
         }
     }
 }

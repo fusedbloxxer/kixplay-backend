@@ -9,6 +9,8 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 
         Task<IOperationResult<User>> GetByUsernameAsync(string username);
 
+        Task<IOperationResult<bool>> IsUserLoginValid(User user, string password);
+
         Task<IOperationResult<bool>> CreateWithOptions(User user, UserOptions options);
 
         Task<IOperationResult<bool>> CreateWithPasswordAsync(User user, string password);

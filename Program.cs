@@ -43,6 +43,7 @@ builder.Services.AddAuthorizationCore(options =>
 
 // Add authorization handlers
 builder.Services.AddSingleton<IAuthorizationHandler, IsSameUserHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminHandler>();
 
 // Add Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
