@@ -25,6 +25,12 @@ namespace KixPlay_Backend.Mappers
 
             CreateMap<UserGetResponseDto, User>();
             CreateMap<User, UserGetResponseDto>();
+
+            CreateMap<Role, RoleGetResponseDto>();
+            CreateMap<RoleGetResponseDto, Role>();
+
+            CreateMap<RoleGrantResponseDto, User>();
+            CreateMap<User, RoleGrantResponseDto>();
         }
     }
 }

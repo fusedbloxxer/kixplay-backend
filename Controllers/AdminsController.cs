@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KixPlay_Backend.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminsController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -36,10 +36,10 @@ namespace KixPlay_Backend.Controllers
                 new Services.Repositories.Implementations.UserOptions
                 {
                     Password = userRegisterDto.Password,
-                    Roles = new List<Role>()
+                    Roles = new List<string>()
                     {
-                        new Role("Admin"),
-                        new Role("Member")
+                        "Admin",
+                        "Member"
                     },
                 }
             );

@@ -2,7 +2,7 @@
 
 namespace KixPlay_Backend.DTOs.Requests
 {
-    public class UserUpdateRequestDto
+    public class UserUpdateRequestDto : BaseRequest
     {
         [EmailAddress]
         public string Email { get; set; }

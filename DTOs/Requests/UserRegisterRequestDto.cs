@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KixPlay_Backend.DTOs.Requests
 {
-    public class UserRegisterRequestDto
+    public class UserRegisterRequestDto : BaseRequest
     {
         [Required]
         [EmailAddress]

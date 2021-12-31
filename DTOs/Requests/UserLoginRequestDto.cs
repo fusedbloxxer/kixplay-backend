@@ -2,7 +2,7 @@
 
 namespace KixPlay_Backend.DTOs.Requests
 {
-    public class UserLoginRequestDto
+    public class UserLoginRequestDto : BaseRequest
     {
         [Required]
         [EmailAddress]

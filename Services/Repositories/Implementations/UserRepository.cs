@@ -49,22 +49,11 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         public async Task<IOperationResult<bool>> CreateWithOptions(User user, UserOptions options)
         {
             // Check the validity of the requested roles
-            if (options.Roles != null && options.Roles.Any())
+            var rolesExistResult = await _roleRepository.RolesExistAsync(options.Roles);
+
+            if (!rolesExistResult.IsSuccessful)
             {
-                foreach (var role in options.Roles)
-                {
-                    var roleResult = await _roleRepository.GetByNameAsync(role.Name);
-
-                    var roleExists = roleResult.IsSuccessful && roleResult.Result != null;
-
-                    if (!roleExists)
-                    {
-                        return new OperationResult<bool>(new List<string>()
-                        {
-                            $"Role {role} does not exist."
-                        });
-                    }
-                }
+                return rolesExistResult;
             }
 
             IdentityResult result;
@@ -96,7 +85,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             {
                 result = await _userManager.AddToRolesAsync(
                     user,
-                    options.Roles.Select(role => role.Name)
+                    options.Roles
                 );
 
                 if (!result.Succeeded)
@@ -133,6 +122,11 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         {
             var user = await _userManager.FindByIdAsync(id);
 
+            if (user == null)
+            {
+                return new OperationResult<User>($"User with id {id} does not exist.");
+            }
+
             return new OperationResult<User>(user);
         }
 
@@ -140,12 +134,22 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         {
             var user = await _userManager.FindByNameAsync(username);
 
+            if (user == null)
+            {
+                return new OperationResult<User>($"User with username {username} does not exist.");
+            }
+
             return new OperationResult<User>(user);
         }
 
         public async Task<IOperationResult<User>> GetByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return new OperationResult<User>($"User with email {email} does not exist.");
+            }
 
             return new OperationResult<User>(user);
         }

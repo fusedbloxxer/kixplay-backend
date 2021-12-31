@@ -127,8 +127,8 @@ namespace KixPlay_Backend.Controllers
                 new Services.Repositories.Implementations.UserOptions
                 {
                     Password = userRegisterDto.Password,
-                    Roles = new List<Role> {
-                        new Role("Member")
+                    Roles = new List<string> {
+                        "Member",
                     }
                 }
             );
@@ -165,7 +165,7 @@ namespace KixPlay_Backend.Controllers
         {
             var user = await _userRepository.GetByEmailAsync(userLoginDto.Email);
 
-            if (user.Result == null)
+            if (!user.IsSuccessful)
             {
                 return NotFound(new ErrorResponse($"The user with the email {userLoginDto.Email} does not exist."));
             }
@@ -202,7 +202,7 @@ namespace KixPlay_Backend.Controllers
 
             var user = await _userRepository.GetByIdAsync(userId);
 
-            if (user.Result == null)
+            if (!user.IsSuccessful)
             {
                 return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
             }
@@ -230,7 +230,7 @@ namespace KixPlay_Backend.Controllers
             var userResult = await _userRepository.GetByIdAsync(userId);
             var user = userResult.Result;
 
-            if (userResult.Result == null)
+            if (!userResult.IsSuccessful)
             {
                 return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
             }
