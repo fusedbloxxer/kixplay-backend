@@ -33,12 +33,15 @@ namespace KixPlay_Backend.Extensions
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwtOptions =>
                 {
-                    var tokenKey = secretsSettings.Authentication.Jwt.TokenKey;
-
-                    var tokenKeyBytes = Encoding.UTF8.GetBytes(tokenKey);
-
+                    // Use public settings to configure the validation
                     jwtOptions.TokenValidationParameters = mapper
                         .Map<JwtSettings, TokenValidationParameters>(jwtSettings);
+
+                    // Add the secret key for issuer signature validation
+                    var tokenKey = secretsSettings.Authentication.Jwt.TokenKey;
+                    var tokenKeyBytes = Encoding.UTF8.GetBytes(tokenKey);
+                    var key = new SymmetricSecurityKey(tokenKeyBytes);
+                    jwtOptions.TokenValidationParameters.IssuerSigningKey = key;
                 });
 
             // Add and configure the Identity Service

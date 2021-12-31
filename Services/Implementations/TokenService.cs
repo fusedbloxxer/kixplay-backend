@@ -1,4 +1,5 @@
-﻿using KixPlay_Backend.Data.Entities;
+﻿using AutoMapper;
+using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Services.Interfaces;
 using KixPlay_Backend.Settings.Application;
 using KixPlay_Backend.Settings.Secrets;
@@ -13,26 +14,31 @@ namespace KixPlay_Backend.Services.Implementations
 {
     public class TokenService : ITokenService
     {
-        private readonly JwtSettings _jwtSettings;
-
-        private readonly SymmetricSecurityKey _key;
-        
+        // Services
+        private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+
+        // Configs
+        private readonly JwtSettings _jwtSettings;
+        private readonly SymmetricSecurityKey _key;
+        private readonly TokenValidationParameters _validationParameters;
 
         public TokenService(
             IOptions<JwtSettings> jwtSettings,
             IOptions<SecretsSettings> secrets,
-            UserManager<User> userManager
-        ) {
-            string tokenKey = secrets.Value.Authentication.Jwt.TokenKey;
+            UserManager<User> userManager,
+            IMapper mapper
+        )
+        {
+            _mapper = mapper;
 
-            byte[] tokenKeyBytes = Encoding.UTF8.GetBytes(tokenKey);
-
-            _key = new SymmetricSecurityKey(tokenKeyBytes);
+            _userManager = userManager;
 
             _jwtSettings = jwtSettings.Value;
-            
-            _userManager = userManager;
+
+            _key = CreateSecurityKey(secrets.Value);
+
+            _validationParameters = CreateValidationParams(_jwtSettings, _key, _mapper);
         }
 
         public async Task<string> CreateToken(User user)
@@ -65,6 +71,40 @@ namespace KixPlay_Backend.Services.Implementations
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public Task<bool> IsTokenValid(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return Task.FromResult(false);
+
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+
+            jwtTokenHandler.ValidateToken(token, _validationParameters, out SecurityToken securityToken);
+
+            var jwtToken = (JwtSecurityToken)securityToken;
+
+            return Task.FromResult(true);
+        }
+
+        private static TokenValidationParameters CreateValidationParams(JwtSettings _jwtSettings, SymmetricSecurityKey key, IMapper mapper)
+        {
+            var tokenValidationParams = mapper.Map<TokenValidationParameters>(_jwtSettings);
+
+            tokenValidationParams.IssuerSigningKey = key;
+
+            return tokenValidationParams;
+        }
+
+        private static SymmetricSecurityKey CreateSecurityKey(SecretsSettings secrets)
+        {
+            string tokenKey = secrets.Authentication.Jwt.TokenKey;
+
+            byte[] tokenKeyBytes = Encoding.UTF8.GetBytes(tokenKey);
+
+            var key = new SymmetricSecurityKey(tokenKeyBytes);
+
+            return key;
         }
     }
 }
