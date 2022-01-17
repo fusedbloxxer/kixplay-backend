@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KixPlay_Backend.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminsController : BaseApiController
     {
         private readonly IMapper _mapper;

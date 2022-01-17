@@ -16,6 +16,7 @@ namespace KixPlay_Backend.Services.Implementations
     {
         // Services
         private readonly IMapper _mapper;
+        private readonly ILogger<TokenService> _logger;
         private readonly UserManager<User> _userManager;
 
         // Configs
@@ -27,13 +28,14 @@ namespace KixPlay_Backend.Services.Implementations
             IOptions<JwtSettings> jwtSettings,
             IOptions<SecretsSettings> secrets,
             UserManager<User> userManager,
+            ILogger<TokenService> logger,
             IMapper mapper
         )
         {
             _mapper = mapper;
 
             _userManager = userManager;
-
+            _logger = logger;
             _jwtSettings = jwtSettings.Value;
 
             _key = CreateSecurityKey(secrets.Value);
@@ -73,18 +75,26 @@ namespace KixPlay_Backend.Services.Implementations
             return tokenHandler.WriteToken(token);
         }
 
-        public Task<bool> IsTokenValid(string token)
+        public async Task<bool> IsTokenValid(string token)
         {
             if (string.IsNullOrWhiteSpace(token))
-                return Task.FromResult(false);
+                return await Task.FromResult(false);
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
-            jwtTokenHandler.ValidateToken(token, _validationParameters, out SecurityToken securityToken);
+            try
+            {
+                var _ = jwtTokenHandler.ValidateToken(token, _validationParameters, out SecurityToken securityToken);
 
-            var jwtToken = (JwtSecurityToken)securityToken;
+                var jwtToken = (JwtSecurityToken)securityToken;
 
-            return Task.FromResult(true);
+                return await Task.FromResult(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("The token {token} is invalid: {exception}", token, ex);
+                return await Task.FromResult(false);
+            }
         }
 
         private static TokenValidationParameters CreateValidationParams(JwtSettings _jwtSettings, SymmetricSecurityKey key, IMapper mapper)
