@@ -1,12 +1,24 @@
-﻿using KixPlay_Backend.Data.Entities;
+﻿using KixPlay_Backend.Data.Configuration;
+using KixPlay_Backend.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace KixPlay_Backend.Data
 {
     public class DataContext : IdentityDbContext<User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
+        public DbSet<Media> Medias { get; set; }
+
+        public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<Source> Sources { get; set; }
+
+        public DbSet<MediaSource> MediaSources { get; set; }
+
+        public DbSet<Entities.RelatedMedia> RelatedMedias { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
@@ -19,7 +31,7 @@ namespace KixPlay_Backend.Data
             ConfigureTables(builder);
 
             AddRelations(builder);
-            
+
             RenameTables(builder);
 
             SeedWithData(builder);
@@ -27,57 +39,16 @@ namespace KixPlay_Backend.Data
 
         private static void ConfigureTables(ModelBuilder builder)
         {
-            builder.Entity<User>()
-                .Property(user => user.CreatedAt)
-                .HasDefaultValue(DateTime.Now);
-
-            builder.Entity<Role>()
-                .Property(Role => Role.CreatedAt)
-                .HasDefaultValue(DateTime.Now);
-
-            builder.Entity<UserRole>()
-                .Property(UserRole => UserRole.AddedAt)
-                .HasDefaultValue(DateTime.Now);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         private static void AddRelations(ModelBuilder builder)
         {
-            // Add One-To-Many: User -> UserRole
-            builder.Entity<User>()
-                .HasMany(user => user.UserRoles)
-                .WithOne(userRole => userRole.User)
-                .HasForeignKey(userRole => userRole.UserId)
-                .IsRequired();
 
-            // Add One-To-Many: Role -> UserRole
-            builder.Entity<Role>()
-                .HasMany(role => role.UserRoles)
-                .WithOne(userRole => userRole.Role)
-                .HasForeignKey(userRole => userRole.RoleId)
-                .IsRequired();
-
-            // Add Many-To-One: UserRole >- User
-            builder.Entity<UserRole>()
-                .HasOne(userRole => userRole.User)
-                .WithMany(user => user.UserRoles);
-
-            // Add Many-To-One: UserRole >- Role
-            builder.Entity<UserRole>()
-                .HasOne(userRole => userRole.Role)
-                .WithMany(role => role.UserRoles);
         }
 
         private static void RenameTables(ModelBuilder builder)
         {
-            builder.Entity<User>()
-                .ToTable("Users");
-
-            builder.Entity<Role>()
-                .ToTable("Roles");
-
-            builder.Entity<UserRole>()
-                .ToTable("UserRoles");
-
             builder.Entity<IdentityUserClaim<Guid>>()
                 .ToTable("UserClaims");
 

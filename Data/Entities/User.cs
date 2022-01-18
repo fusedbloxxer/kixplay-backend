@@ -10,7 +10,7 @@ namespace KixPlay_Backend.Data.Entities
 
         public string LastName { get; set; }
 
-        public DateTime? LastSeen { get; set; }
+        public DateTime? LastUpdated { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
 

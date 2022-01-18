@@ -6,6 +6,6 @@ namespace KixPlay_Backend.Data.Entities
     {
         public string Name { get; set; }
 
-        public ICollection<Medium> Medias { get; set; }
+        public ICollection<MediaInGenre> HasMedias { get; set; }
     }
 }

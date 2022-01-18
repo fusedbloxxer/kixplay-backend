@@ -2,7 +2,7 @@
 
 namespace KixPlay_Backend.Data.Entities
 {
-    public partial class Medium : BaseEntity
+    public partial class Media : BaseEntity
     {
         public string Title { get; set; }
 
@@ -12,7 +12,7 @@ namespace KixPlay_Backend.Data.Entities
 
         public string BannerUrl { get; set; }
 
-        public string Thumbnail { get; set; }
+        public string ThumbnailUrl { get; set; }
 
         public TimeSpan? Duration { get; set; }
 
@@ -24,18 +24,18 @@ namespace KixPlay_Backend.Data.Entities
 
         public ICollection<string> PreviewVideoUrls { get; set; }
 
-        public ICollection<Genre> Genres { get; set; }
+        public ICollection<MediaInGenre> InGenres { get; set; }
 
-        public ICollection<Source> Sources { get; set; }
+        public ICollection<MediaSource> MediaSources { get; set; }
 
-        public ICollection<RelatedMedium> RelatedMedias { get; set; }
+        public ICollection<RelatedMedia> RelatedMedias { get; set; }
 
-        public Medium Previous { get; set; }
+        public Media Previous { get; set; }
 
-        public Medium Next { get; set; }
+        public Media Next { get; set; }
     }
 
-    public partial class Medium : IEntity<Guid>
+    public partial class Media : IEntity<Guid>
     {
         public enum Status
         {
