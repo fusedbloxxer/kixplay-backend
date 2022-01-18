@@ -30,23 +30,41 @@ namespace KixPlay_Backend.Data
             builder.Entity<User>()
                 .Property(user => user.CreatedAt)
                 .HasDefaultValue(DateTime.Now);
+
+            builder.Entity<Role>()
+                .Property(Role => Role.CreatedAt)
+                .HasDefaultValue(DateTime.Now);
+
+            builder.Entity<UserRole>()
+                .Property(UserRole => UserRole.AddedAt)
+                .HasDefaultValue(DateTime.Now);
         }
 
         private static void AddRelations(ModelBuilder builder)
         {
-            // Add One-To-Many: User -> UserRoles
+            // Add One-To-Many: User -> UserRole
             builder.Entity<User>()
                 .HasMany(user => user.UserRoles)
                 .WithOne(userRole => userRole.User)
                 .HasForeignKey(userRole => userRole.UserId)
                 .IsRequired();
 
-            // Add One-To-Many: Role -> UserRoles 
+            // Add One-To-Many: Role -> UserRole
             builder.Entity<Role>()
                 .HasMany(role => role.UserRoles)
                 .WithOne(userRole => userRole.Role)
                 .HasForeignKey(userRole => userRole.RoleId)
                 .IsRequired();
+
+            // Add Many-To-One: UserRole >- User
+            builder.Entity<UserRole>()
+                .HasOne(userRole => userRole.User)
+                .WithMany(user => user.UserRoles);
+
+            // Add Many-To-One: UserRole >- Role
+            builder.Entity<UserRole>()
+                .HasOne(userRole => userRole.Role)
+                .WithMany(role => role.UserRoles);
         }
 
         private static void RenameTables(ModelBuilder builder)

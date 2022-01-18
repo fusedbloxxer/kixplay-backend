@@ -4,6 +4,7 @@ using KixPlay_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220118175810_AddUserRoleInverseRelations")]
+    partial class AddUserRoleInverseRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 18, 20, 3, 16, 280, DateTimeKind.Local).AddTicks(3480));
+                        .HasDefaultValue(new DateTime(2022, 1, 18, 19, 58, 10, 80, DateTimeKind.Local).AddTicks(5901));
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -57,32 +59,32 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6be2ead8-61d6-4ec1-9197-a5258d58ccc6"),
-                            ConcurrencyStamp = "0494848e-cff4-4b64-b009-7aa053a02b7f",
+                            Id = new Guid("da4b13e7-2dc1-4dbc-a51a-b15af2c42b94"),
+                            ConcurrencyStamp = "c1b06c90-95c5-4151-b772-015c5cea7f77",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
                             NormalizedName = "CONTRIBUTOR"
                         },
                         new
                         {
-                            Id = new Guid("5c598e20-5a61-4e58-87e2-c469c50b6c15"),
-                            ConcurrencyStamp = "3635bdc6-dcd4-4fc7-a35d-57ea9ab3b9f4",
+                            Id = new Guid("355cf7c9-c71f-4e72-a934-9e680525eedc"),
+                            ConcurrencyStamp = "7a2328e0-f708-4768-ab79-2cfc5c121eb5",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = new Guid("f2e8f759-0bc3-464c-b02d-fad41584addd"),
-                            ConcurrencyStamp = "1d79dca7-737c-4a90-b2dd-a41c7283881c",
+                            Id = new Guid("73a44695-23eb-4e20-9f96-1696bb097006"),
+                            ConcurrencyStamp = "9ad91d6a-122c-40f9-910b-f43e4455f0f6",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = new Guid("aa6ea8ce-f0b0-4dc9-a71e-784d2d59f1b4"),
-                            ConcurrencyStamp = "c36e1e37-7a38-4b41-aacb-217b6457873e",
+                            Id = new Guid("b5623523-1eb1-41e1-b574-1aca5438c5f5"),
+                            ConcurrencyStamp = "3fe3b91a-8e0f-4249-bde8-e2335d00bb73",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -105,7 +107,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 18, 20, 3, 16, 280, DateTimeKind.Local).AddTicks(3287));
+                        .HasDefaultValue(new DateTime(2022, 1, 18, 19, 58, 10, 80, DateTimeKind.Local).AddTicks(5731));
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -174,20 +176,26 @@ namespace KixPlay_Backend.Data.Migrations
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.UserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 1, 18, 19, 58, 10, 80, DateTimeKind.Local).AddTicks(6046));
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("AddedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 18, 20, 3, 16, 280, DateTimeKind.Local).AddTicks(3585));
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserRoles", (string)null);
                 });
