@@ -16,11 +16,20 @@ namespace KixPlay_Backend.Data
         {
             base.OnModelCreating(builder);
 
+            ConfigureTables(builder);
+
             AddRelations(builder);
             
             RenameTables(builder);
 
             SeedWithData(builder);
+        }
+
+        private static void ConfigureTables(ModelBuilder builder)
+        {
+            builder.Entity<User>()
+                .Property(user => user.CreatedAt)
+                .HasDefaultValue(DateTime.Now);
         }
 
         private static void AddRelations(ModelBuilder builder)

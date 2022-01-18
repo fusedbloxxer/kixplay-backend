@@ -55,32 +55,32 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d4ee694b-f125-4e4b-8e35-7f648888d582"),
-                            ConcurrencyStamp = "6395bf67-be09-424d-8842-f9f340f5bef2",
+                            Id = new Guid("2992ef1e-2788-48cd-b4f7-5b2d86f29e49"),
+                            ConcurrencyStamp = "d30c3b77-253b-46ea-ad1f-c3352a520d30",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
                             NormalizedName = "CONTRIBUTOR"
                         },
                         new
                         {
-                            Id = new Guid("d46cba3a-c6fa-4e46-863b-ed38bc4f5e10"),
-                            ConcurrencyStamp = "e069be7c-98ea-40f8-a6e7-edb2a1336a24",
+                            Id = new Guid("df07db7b-924b-48ea-88b3-b9dcfb68dd61"),
+                            ConcurrencyStamp = "0c087c3e-9412-43cd-8218-7400195a5aa4",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = new Guid("b17a8caf-350b-4436-b328-acfbc47f2928"),
-                            ConcurrencyStamp = "003abffd-bf00-43bf-80e8-9c86c614153c",
+                            Id = new Guid("7ff96310-b542-4912-b170-b77ea4909406"),
+                            ConcurrencyStamp = "14ea46e6-c508-4915-9961-394c8025adca",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = new Guid("3d45e98e-7c65-42dd-bac9-e7f9c1a3ef79"),
-                            ConcurrencyStamp = "27da240d-392d-46a9-bcea-91dac8728974",
+                            Id = new Guid("2fdfd55f-f60f-4e0c-8a18-636b2d4ff3ca"),
+                            ConcurrencyStamp = "f9b800b7-ff06-4286-9d23-580b4f67e12d",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -101,7 +101,9 @@ namespace KixPlay_Backend.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 1, 18, 19, 36, 52, 216, DateTimeKind.Local).AddTicks(1989));
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
