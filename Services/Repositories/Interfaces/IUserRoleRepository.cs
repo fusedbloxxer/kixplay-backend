@@ -8,10 +8,10 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 
         IRoleRepository RoleRepository { get; }
 
-        Task<IOperationResult<IEnumerable<Role>>> GetRolesFromUser(string userId);
+        Task<IOperationResult<IEnumerable<Role>>> GetRolesFromUser(Guid userId);
 
-        Task<IOperationResult<bool>> GrantRolesToUser(string userId, IEnumerable<string> roleNames);
+        Task<IOperationResult<bool>> GrantRolesToUser(Guid userId, IEnumerable<string> roleNames);
 
-        Task<IOperationResult<bool>> RevokeRolesFromUser(string userId, IEnumerable<string> roleNames);
+        Task<IOperationResult<bool>> RevokeRolesFromUser(Guid userId, IEnumerable<string> roleNames);
     }
 }

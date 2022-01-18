@@ -27,7 +27,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             _mapper = mapper;
         }
 
-        public async Task<IOperationResult<bool>> GrantRolesToUser(string userId, IEnumerable<string> roleNames)
+        public async Task<IOperationResult<bool>> GrantRolesToUser(Guid userId, IEnumerable<string> roleNames)
         {
             var rolesExistResult = await RoleRepository.RolesExistAsync(roleNames);
 
@@ -53,7 +53,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return new OperationResult<bool>(true);
         }
 
-        public async Task<IOperationResult<bool>> RevokeRolesFromUser(string userId, IEnumerable<string> roleNames)
+        public async Task<IOperationResult<bool>> RevokeRolesFromUser(Guid userId, IEnumerable<string> roleNames)
         {
             var rolesExistResult = await RoleRepository.RolesExistAsync(roleNames);
 
@@ -79,7 +79,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return new OperationResult<bool>(true);
         }
 
-        public async Task<IOperationResult<IEnumerable<Role>>> GetRolesFromUser(string userId)
+        public async Task<IOperationResult<IEnumerable<Role>>> GetRolesFromUser(Guid userId)
         {
             var userGetResult = await UserRepository.GetByIdAsync(userId);
         

@@ -35,7 +35,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return _mapper.Map<OperationResult<bool>>(roleCreateResult);
         }
 
-        public async Task<IOperationResult<bool>> DeleteAsync(string roleId)
+        public async Task<IOperationResult<bool>> DeleteAsync(Guid roleId)
         {
             var getRoleResult = await GetByIdAsync(roleId);
 
@@ -54,16 +54,16 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return new OperationResult<bool>(true);
         }
 
-        public async Task<IOperationResult<bool>> ExistsAsync(string roleId)
+        public async Task<IOperationResult<bool>> ExistsAsync(Guid roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
+            var role = await _roleManager.FindByIdAsync(roleId.ToString());
 
             return new OperationResult<bool>(role != null);
         }
 
-        public async Task<IOperationResult<Role>> GetByIdAsync(string roleId)
+        public async Task<IOperationResult<Role>> GetByIdAsync(Guid roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
+            var role = await _roleManager.FindByIdAsync(roleId.ToString());
 
             if (role == null)
             {
@@ -124,7 +124,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
                 return new OperationResult<IEnumerable<Role>>($"No role names were specified.");
             }
 
-            List<Role> roles = new List<Role>(roleNames.Count());
+            List<Role> roles = new(roleNames.Count());
 
             foreach (var roleName in roleNames)
             {

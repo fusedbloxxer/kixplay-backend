@@ -1,4 +1,4 @@
-﻿using KixPlay_Backend.Data.Interfaces;
+﻿using KixPlay_Backend.Data.Abstractions;
 
 namespace KixPlay_Backend.Services.Repositories.Interfaces
 {

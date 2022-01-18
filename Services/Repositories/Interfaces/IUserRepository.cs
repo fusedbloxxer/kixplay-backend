@@ -3,7 +3,7 @@ using KixPlay_Backend.Services.Repositories.Implementations;
 
 namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
-    public interface IUserRepository : IGenericRepository<string, User>
+    public interface IUserRepository : IGenericRepository<Guid, User>
     {
         Task<IOperationResult<User>> GetByEmailAsync(string email);
 

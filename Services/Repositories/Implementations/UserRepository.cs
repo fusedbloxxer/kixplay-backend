@@ -30,7 +30,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
         public async Task<IOperationResult<bool>> CreateAsync(User user)
         {
-            user.Id = Guid.NewGuid().ToString();
+            user.Id = Guid.NewGuid();
 
             var result = await _userManager.CreateAsync(user);
 
@@ -39,7 +39,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
         public async Task<IOperationResult<bool>> CreateWithPasswordAsync(User user, string pass)
         {
-            user.Id = Guid.NewGuid().ToString();
+            user.Id = Guid.NewGuid();
 
             var result = await _userManager.CreateAsync(user, pass);
 
@@ -58,7 +58,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
             IdentityResult result;
 
-            user.Id = Guid.NewGuid().ToString();
+            user.Id = Guid.NewGuid();
 
             // Create the user with or without password
             if (!string.IsNullOrEmpty(options.Password))
@@ -97,9 +97,9 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return new OperationResult<bool>(true);
         }
 
-        public async Task<IOperationResult<bool>> DeleteAsync(string id)
+        public async Task<IOperationResult<bool>> DeleteAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
         
             if (user == null)
             {
@@ -111,16 +111,16 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
         }
 
-        public async Task<IOperationResult<bool>> ExistsAsync(string id)
+        public async Task<IOperationResult<bool>> ExistsAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
             return new OperationResult<bool>(user != null);
         }
 
-        public async Task<IOperationResult<User>> GetByIdAsync(string id)
+        public async Task<IOperationResult<User>> GetByIdAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user == null)
             {

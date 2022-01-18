@@ -5,10 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KixPlay_Backend.Data
 {
-    public class DataContext : IdentityDbContext<
-        User, Role, string,
-        IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
-        IdentityRoleClaim<string>, IdentityUserToken<string>>
+    public class DataContext : IdentityDbContext<User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -54,16 +51,16 @@ namespace KixPlay_Backend.Data
             builder.Entity<UserRole>()
                 .ToTable("UserRoles");
 
-            builder.Entity<IdentityUserClaim<string>>()
+            builder.Entity<IdentityUserClaim<Guid>>()
                 .ToTable("UserClaims");
 
-            builder.Entity<IdentityRoleClaim<string>>()
+            builder.Entity<IdentityRoleClaim<Guid>>()
                 .ToTable("RoleClaims");
 
-            builder.Entity<IdentityUserLogin<string>>()
+            builder.Entity<IdentityUserLogin<Guid>>()
                 .ToTable("UserLogins");
 
-            builder.Entity<IdentityUserToken<string>>()
+            builder.Entity<IdentityUserToken<Guid>>()
                 .ToTable("UserTokens");
         }
 

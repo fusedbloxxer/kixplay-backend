@@ -50,7 +50,7 @@ namespace KixPlay_Backend.Controllers
 
         [AllowAnonymous]
         [HttpGet("{userId}")]
-        public async Task<ActionResult> GetUserById([FromRoute] string userId)
+        public async Task<ActionResult> GetUserById([FromRoute] Guid userId)
         {
             var userResult = await _userRepository.GetByIdAsync(userId);
 
@@ -67,16 +67,21 @@ namespace KixPlay_Backend.Controllers
 
         [AllowAnonymous]
         [HttpGet("findBy")]
-        public async Task<ActionResult> GetUser([FromQuery] string userId, [FromQuery] string email, [FromQuery] string userName)
+        public async Task<ActionResult> GetUser([FromQuery] Guid userId, [FromQuery] string email, [FromQuery] string userName)
         {
             int countParams = 0;
 
-            foreach (var param in new List<string> { userId, email, userName })
+            foreach (var param in new List<string> { email, userName })
             {
                 if (!string.IsNullOrWhiteSpace(param))
                 {
                     ++countParams;
                 }
+            }
+
+            if (userId != Guid.Empty)
+            {
+                ++countParams;
             }
 
             if (countParams > 1)
@@ -104,8 +109,8 @@ namespace KixPlay_Backend.Controllers
                 isMatch |= !string.IsNullOrWhiteSpace(email)
                     && user.NormalizedEmail.Equals(email.ToUpperInvariant());
 
-                isMatch |= !string.IsNullOrWhiteSpace(userId)
-                    && user.Id.ToUpperInvariant().Equals(userId.ToUpper());
+                isMatch |= userId != Guid.Empty
+                    && user.Id.Equals(userId);
 
                 return isMatch;
             });
@@ -193,9 +198,9 @@ namespace KixPlay_Backend.Controllers
 
         [Authorize(Policy = "IsSameUser")]
         [HttpDelete("{userId}/remove")]
-        public async Task<ActionResult> DeleteUser([FromRoute] string userId)
+        public async Task<ActionResult> DeleteUser([FromRoute] Guid userId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (userId == Guid.Empty)
             {
                 return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
             }
@@ -222,9 +227,9 @@ namespace KixPlay_Backend.Controllers
 
         [Authorize(Policy = "IsSameUser")]
         [HttpPut("{userId}/update")]
-        public async Task<ActionResult> UpdateUser([FromRoute] string userId, [FromBody] UserUpdateRequestDto userUpdateDto)
+        public async Task<ActionResult> UpdateUser([FromRoute] Guid userId, [FromBody] UserUpdateRequestDto userUpdateDto)
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (userId == Guid.Empty)
                 return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
 
             var userResult = await _userRepository.GetByIdAsync(userId);

@@ -41,7 +41,7 @@ namespace KixPlay_Backend.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("grant/{userId}")]
-        public async Task<ActionResult> GrantRoleToUser([FromRoute] string userId, [FromBody] RoleRequestDto roleGrantRequest)
+        public async Task<ActionResult> GrantRoleToUser([FromRoute] Guid userId, [FromBody] RoleRequestDto roleGrantRequest)
         {
             var grantResult = await _userRoleRepository.GrantRolesToUser(userId, roleGrantRequest.Roles);
 
@@ -82,7 +82,7 @@ namespace KixPlay_Backend.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("revoke/{userId}")]
-        public async Task<ActionResult> RevokeRoleFromUser([FromRoute] string userId, [FromBody] RoleRequestDto roleGrantRequest)
+        public async Task<ActionResult> RevokeRoleFromUser([FromRoute] Guid userId, [FromBody] RoleRequestDto roleGrantRequest)
         {
             var grantResult = await _userRoleRepository.RevokeRolesFromUser(userId, roleGrantRequest.Roles);
 
@@ -123,7 +123,7 @@ namespace KixPlay_Backend.Controllers
 
         [Authorize(Policy = "IsSameUser")]
         [HttpGet("{userId}")]
-        public async Task<ActionResult> GetRolesForUser([FromRoute] string userId)
+        public async Task<ActionResult> GetRolesForUser([FromRoute] Guid userId)
         {
             var rolesGetResult = await _userRoleRepository.GetRolesFromUser(userId);
 
