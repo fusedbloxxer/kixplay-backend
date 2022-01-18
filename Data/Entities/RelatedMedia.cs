@@ -6,9 +6,13 @@ namespace KixPlay_Backend.Data.Entities
     {
         public Relation Relationship { get; set; }
 
-        public Media Previous { get; set; }
+        public Guid? MediaFromId { get; set; }
 
-        public Media Next { get; set; }
+        public Media MediaFrom { get; set; }
+
+        public Guid? MediaToId { get; set; }
+
+        public Media MediaTo { get; set; }
     }
 
     public partial class RelatedMedia : BaseEntity

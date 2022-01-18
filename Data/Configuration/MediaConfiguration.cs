@@ -55,12 +55,18 @@ namespace KixPlay_Backend.Data.Configuration
                 .WithOne(mediaSources => mediaSources.Media);
 
             builder
-                .HasMany(media => media.RelatedMedias)
-                .WithOne(relatedMedia => relatedMedia.Previous);
+                .HasMany(media => media.RelatedTo)
+                .WithOne(mediaTo => mediaTo.MediaTo)
+                .HasForeignKey(mediaTo => mediaTo.MediaToId)
+                .HasPrincipalKey(media => media.Id)
+                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
             builder
-                .HasMany(media => media.RelatedMedias)
-                .WithOne(relatedMedia => relatedMedia.Next);
+                .HasMany(media => media.RelatedFrom)
+                .WithOne(mediaFrom => mediaFrom.MediaFrom)
+                .HasForeignKey(mediaTo => mediaTo.MediaFromId)
+                .HasPrincipalKey(media => media.Id)
+                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
             builder
                 .HasOne(media => media.Next)

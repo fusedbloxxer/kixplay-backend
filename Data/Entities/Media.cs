@@ -28,7 +28,9 @@ namespace KixPlay_Backend.Data.Entities
 
         public ICollection<MediaSource> MediaSources { get; set; }
 
-        public ICollection<RelatedMedia> RelatedMedias { get; set; }
+        public ICollection<RelatedMedia> RelatedTo { get; set; }
+
+        public ICollection<RelatedMedia> RelatedFrom { get; set; }
 
         public Media Previous { get; set; }
 
