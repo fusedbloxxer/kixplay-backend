@@ -440,6 +440,73 @@ namespace KixPlay_Backend.Data.Migrations
                     b.ToTable("Reviews", (string)null);
 
                     b.HasCheckConstraint("CK_VALID_RATING", "[Rating] BETWEEN 0 and 10");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            Content = "Fractured is a mystery thriller, I'd agree with that, but the one tag that's missing, is surreal. It's a very odd film, so odd it's almost bonkers,\r\n                                    it's like being in a nightmare, you can't wake up, all events are out of your control, and every aspect of life is spiraling out of control. \r\n                                    I won't give a single spoiler away, because it would give the game away, all I could say is expect the unexpected. \r\n                                    I predicted events and outcomes, I got every single sequence of events wrong, loaded with twists and crammed full of intrigue. Sam Worthington is terrific.\r\n                                    It's trippy, it's slow to start, but great as it gets going, think The Lady vanishes. 7/10",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            Rating = 7f,
+                            Recommended = true,
+                            Title = "Expect the unexpected"
+                        },
+                        new
+                        {
+                            Id = new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"),
+                            Content = "When a movie decides to go places, as a viewer you have the choice to ride with it or abandon it.\r\n                                    I do hope you are taking option A and ride with it. It really is quite engaging and you will be quite\r\n                                    'mindblown' as another reviewer already rightfully stated. If you were wondering where Sam Worthington was (is) - wonder no more.\r\n                                    This is really a nice acting piece he got to grab and make something of it.\r\n                                    There are 2 obvious paths or choices or options, on how to view this or what it probably is telling us. So no Bonus points for guessing right.\r\n                                    This is about the journey and it is quite an exhausting one! But very good too",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            OriginalPosterId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
+                            Rating = 8f,
+                            Recommended = true,
+                            Title = "A mind of its own"
+                        },
+                        new
+                        {
+                            Id = new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"),
+                            Content = "For a surprise worhington isnt stoic in this film but film potential could be used in better way and ending isnt very good",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            OriginalPosterId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
+                            Rating = 4f,
+                            Recommended = false,
+                            Title = "Fracture"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"),
+                            Content = "I have to admit I am disappointed by this movie. I saw it had a high rating and I read some reviews about how good it was supposed to be. But in fact it's not that great. \r\n                                    It could have been so much better if they would not have dragged that whole story. By that I mean the only last half hour could be qualified as good. The rest of the movie is a battle to not fall asleep, with unstoppable irritating \r\n                                    conversations between a bunch of weirdo's. If it was not for the end, that you see coming from miles away by the way, then I would have scored the movie even lesser. The actors are not bad, they are just average. Anyways, \r\n                                    if other people like The Invitation, good for them, but it was not my cup of tea.",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            OriginalPosterId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
+                            Rating = 5f,
+                            Recommended = false,
+                            Title = "Only the end is okay, the rest is below average"
+                        },
+                        new
+                        {
+                            Id = new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"),
+                            Content = "Will (Logan Marshall-Green) and Kira (Emayatzy Corinealdi) have accepted a fancy dinner invitation (the invitation was fancy not the dinner) to the \r\n                                    house that he formally lived in. His ex-wife Eden (Tammy Blanchard) and her new husband David (Michiel Huisman) are hosting. Many couples show up, \r\n                                    all friends of Eden. Eden and Dave have spent the last two years in Mexico. \r\n                                    About 30 minutes into the film two more plot details fill in. Will and Eden had a son that died. Eden was in Mexico being part of a cult that helped her get over \r\n                                    her grief knowing she will be with her loves ones in the afterlife. Will suffers from the loss of his child and has bad memories.\r\n                                    Will suspects something is going on, but everyone else doesn't see it. As the audience we find the explanations acceptable, and Will maybe has issues...or not. We don't know \r\n                                    but soon the pieces come together when in end...when we finally decide we were actually entertained, but didn't know it as the film moves slow.\r\n                                    Michelle Krusiec is the token hot Asian chick.\r\n                                    Guide: F - word.No sex or nudity.",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            Rating = 8f,
+                            Recommended = true,
+                            Title = "It's weird, but it's L.A."
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.ReviewOpinion", b =>
@@ -487,6 +554,96 @@ namespace KixPlay_Backend.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("ReviewOpinions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11931d93-a732-4bd0-b54f-72e2ebf5eee1"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = true,
+                            IsHelpful = false,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8")
+                        },
+                        new
+                        {
+                            Id = new Guid("18935269-031d-4e7b-ac5a-f04171752e74"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = true,
+                            IsHelpful = true,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976")
+                        },
+                        new
+                        {
+                            Id = new Guid("f25cac52-c01e-4699-bb77-3babe2174b43"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = false,
+                            IsInteresting = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        },
+                        new
+                        {
+                            Id = new Guid("c5255c73-c90c-4bf7-83d7-b8aad55bbde0"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = true,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"),
+                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976")
+                        },
+                        new
+                        {
+                            Id = new Guid("b59e0186-2979-4542-8b69-e6436ec34d9c"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = false,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"),
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("6be51be4-cf10-43b9-861c-e58026125ef3"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = true,
+                            IsInteresting = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"),
+                            UserId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985")
+                        },
+                        new
+                        {
+                            Id = new Guid("e60f9fc3-1c62-46fc-8307-584d2c9eec1c"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = false,
+                            IsInteresting = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"),
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        },
+                        new
+                        {
+                            Id = new Guid("f385b814-ef3b-47e6-be49-f5b77059b4b9"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = true,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"),
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Role", b =>
@@ -530,7 +687,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            ConcurrencyStamp = "5100986f-740d-4950-8dba-8d279d49c122",
+                            ConcurrencyStamp = "ba801f00-cc7b-48be-93dc-5e5bd063784a",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -539,7 +696,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            ConcurrencyStamp = "e1aedf32-6b50-46ef-b803-566adb78658a",
+                            ConcurrencyStamp = "296c14ab-1f86-48a5-b6ab-cfd89142ddc8",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -548,7 +705,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            ConcurrencyStamp = "ef1a2f67-3abb-4205-8bcb-f35bfc929936",
+                            ConcurrencyStamp = "5ca0a30b-ec61-4933-ad0a-34c81555e913",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -557,7 +714,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            ConcurrencyStamp = "07185fe7-4b15-49dc-b209-84398c90d5b7",
+                            ConcurrencyStamp = "45f08f4a-44a1-4f24-a19d-2e5bd666db0f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -673,7 +830,81 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("UserId", "MediaId")
                         .IsUnique();
 
-                    b.ToTable("TrackedMedia");
+                    b.ToTable("TrackedMedias", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a62a6a8e-0211-4eff-a4a6-a0dc6a7a64c8"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            Status = "Watched",
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("1a9ab45f-3b57-48b6-8829-7c9e14271aca"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"),
+                            Status = "ToWatch",
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("e9fceb36-89a3-46c2-9888-0198471c2029"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            Status = "Watched",
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("f0de9466-968a-4e9f-b3c3-3fe09eaeb383"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"),
+                            Status = "ToWatch",
+                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8")
+                        },
+                        new
+                        {
+                            Id = new Guid("e35e01fa-d822-4d44-a528-d230c1df43e9"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            Status = "Watched",
+                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8")
+                        },
+                        new
+                        {
+                            Id = new Guid("87b92312-864b-4bd2-a52d-a5e641c8d8f7"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            Status = "Watching",
+                            UserId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985")
+                        },
+                        new
+                        {
+                            Id = new Guid("9c7128df-7b0e-49fa-b25f-c53d218b3d3e"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            Status = "OnPause",
+                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976")
+                        },
+                        new
+                        {
+                            Id = new Guid("36389164-992e-4a82-9283-4b3af2389cd6"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            Status = "Dropped",
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.User", b =>
@@ -765,7 +996,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c5b96a11-e30e-406c-8409-0020c6b4d8ac",
+                            ConcurrencyStamp = "f4f807ff-63ca-4893-bf3f-4c70cf9e988f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "mikasa.ackerman@gmail.com",
@@ -785,7 +1016,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f2f7297-514b-4e88-a12f-d1801be8c3c5",
+                            ConcurrencyStamp = "ca436a3f-8207-4be0-8553-0abea9214a8d",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "eren.yeager@gmail.com",
@@ -805,7 +1036,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0f416b8f-26e7-4725-a7ab-51ddaf25e8fc",
+                            ConcurrencyStamp = "a28d974f-a0c1-461b-a911-9479a7922432",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "levi.ivel@gmail.com",
@@ -824,7 +1055,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f22c7556-24fe-407a-ad94-91eed1a4c44f",
+                            ConcurrencyStamp = "71107a72-50c9-4f45-9b4d-d31a38a84e21",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "armin.arlert@gmail.com",
@@ -844,7 +1075,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4e4c42cf-0287-4464-8712-9d725d717d55",
+                            ConcurrencyStamp = "f38e2100-4be3-42e1-a296-84fab0cf52c6",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "erwin.smith@gmail.com",

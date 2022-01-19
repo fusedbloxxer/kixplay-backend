@@ -34,17 +34,27 @@ namespace KixPlay_Backend.Data.Configuration
 
             builder
                 .HasOne(comment => comment.Parent)
-                .WithOne();
-        }
-
-        protected override void ConfigureSeed(EntityTypeBuilder<Comment> builder)
-        {
+                .WithOne()
+                .HasForeignKey<Comment>(comment => comment.ParentId)
+                .HasPrincipalKey<Comment>(comment => comment.Id);
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<Comment> builder)
         {
             builder
                 .ToTable($"{nameof(Comment)}s");
+        }
+
+        protected override void ConfigureSeed(EntityTypeBuilder<Comment> builder)
+        {
+            builder
+                .HasData(new List<Comment>()
+                {
+                    //new Comment()
+                    //{
+                    //    Id = Guid.Parse(""),
+                    //},
+                });
         }
     }
 }

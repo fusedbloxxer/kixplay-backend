@@ -40,6 +40,10 @@ namespace KixPlay_Backend.Data.Abstractions
         private static void ConfigureCommon(EntityTypeBuilder<TEntity> builder)
         {
             builder
+                .Property(entity => entity.Id)
+                .ValueGeneratedOnAdd();
+
+            builder
                 .Property(entity => entity.CreatedAt)
                 .HasDefaultValueSql("GETDATE()");
 

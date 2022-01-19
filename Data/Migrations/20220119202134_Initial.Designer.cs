@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220119182111_SeedSources")]
-    partial class SeedSources
+    [Migration("20220119202134_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,6 +89,43 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0faa2716-763a-46bd-aeb5-b731070edf23"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "horror"
+                        },
+                        new
+                        {
+                            Id = new Guid("63f38ef9-382c-4cca-b0fc-000a3aaa2e1e"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "action"
+                        },
+                        new
+                        {
+                            Id = new Guid("bb85ef16-0dfc-4cf8-a248-929920f775e3"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "thriller"
+                        },
+                        new
+                        {
+                            Id = new Guid("5d90f656-95b7-41e9-afbc-7f03564a2b16"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "slowburn"
+                        },
+                        new
+                        {
+                            Id = new Guid("3cf709a3-a95c-4d56-a8d6-2ee490ca7161"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "drama"
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Media", b =>
@@ -192,6 +229,72 @@ namespace KixPlay_Backend.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("MediaInGenres", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("fcda9b37-4d4e-42f6-93ff-297b7bd6d69e"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("0faa2716-763a-46bd-aeb5-b731070edf23"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38")
+                        },
+                        new
+                        {
+                            Id = new Guid("62591aee-1b47-499f-93b0-78977272adea"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("bb85ef16-0dfc-4cf8-a248-929920f775e3"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38")
+                        },
+                        new
+                        {
+                            Id = new Guid("29c2ab05-d741-4030-8578-2ee548251784"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("5d90f656-95b7-41e9-afbc-7f03564a2b16"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38")
+                        },
+                        new
+                        {
+                            Id = new Guid("8caf43d0-0eed-4e7a-8b1a-02c7a7df0890"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("63f38ef9-382c-4cca-b0fc-000a3aaa2e1e"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("732e75d1-baa5-43bd-8636-8f91262545b2")
+                        },
+                        new
+                        {
+                            Id = new Guid("bb56200e-f47e-4bed-97ab-dfc9fb7f90d8"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("0faa2716-763a-46bd-aeb5-b731070edf23"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095")
+                        },
+                        new
+                        {
+                            Id = new Guid("414873c1-82d0-4cb0-bd13-e4a76e3feed5"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("bb85ef16-0dfc-4cf8-a248-929920f775e3"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095")
+                        },
+                        new
+                        {
+                            Id = new Guid("f6ffc53e-1ea7-4e29-b2fc-665f68fef9ff"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("5d90f656-95b7-41e9-afbc-7f03564a2b16"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095")
+                        },
+                        new
+                        {
+                            Id = new Guid("ccae8e17-8759-405f-8d48-a59324956f92"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            GenreId = new Guid("3cf709a3-a95c-4d56-a8d6-2ee490ca7161"),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095")
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.MediaSource", b =>
@@ -227,6 +330,26 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("SourceId");
 
                     b.ToTable("MediaSources");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2f5ba7de-9a8f-434b-a61e-764dfe656bfb"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            SourceId = new Guid("4a022ad0-e6e6-4df3-9b95-bf1aa05db9df"),
+                            Url = "https://filmeserialegratis.org/fractured/"
+                        },
+                        new
+                        {
+                            Id = new Guid("f0c5a927-2ac3-4fd9-b31b-88b4d377325d"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            SourceId = new Guid("4a022ad0-e6e6-4df3-9b95-bf1aa05db9df"),
+                            Url = "https://filmeserialegratis.org/the-invitation-invitatia/"
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.RelatedMedia", b =>
@@ -319,6 +442,73 @@ namespace KixPlay_Backend.Data.Migrations
                     b.ToTable("Reviews", (string)null);
 
                     b.HasCheckConstraint("CK_VALID_RATING", "[Rating] BETWEEN 0 and 10");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            Content = "Fractured is a mystery thriller, I'd agree with that, but the one tag that's missing, is surreal. It's a very odd film, so odd it's almost bonkers,\r\n                                    it's like being in a nightmare, you can't wake up, all events are out of your control, and every aspect of life is spiraling out of control. \r\n                                    I won't give a single spoiler away, because it would give the game away, all I could say is expect the unexpected. \r\n                                    I predicted events and outcomes, I got every single sequence of events wrong, loaded with twists and crammed full of intrigue. Sam Worthington is terrific.\r\n                                    It's trippy, it's slow to start, but great as it gets going, think The Lady vanishes. 7/10",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            Rating = 7f,
+                            Recommended = true,
+                            Title = "Expect the unexpected"
+                        },
+                        new
+                        {
+                            Id = new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"),
+                            Content = "When a movie decides to go places, as a viewer you have the choice to ride with it or abandon it.\r\n                                    I do hope you are taking option A and ride with it. It really is quite engaging and you will be quite\r\n                                    'mindblown' as another reviewer already rightfully stated. If you were wondering where Sam Worthington was (is) - wonder no more.\r\n                                    This is really a nice acting piece he got to grab and make something of it.\r\n                                    There are 2 obvious paths or choices or options, on how to view this or what it probably is telling us. So no Bonus points for guessing right.\r\n                                    This is about the journey and it is quite an exhausting one! But very good too",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            OriginalPosterId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
+                            Rating = 8f,
+                            Recommended = true,
+                            Title = "A mind of its own"
+                        },
+                        new
+                        {
+                            Id = new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"),
+                            Content = "For a surprise worhington isnt stoic in this film but film potential could be used in better way and ending isnt very good",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            OriginalPosterId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
+                            Rating = 4f,
+                            Recommended = false,
+                            Title = "Fracture"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"),
+                            Content = "I have to admit I am disappointed by this movie. I saw it had a high rating and I read some reviews about how good it was supposed to be. But in fact it's not that great. \r\n                                    It could have been so much better if they would not have dragged that whole story. By that I mean the only last half hour could be qualified as good. The rest of the movie is a battle to not fall asleep, with unstoppable irritating \r\n                                    conversations between a bunch of weirdo's. If it was not for the end, that you see coming from miles away by the way, then I would have scored the movie even lesser. The actors are not bad, they are just average. Anyways, \r\n                                    if other people like The Invitation, good for them, but it was not my cup of tea.",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            OriginalPosterId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
+                            Rating = 5f,
+                            Recommended = false,
+                            Title = "Only the end is okay, the rest is below average"
+                        },
+                        new
+                        {
+                            Id = new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"),
+                            Content = "Will (Logan Marshall-Green) and Kira (Emayatzy Corinealdi) have accepted a fancy dinner invitation (the invitation was fancy not the dinner) to the \r\n                                    house that he formally lived in. His ex-wife Eden (Tammy Blanchard) and her new husband David (Michiel Huisman) are hosting. Many couples show up, \r\n                                    all friends of Eden. Eden and Dave have spent the last two years in Mexico. \r\n                                    About 30 minutes into the film two more plot details fill in. Will and Eden had a son that died. Eden was in Mexico being part of a cult that helped her get over \r\n                                    her grief knowing she will be with her loves ones in the afterlife. Will suffers from the loss of his child and has bad memories.\r\n                                    Will suspects something is going on, but everyone else doesn't see it. As the audience we find the explanations acceptable, and Will maybe has issues...or not. We don't know \r\n                                    but soon the pieces come together when in end...when we finally decide we were actually entertained, but didn't know it as the film moves slow.\r\n                                    Michelle Krusiec is the token hot Asian chick.\r\n                                    Guide: F - word.No sex or nudity.",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasSpoilers = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            Rating = 8f,
+                            Recommended = true,
+                            Title = "It's weird, but it's L.A."
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.ReviewOpinion", b =>
@@ -366,6 +556,96 @@ namespace KixPlay_Backend.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("ReviewOpinions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11931d93-a732-4bd0-b54f-72e2ebf5eee1"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = true,
+                            IsHelpful = false,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8")
+                        },
+                        new
+                        {
+                            Id = new Guid("18935269-031d-4e7b-ac5a-f04171752e74"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = true,
+                            IsHelpful = true,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976")
+                        },
+                        new
+                        {
+                            Id = new Guid("f25cac52-c01e-4699-bb77-3babe2174b43"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = false,
+                            IsInteresting = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"),
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        },
+                        new
+                        {
+                            Id = new Guid("c5255c73-c90c-4bf7-83d7-b8aad55bbde0"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = true,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"),
+                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976")
+                        },
+                        new
+                        {
+                            Id = new Guid("b59e0186-2979-4542-8b69-e6436ec34d9c"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = false,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"),
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("6be51be4-cf10-43b9-861c-e58026125ef3"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = true,
+                            IsInteresting = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"),
+                            UserId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985")
+                        },
+                        new
+                        {
+                            Id = new Guid("e60f9fc3-1c62-46fc-8307-584d2c9eec1c"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = false,
+                            IsInteresting = true,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"),
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        },
+                        new
+                        {
+                            Id = new Guid("f385b814-ef3b-47e6-be49-f5b77059b4b9"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsFunny = false,
+                            IsHelpful = true,
+                            IsInteresting = false,
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReviewId = new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"),
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Role", b =>
@@ -409,7 +689,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            ConcurrencyStamp = "ac834aee-7acc-4d8f-aebb-d21350eb74a2",
+                            ConcurrencyStamp = "ba801f00-cc7b-48be-93dc-5e5bd063784a",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -418,7 +698,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            ConcurrencyStamp = "b8d85e07-f294-4d3f-bc6b-e094e1a59a7b",
+                            ConcurrencyStamp = "296c14ab-1f86-48a5-b6ab-cfd89142ddc8",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -427,7 +707,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            ConcurrencyStamp = "ab0f3f93-411b-4cd8-a07e-0979861ea331",
+                            ConcurrencyStamp = "5ca0a30b-ec61-4933-ad0a-34c81555e913",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -436,7 +716,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            ConcurrencyStamp = "d2ad14d1-c41b-47f0-917f-b4f5932b8c6b",
+                            ConcurrencyStamp = "45f08f4a-44a1-4f24-a19d-2e5bd666db0f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -552,7 +832,81 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("UserId", "MediaId")
                         .IsUnique();
 
-                    b.ToTable("TrackedMedia");
+                    b.ToTable("TrackedMedias", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a62a6a8e-0211-4eff-a4a6-a0dc6a7a64c8"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            Status = "Watched",
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("1a9ab45f-3b57-48b6-8829-7c9e14271aca"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"),
+                            Status = "ToWatch",
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("e9fceb36-89a3-46c2-9888-0198471c2029"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            Status = "Watched",
+                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602")
+                        },
+                        new
+                        {
+                            Id = new Guid("f0de9466-968a-4e9f-b3c3-3fe09eaeb383"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"),
+                            Status = "ToWatch",
+                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8")
+                        },
+                        new
+                        {
+                            Id = new Guid("e35e01fa-d822-4d44-a528-d230c1df43e9"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            Status = "Watched",
+                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8")
+                        },
+                        new
+                        {
+                            Id = new Guid("87b92312-864b-4bd2-a52d-a5e641c8d8f7"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            Status = "Watching",
+                            UserId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985")
+                        },
+                        new
+                        {
+                            Id = new Guid("9c7128df-7b0e-49fa-b25f-c53d218b3d3e"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            Status = "OnPause",
+                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976")
+                        },
+                        new
+                        {
+                            Id = new Guid("36389164-992e-4a82-9283-4b3af2389cd6"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            Status = "Dropped",
+                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36")
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.User", b =>
@@ -644,7 +998,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "47bba5aa-3262-41bb-ab03-53b9918516fa",
+                            ConcurrencyStamp = "f4f807ff-63ca-4893-bf3f-4c70cf9e988f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "mikasa.ackerman@gmail.com",
@@ -664,7 +1018,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a2cc8b09-46fb-4209-846d-569043319b89",
+                            ConcurrencyStamp = "ca436a3f-8207-4be0-8553-0abea9214a8d",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "eren.yeager@gmail.com",
@@ -684,7 +1038,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7f6d0cc-fe1a-4bce-a9dc-c724b57468ca",
+                            ConcurrencyStamp = "a28d974f-a0c1-461b-a911-9479a7922432",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "levi.ivel@gmail.com",
@@ -703,7 +1057,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6dfc70c1-ba35-49b5-ac56-79eff8d12e16",
+                            ConcurrencyStamp = "71107a72-50c9-4f45-9b4d-d31a38a84e21",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "armin.arlert@gmail.com",
@@ -723,7 +1077,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f19e122f-35db-4dd2-a42f-a7dc751af646",
+                            ConcurrencyStamp = "f38e2100-4be3-42e1-a296-84fab0cf52c6",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "erwin.smith@gmail.com",
@@ -920,6 +1274,62 @@ namespace KixPlay_Backend.Data.Migrations
                         .HasColumnType("int");
 
                     b.ToTable("Movies", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
+                            BannerUrl = "https://i2-prod.mirror.co.uk/incoming/article20584611.ece/ALTERNATES/s1200b/1_Fractured_00_10_38_22_R.jpg",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CurrentStatus = "Aired",
+                            Description = "Driving cross-country, Ray and his wife and daughter stop at a highway rest area where his daughter falls and breaks her arm. After a frantic rush to the hospital and a clash with the check-in nurse, Ray is finally able to get her to a doctor. While the wife and daughter go downstairs for an MRI, Ray, exhausted, passes out in a chair in the lobby. Upon waking up, they have no record or knowledge of Ray's family ever being checked in.—Alan B. McElroy",
+                            Duration = new TimeSpan(0, 1, 40, 0, 0),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PreviewImageUrls = "[\r\n  \"https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABSrkPHFHFt3JHfZOtaq2Naho-W8R0qxyTgNmDuM5etrbqvn_8hBS34qp5co6gh9EeW9I61LmTGx_yGG3ytieoDgjuHdF.jpg?r=054\",\r\n  \"https://www.refinery29.com/images/8556165.jpg?crop=2000%2C1051%2Cx0%2Cy133\",\r\n  \"https://d2e111jq13me73.cloudfront.net/sites/default/files/styles/share_link_image_large/public/screenshots/csm-movie/fractured-screenshot-1.jpg?itok=eLiXNoOY\"\r\n]",
+                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/watch?v=S8obCz5NSog\"\r\n]",
+                            ReleaseDate = new DateTime(2019, 9, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Synopsis = "A couple stops at a gas station, where their 6 y.o. daughter's arm is fractured. They hurry to a hospital. Something strange is going on there. The wife and daughter go missing.",
+                            ThumbnailUrl = "https://m.media-amazon.com/images/M/MV5BZTE0MWE4NzMtMzc4Ny00NWE4LTg2OTQtZmIyNDdhZjdiZmJhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg",
+                            Title = "Fractured",
+                            MetreageType = "Long",
+                            WonAwards = 15
+                        },
+                        new
+                        {
+                            Id = new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"),
+                            BannerUrl = "https://i.ytimg.com/vi/oMSdFM12hOw/maxresdefault.jpg",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CurrentStatus = "Unreleased",
+                            Description = "From acclaimed director Robert Eggers, The Northman is an epic revenge thriller that explores how far a Viking prince will go to seek justice for his murdered father.",
+                            Duration = new TimeSpan(0, 2, 20, 0, 0),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PreviewImageUrls = "[\r\n  \"https://decider.com/wp-content/uploads/2021/12/The-Northman.jpg?quality=80\\u0026strip=all\",\r\n  \"https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/12/Alexander-Skarsgard-and-Anya-Taylor-Joy-The-Northman-social.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BYjA3NjkyZjYtN2UwZC00MWM5LTk4MDUtMzcxNDU4ZDE3OWZkXkEyXkFqcGdeQWpnYW1i._V1_QL75_UX500_CR0,0,500,281_.jpg\"\r\n]",
+                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/watch?v=oMSdFM12hOw\"\r\n]",
+                            ReleaseDate = new DateTime(2022, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Synopsis = "Written by Eggers and Icelandic poet and novelist Sjón Sigurdsson, Northman is described as a grounded story set in Iceland at the turn of the 10th century that centres on a Nordic prince who seeks revenge for the death of his father.",
+                            ThumbnailUrl = "https://pics.filmaffinity.com/The_Northman-208868927-large.jpg",
+                            Title = "The Northman",
+                            MetreageType = "Long",
+                            WonAwards = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
+                            BannerUrl = "https://s3.amazonaws.com/static.rogerebert.com/uploads/review/primary_image/reviews/the-invitation-2016/The-Invitation-2016.jpg",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CurrentStatus = "Aired",
+                            Description = "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions. A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.",
+                            Duration = new TimeSpan(0, 1, 40, 0, 0),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PreviewImageUrls = "[\r\n  \"https://static01.nyt.com/images/2016/04/08/arts/08INVITE/08INVITE-superJumbo.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BMTgzMTU1NjE4N15BMl5BanBnXkFtZTgwOTU3ODM1ODE@._V1_.jpg\",\r\n  \"http://www.moriareviews.com/rongulator/wp-content/uploads/Invitation-2015-8.jpg\"\r\n]",
+                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/watch?v=0-mp77SZ_0M\"\r\n]",
+                            ReleaseDate = new DateTime(2015, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Synopsis = "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.",
+                            ThumbnailUrl = "https://m.media-amazon.com/images/M/MV5BMTkzODMwNDkzOF5BMl5BanBnXkFtZTgwNDA4NzA1ODE@._V1_.jpg",
+                            Title = "The Invitation",
+                            MetreageType = "Long",
+                            WonAwards = 10
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Comment", b =>
