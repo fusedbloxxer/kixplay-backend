@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace KixPlay_Backend.Data.Abstractions
 {
-    public abstract class BaseEntityConfiguration<TKey, TEntity>
+    public abstract class BaseEntityConfiguration<TKey, TEntity> : IEntityTypeConfiguration<TEntity>
         where TEntity : class, IEntity<TKey>
         where TKey : IEquatable<TKey>
     {

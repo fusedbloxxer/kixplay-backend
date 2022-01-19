@@ -22,6 +22,41 @@ namespace KixPlay_Backend.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("OriginalPosterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ReviewId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OriginalPosterId");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("ReviewId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Genre", b =>
                 {
                     b.Property<Guid>("Id")
@@ -31,7 +66,12 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(5019));
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -54,7 +94,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(6259));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("CurrentStatus")
                         .IsRequired()
@@ -65,6 +105,11 @@ namespace KixPlay_Backend.Data.Migrations
 
                     b.Property<TimeSpan?>("Duration")
                         .HasColumnType("time");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<Guid?>("NextId")
                         .HasColumnType("uniqueidentifier");
@@ -117,10 +162,15 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(7633));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<Guid>("GenreId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
@@ -144,7 +194,12 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(9289));
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
@@ -174,7 +229,12 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(3535));
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<Guid?>("MediaFromId")
                         .HasColumnType("uniqueidentifier");
@@ -197,6 +257,84 @@ namespace KixPlay_Backend.Data.Migrations
                     b.ToTable("RelatedMedias");
                 });
 
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasSpoilers")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("MediaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OriginalPosterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("Recommended")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaId");
+
+                    b.HasIndex("OriginalPosterId");
+
+                    b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.ReviewOpinion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFunny")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHelpful")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsInteresting")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ReviewId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ReviewOpinion");
+                });
+
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -210,7 +348,12 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(5210));
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -232,33 +375,37 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2129be10-39df-423c-a30a-7d299a0f914b"),
-                            ConcurrencyStamp = "e1dcec39-50e2-4688-a4ea-081f6a42b0ac",
+                            Id = new Guid("9a3f7342-fd1a-41b2-8039-71644882b2fa"),
+                            ConcurrencyStamp = "e32fba3d-6d3a-424f-a385-2f058b82e8d4",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
                             NormalizedName = "CONTRIBUTOR"
                         },
                         new
                         {
-                            Id = new Guid("e1079099-9096-4b4d-8cd2-0c145216c02b"),
-                            ConcurrencyStamp = "4e77c6fa-d69d-40ae-ae24-29a431a003df",
+                            Id = new Guid("6efa8737-dc3f-4ea1-8a7e-673dc349effd"),
+                            ConcurrencyStamp = "13247d98-cd5f-4f93-8e23-e9460b858e35",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = new Guid("695bb53d-8c17-4493-ae9f-098382960615"),
-                            ConcurrencyStamp = "6e65877f-6628-45c4-94e7-f3fa0d79bc0f",
+                            Id = new Guid("88567a60-3e6d-480b-85d6-8f74f321107b"),
+                            ConcurrencyStamp = "03b52ccc-9680-49ef-aceb-70cb962f5419",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = new Guid("93e08d06-57c0-47da-949f-8186f2ae93ba"),
-                            ConcurrencyStamp = "1ac6cb3d-cbfb-4c53-b520-4ae9ae05dc68",
+                            Id = new Guid("a9a2d31f-ae0d-457d-ac8c-89767c07ebc7"),
+                            ConcurrencyStamp = "6af854f2-6066-46ee-aecf-3725b297a246",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -273,10 +420,15 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(8568));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Reliable")
                         .IsRequired()
@@ -315,7 +467,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(9230));
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -333,9 +485,10 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastUpdated")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -391,7 +544,10 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("AddedAt")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserId", "RoleId");
@@ -489,6 +645,25 @@ namespace KixPlay_Backend.Data.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Comment", b =>
+                {
+                    b.HasOne("KixPlay_Backend.Data.Entities.User", "OriginalPoster")
+                        .WithMany("Comments")
+                        .HasForeignKey("OriginalPosterId");
+
+                    b.HasOne("KixPlay_Backend.Data.Entities.Comment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("KixPlay_Backend.Data.Entities.Review", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ReviewId");
+
+                    b.Navigation("OriginalPoster");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Media", b =>
                 {
                     b.HasOne("KixPlay_Backend.Data.Entities.Media", "Next")
@@ -557,6 +732,36 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Navigation("MediaFrom");
 
                     b.Navigation("MediaTo");
+                });
+
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Review", b =>
+                {
+                    b.HasOne("KixPlay_Backend.Data.Entities.Media", "Media")
+                        .WithMany()
+                        .HasForeignKey("MediaId");
+
+                    b.HasOne("KixPlay_Backend.Data.Entities.User", "OriginalPoster")
+                        .WithMany("Reviews")
+                        .HasForeignKey("OriginalPosterId");
+
+                    b.Navigation("Media");
+
+                    b.Navigation("OriginalPoster");
+                });
+
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.ReviewOpinion", b =>
+                {
+                    b.HasOne("KixPlay_Backend.Data.Entities.Review", "Review")
+                        .WithMany("ReviewOpinions")
+                        .HasForeignKey("ReviewId");
+
+                    b.HasOne("KixPlay_Backend.Data.Entities.User", "User")
+                        .WithMany("ReviewOpinions")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Review");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.UserRole", b =>
@@ -630,6 +835,13 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Navigation("RelatedTo");
                 });
 
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Review", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("ReviewOpinions");
+                });
+
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Role", b =>
                 {
                     b.Navigation("UserRoles");
@@ -642,6 +854,12 @@ namespace KixPlay_Backend.Data.Migrations
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.User", b =>
                 {
+                    b.Navigation("Comments");
+
+                    b.Navigation("ReviewOpinions");
+
+                    b.Navigation("Reviews");
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

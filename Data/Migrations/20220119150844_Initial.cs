@@ -15,7 +15,8 @@ namespace KixPlay_Backend.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(5019))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -39,7 +40,8 @@ namespace KixPlay_Backend.Data.Migrations
                     PreviewVideoUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreviousId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     NextId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(6259))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -61,7 +63,8 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(5210)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -81,7 +84,8 @@ namespace KixPlay_Backend.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThumbnailUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reliable = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(8568))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -95,9 +99,9 @@ namespace KixPlay_Backend.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(9230)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -125,7 +129,8 @@ namespace KixPlay_Backend.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(7633))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -152,7 +157,8 @@ namespace KixPlay_Backend.Data.Migrations
                     Relationship = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MediaFromId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     MediaToId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(3535))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -198,7 +204,8 @@ namespace KixPlay_Backend.Data.Migrations
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(9289))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -215,6 +222,36 @@ namespace KixPlay_Backend.Data.Migrations
                         principalTable: "Sources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Review",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rating = table.Column<float>(type: "real", nullable: false),
+                    HasSpoilers = table.Column<bool>(type: "bit", nullable: false),
+                    Recommended = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Review_Medias_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Medias",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Review_Users_OriginalPosterId",
+                        column: x => x.OriginalPosterId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -264,7 +301,8 @@ namespace KixPlay_Backend.Data.Migrations
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -303,16 +341,91 @@ namespace KixPlay_Backend.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comment_Comment_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Comment",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comment_Review_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Review",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comment_Users_OriginalPosterId",
+                        column: x => x.OriginalPosterId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReviewOpinion",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsFunny = table.Column<bool>(type: "bit", nullable: false),
+                    IsHelpful = table.Column<bool>(type: "bit", nullable: false),
+                    IsInteresting = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReviewOpinion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReviewOpinion_Review_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Review",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ReviewOpinion_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("2129be10-39df-423c-a30a-7d299a0f914b"), "e1dcec39-50e2-4688-a4ea-081f6a42b0ac", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("695bb53d-8c17-4493-ae9f-098382960615"), "6e65877f-6628-45c4-94e7-f3fa0d79bc0f", "Member", "MEMBER" },
-                    { new Guid("93e08d06-57c0-47da-949f-8186f2ae93ba"), "1ac6cb3d-cbfb-4c53-b520-4ae9ae05dc68", "Admin", "ADMIN" },
-                    { new Guid("e1079099-9096-4b4d-8cd2-0c145216c02b"), "4e77c6fa-d69d-40ae-ae24-29a431a003df", "Moderator", "MODERATOR" }
+                    { new Guid("6efa8737-dc3f-4ea1-8a7e-673dc349effd"), "13247d98-cd5f-4f93-8e23-e9460b858e35", "Moderator", "MODERATOR" },
+                    { new Guid("88567a60-3e6d-480b-85d6-8f74f321107b"), "03b52ccc-9680-49ef-aceb-70cb962f5419", "Member", "MEMBER" },
+                    { new Guid("9a3f7342-fd1a-41b2-8039-71644882b2fa"), "e32fba3d-6d3a-424f-a385-2f058b82e8d4", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("a9a2d31f-ae0d-457d-ac8c-89767c07ebc7"), "6af854f2-6066-46ee-aecf-3725b297a246", "Admin", "ADMIN" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_OriginalPosterId",
+                table: "Comment",
+                column: "OriginalPosterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ParentId",
+                table: "Comment",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ReviewId",
+                table: "Comment",
+                column: "ReviewId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MediaInGenre_GenreId_MediaId",
@@ -362,6 +475,26 @@ namespace KixPlay_Backend.Data.Migrations
                 column: "MediaToId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Review_MediaId",
+                table: "Review",
+                column: "MediaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_OriginalPosterId",
+                table: "Review",
+                column: "OriginalPosterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewOpinion_ReviewId",
+                table: "ReviewOpinion",
+                column: "ReviewId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewOpinion_UserId",
+                table: "ReviewOpinion",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
                 table: "RoleClaims",
                 column: "RoleId");
@@ -404,6 +537,9 @@ namespace KixPlay_Backend.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
                 name: "MediaInGenre");
 
             migrationBuilder.DropTable(
@@ -411,6 +547,9 @@ namespace KixPlay_Backend.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "RelatedMedias");
+
+            migrationBuilder.DropTable(
+                name: "ReviewOpinion");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
@@ -434,10 +573,13 @@ namespace KixPlay_Backend.Data.Migrations
                 name: "Sources");
 
             migrationBuilder.DropTable(
-                name: "Medias");
+                name: "Review");
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Medias");
 
             migrationBuilder.DropTable(
                 name: "Users");
