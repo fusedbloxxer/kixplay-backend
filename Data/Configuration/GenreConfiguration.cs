@@ -27,5 +27,9 @@ namespace KixPlay_Backend.Data.Configuration
         protected override void ConfigureTable(EntityTypeBuilder<Genre> builder)
         {
         }
+
+        protected override void ConfigureSeed(EntityTypeBuilder<Genre> builder)
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using KixPlay_Backend.Data.Entities;
+﻿using KixPlay_Backend.Data.Abstractions;
+using KixPlay_Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
@@ -77,6 +78,10 @@ namespace KixPlay_Backend.Data.Configuration
                 .HasOne(media => media.Previous)
                 .WithOne()
                 .HasPrincipalKey<Media>(media => media.Id);
+        }
+
+        protected override void ConfigureSeed(EntityTypeBuilder<Media> builder)
+        {
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<Media> builder)

@@ -64,7 +64,6 @@ namespace KixPlay_Backend.Data
 
         private static void SeedWithData(ModelBuilder builder)
         {
-            builder.Entity<Role>().HasData(Role.Roles);
         }
     }
 }

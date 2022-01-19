@@ -1,4 +1,5 @@
-﻿using KixPlay_Backend.Data.Entities;
+﻿using KixPlay_Backend.Data.Abstractions;
+using KixPlay_Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace KixPlay_Backend.Data.Configuration
@@ -30,6 +31,10 @@ namespace KixPlay_Backend.Data.Configuration
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<Source> builder)
+        {
+        }
+
+        protected override void ConfigureSeed(EntityTypeBuilder<Source> builder)
         {
         }
     }

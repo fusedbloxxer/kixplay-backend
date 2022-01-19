@@ -1,4 +1,5 @@
-﻿using KixPlay_Backend.Data.Entities;
+﻿using KixPlay_Backend.Data.Abstractions;
+using KixPlay_Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
