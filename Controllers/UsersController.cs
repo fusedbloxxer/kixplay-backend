@@ -6,6 +6,7 @@ using KixPlay_Backend.Services.Interfaces;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace KixPlay_Backend.Controllers
 {
@@ -17,15 +18,19 @@ namespace KixPlay_Backend.Controllers
         private readonly ITokenService _tokenService;
 
         private readonly IUserRepository _userRepository;
+        
+        private readonly ILogger<UsersController> _logger;
 
         public UsersController(
             IMapper mapper,
             ITokenService tokenService,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            ILogger<UsersController> logger
         )
         {
             _userRepository = userRepository;
             _tokenService = tokenService;
+            _logger = logger;
             _mapper = mapper;
         }
 
@@ -33,226 +38,242 @@ namespace KixPlay_Backend.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllUsers()
         {
-            var usersResult = await _userRepository.GetAllAsync();
-
-            if (!usersResult.IsSuccessful)
+            try
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponse
-                {
-                    Errors = usersResult.Errors,
-                });
+                var users = await _userRepository.GetAllAsync();
+
+                var usersDto = _mapper.ProjectTo<UserGetResponseDto>(users.AsQueryable());
+
+                return Ok(usersDto);
             }
-
-            var usersDto = _mapper.ProjectTo<UserGetResponseDto>(usersResult.Result.AsQueryable());
-
-            return Ok(usersDto);
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not retrieve users. Exception: {Error}", ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
+            }
         }
 
         [AllowAnonymous]
         [HttpGet("{userId}")]
         public async Task<ActionResult> GetUserById([FromRoute] Guid userId)
         {
-            var userResult = await _userRepository.GetByIdAsync(userId);
-
-            if (!userResult.IsSuccessful)
+            try
             {
-                return BadRequest(new ErrorResponse
-                {
-                    Errors = userResult.Errors
-                });
-            }
+                var user = await _userRepository.GetByIdAsync(userId);
 
-            return Ok(_mapper.Map<UserGetResponseDto>(userResult.Result));
+                if (user == null)
+                {
+                    return NotFound(new ErrorResponse($"User {userId} not found."));
+                }
+
+                return Ok(_mapper.Map<UserGetResponseDto>(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not find user {userId}. Exception: {Error}", userId, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
+            }
         }
 
         [AllowAnonymous]
         [HttpGet("findBy")]
         public async Task<ActionResult> GetUser([FromQuery] Guid userId, [FromQuery] string email, [FromQuery] string userName)
         {
-            int countParams = 0;
-
-            foreach (var param in new List<string> { email, userName })
+            try
             {
-                if (!string.IsNullOrWhiteSpace(param))
+                int countParams = 0;
+
+                foreach (var param in new List<string> { email, userName })
+                {
+                    if (!string.IsNullOrWhiteSpace(param))
+                    {
+                        ++countParams;
+                    }
+                }
+
+                if (userId != Guid.Empty)
                 {
                     ++countParams;
                 }
-            }
 
-            if (userId != Guid.Empty)
-            {
-                ++countParams;
-            }
-
-            if (countParams > 1)
-            {
-                return BadRequest(new ErrorResponse("You can search a user only by either userId, email or username."));
-            }
-
-            var usersResult = await _userRepository.GetAllAsync();
-
-            if (!usersResult.IsSuccessful)
-            {
-                return BadRequest(new ErrorResponse
+                if (countParams > 1)
                 {
-                    Errors = usersResult.Errors,
+                    return BadRequest(new ErrorResponse("You can search a user only by either userId, email or username."));
+                }
+
+                var users = await _userRepository.GetAllAsync();
+
+                var user = users.FirstOrDefault(user =>
+                {
+                    bool isMatch = false;
+
+                    isMatch |= !string.IsNullOrWhiteSpace(userName)
+                        && user.NormalizedUserName.Equals(userName.ToUpperInvariant());
+
+                    isMatch |= !string.IsNullOrWhiteSpace(email)
+                        && user.NormalizedEmail.Equals(email.ToUpperInvariant());
+
+                    isMatch |= userId != Guid.Empty
+                        && user.Id.Equals(userId);
+
+                    return isMatch;
                 });
+
+                if (user == null)
+                {
+                    return NotFound(new ErrorResponse("No user was found with the provided information."));
+                }
+
+                return Ok(_mapper.Map<UserGetResponseDto>(user));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not find user. Id: {UserId}, Email: {Email}, Username: {Username}. Exception: {Error}", userId, email, userName, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
             }
 
-            var user = usersResult.Result.FirstOrDefault(user =>
-            {
-                bool isMatch = false;
-
-                isMatch |= !string.IsNullOrWhiteSpace(userName)
-                    && user.NormalizedUserName.Equals(userName.ToUpperInvariant());
-
-                isMatch |= !string.IsNullOrWhiteSpace(email)
-                    && user.NormalizedEmail.Equals(email.ToUpperInvariant());
-
-                isMatch |= userId != Guid.Empty
-                    && user.Id.Equals(userId);
-
-                return isMatch;
-            });
-
-            if (user == null)
-            {
-                return NotFound(new ErrorResponse("No user was found with the provided information."));
-            }
-
-            return Ok(_mapper.Map<UserGetResponseDto>(user));
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> CreateUser([FromBody] UserRegisterRequestDto userRegisterDto)
         {
-            var createResult = await _userRepository.CreateWithOptions(
-                _mapper.Map<UserRegisterRequestDto, User>(userRegisterDto),
-                new Services.Repositories.Implementations.UserOptions
-                {
-                    Password = userRegisterDto.Password,
-                    Roles = new List<string> {
-                        "Member",
+            try
+            {
+                var createResult = await _userRepository.CreateWithOptionsAsync(
+                    _mapper.Map<UserRegisterRequestDto, User>(userRegisterDto),
+                    new Services.Repositories.Implementations.UserOptions
+                    {
+                        Password = userRegisterDto.Password,
+                        Roles = new List<string> {
+                            "Member",
+                        }
                     }
+                );
+
+                if (!createResult)
+                {
+                    return BadRequest(new ErrorResponse("Invalid user registration."));
                 }
-            );
 
-            if (!createResult.IsSuccessful)
-            {
-                return BadRequest(new ErrorResponse
+                var user = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
+
+                if (user == null)
                 {
-                    Errors = createResult.Errors
-                });
+                    return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Could not find recently created user."));
+                }
+
+                var token = await _tokenService.CreateToken(user);
+
+                return StatusCode(StatusCodes.Status201Created, new UserRegisterResponseDto { Token = token, });
             }
-
-            var userResult = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
-
-            if (!userResult.IsSuccessful)
+            catch (Exception ex)
             {
-                return NotFound(new ErrorResponse
-                {
-                    Errors = userResult.Errors
-                });
+                _logger.LogError("Could not register user with options {Options}. Exception: {Error}", userRegisterDto, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
             }
-
-            var token = await _tokenService.CreateToken(userResult.Result);
-
-            return StatusCode(StatusCodes.Status201Created, new UserRegisterResponseDto
-            {
-                Token = token,
-            });
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> LoginUser([FromBody] UserLoginRequestDto userLoginDto)
         {
-            var user = await _userRepository.GetByEmailAsync(userLoginDto.Email);
-
-            if (!user.IsSuccessful)
+            try
             {
-                return NotFound(new ErrorResponse($"The user with the email {userLoginDto.Email} does not exist."));
-            }
+                var user = await _userRepository.GetByEmailAsync(userLoginDto.Email);
 
-            var signInResult = await _userRepository.IsUserLoginValid(
-                user.Result,
-                userLoginDto.Password
-            );
-
-            if (!signInResult.IsSuccessful)
-            {
-                return BadRequest(new ErrorResponse
+                if (user == null)
                 {
-                    Errors = signInResult.Errors
-                });
+                    return NotFound(new ErrorResponse($"The user with the email {userLoginDto.Email} does not exist."));
+                }
+
+                var signInResult = await _userRepository.CanUserLoginAsync(
+                    user,
+                    userLoginDto.Password
+                );
+
+                if (!signInResult)
+                {
+                    return BadRequest(new ErrorResponse("Invalid user credentials"));
+                }
+
+                var token = await _tokenService.CreateToken(user);
+
+                return Ok(new UserLoginResponseDto { Token = token, });
             }
-
-            var token = await _tokenService.CreateToken(user.Result);
-
-            return Ok(new UserLoginResponseDto
+            catch (Exception ex)
             {
-                Token = token,
-            });
+                _logger.LogError("Could not login provided user {LoginDto}. Exception: {Error}", userLoginDto, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
+            }
         }
 
         [Authorize(Policy = "IsSameUser")]
         [HttpDelete("{userId}/remove")]
         public async Task<ActionResult> DeleteUser([FromRoute] Guid userId)
         {
-            if (userId == Guid.Empty)
+            try
             {
-                return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
-            }
-
-            var user = await _userRepository.GetByIdAsync(userId);
-
-            if (!user.IsSuccessful)
-            {
-                return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
-            }
-
-            var deleteResult = await _userRepository.DeleteAsync(userId);
-
-            if (!deleteResult.IsSuccessful)
-            {
-                return BadRequest(new ErrorResponse
+                if (userId == Guid.Empty)
                 {
-                    Errors = deleteResult.Errors,
-                });
-            }
+                    return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
+                }
 
-            return Ok();
+                var user = await _userRepository.GetByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
+                }
+
+                var deleteResult = await _userRepository.DeleteAsync(userId);
+
+                if (!deleteResult)
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse($"Could not delete user {userId}."));
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not delete user {UserId}. Exception: {Error}", userId, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
+            }
         }
 
         [Authorize(Policy = "IsSameUser")]
         [HttpPut("{userId}/update")]
         public async Task<ActionResult> UpdateUser([FromRoute] Guid userId, [FromBody] UserUpdateRequestDto userUpdateDto)
         {
-            if (userId == Guid.Empty)
-                return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
-
-            var userResult = await _userRepository.GetByIdAsync(userId);
-            var user = userResult.Result;
-
-            if (!userResult.IsSuccessful)
+            try
             {
-                return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
-            }
+                if (userId == Guid.Empty)
+                    return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
 
-            var updatedUser = _mapper.Map(userUpdateDto, user);
+                var user = await _userRepository.GetByIdAsync(userId);
 
-            var updateResult = await _userRepository.UpdateAsync(updatedUser);
-
-            if (!updateResult.IsSuccessful)
-            {
-                return BadRequest(new ErrorResponse()
+                if (user == null)
                 {
-                    Errors = updateResult.Errors
-                });
-            }
+                    return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
+                }
 
-            return NoContent();
+                var updatedUser = _mapper.Map(userUpdateDto, user);
+
+                var updateResult = await _userRepository.UpdateAsync(updatedUser);
+
+                if (!updateResult)
+                {
+                    return BadRequest(new ErrorResponse($"Could not update the user with id {userId}."));
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not update user {UserId} using provided info {UpdateDto}. Exception: {Error}", userId, userUpdateDto, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
+            }
         }
     }
 }

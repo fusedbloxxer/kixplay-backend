@@ -7,8 +7,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 {
     public class UserRoleRepository : IUserRoleRepository
     {
-        private readonly IMapper _mapper;
-
+        private readonly ILogger<UserRoleRepository> _logger;
         private readonly UserManager<User> _userManager;
 
         public IUserRepository UserRepository { get; }
@@ -16,81 +15,88 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         public IRoleRepository RoleRepository { get; }
 
         public UserRoleRepository(
+            ILogger<UserRoleRepository> logger,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
-            UserManager<User> userManager,
-            IMapper mapper
+            UserManager<User> userManager
         ) {
             UserRepository = userRepository;
             RoleRepository = roleRepository;
             _userManager = userManager;
-            _mapper = mapper;
+            _logger = logger;
         }
 
-        public async Task<IOperationResult<bool>> GrantRolesToUser(Guid userId, IEnumerable<string> roleNames)
+        public async Task<bool> GrantRolesToUser(Guid userId, IEnumerable<string> roleNames)
         {
             var rolesExistResult = await RoleRepository.RolesExistAsync(roleNames);
 
-            if (!rolesExistResult.IsSuccessful)
+            if (!rolesExistResult)
             {
-                return rolesExistResult;
+                _logger.LogError("Could not grant roles {RoleNames} to user with id {Id}.", roleNames, userId);
+                return false;
             }
 
-            var userExistsResult = await UserRepository.GetByIdAsync(userId);
+            var user = await UserRepository.GetByIdAsync(userId);
 
-            if (!userExistsResult.IsSuccessful)
+            if (user == null)
             {
-                return new OperationResult<bool>(userExistsResult.Errors);
+                _logger.LogError("Could not grant roles {RoleNames} to user with id {Id}.", roleNames, userId);
+                return false;
             }
 
-            var grantRolesResult = await _userManager.AddToRolesAsync(userExistsResult.Result, roleNames);
+            var grantRolesResult = await _userManager.AddToRolesAsync(user, roleNames);
 
             if (!grantRolesResult.Succeeded)
             {
-                return _mapper.Map<OperationResult<bool>>(grantRolesResult);
+                _logger.LogError("Could not grant roles {RoleNames} to user with id {Id}. IdentityErrors: {IdentityErrors}", roleNames, userId, grantRolesResult.Errors);
+                return false;
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> RevokeRolesFromUser(Guid userId, IEnumerable<string> roleNames)
+        public async Task<bool> RevokeRolesFromUser(Guid userId, IEnumerable<string> roleNames)
         {
-            var rolesExistResult = await RoleRepository.RolesExistAsync(roleNames);
+            var rolesExist = await RoleRepository.RolesExistAsync(roleNames);
 
-            if (!rolesExistResult.IsSuccessful)
+            if (!rolesExist)
             {
-                return rolesExistResult;
+                _logger.LogError("Could not revoke roles {RoleNames} from user with id {Id}.", roleNames, userId);
+                return false;
             }
 
-            var userExistsResult = await UserRepository.GetByIdAsync(userId);
+            var user = await UserRepository.GetByIdAsync(userId);
 
-            if (!userExistsResult.IsSuccessful)
+            if (user == null)
             {
-                return new OperationResult<bool>(userExistsResult.Errors);
+                _logger.LogError("Could not revoke roles {RoleNames} from user with id {Id}.", roleNames, userId);
+                return false;
             }
 
-            var grantRolesResult = await _userManager.RemoveFromRolesAsync(userExistsResult.Result, roleNames);
+            var revokeRolesResult = await _userManager.RemoveFromRolesAsync(user, roleNames);
 
-            if (!grantRolesResult.Succeeded)
+            if (!revokeRolesResult.Succeeded)
             {
-                return _mapper.Map<OperationResult<bool>>(grantRolesResult);
+                _logger.LogError("Could not grant roles {RoleNames} to user with id {Id}. IdentityErrors: {IdentityErrors}", roleNames, userId, revokeRolesResult.Errors);
+                return false;
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<IEnumerable<Role>>> GetRolesFromUser(Guid userId)
+        public async Task<IEnumerable<Role>> GetRolesFromUser(Guid userId)
         {
-            var userGetResult = await UserRepository.GetByIdAsync(userId);
+            var user = await UserRepository.GetByIdAsync(userId);
         
-            if (!userGetResult.IsSuccessful)
+            if (user == null)
             {
-                return new OperationResult<IEnumerable<Role>>(userGetResult.Errors);
+                _logger.LogError("Could not retrieve roles for user with id {Id}.", userId);
+                throw new Exception($"Could not retrieve roles for user {userId}. User was not found");
             }
 
-            var userRoles = await _userManager.GetRolesAsync(userGetResult.Result);
+            var roleNames = await _userManager.GetRolesAsync(user);
 
-            var rolesResult = await RoleRepository.GetRolesByNames(userRoles);
+            var rolesResult = await RoleRepository.GetRolesByNamesAsync(roleNames);
 
             return rolesResult;
         }

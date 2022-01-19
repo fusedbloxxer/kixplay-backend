@@ -6,6 +6,7 @@ using KixPlay_Backend.Services.Interfaces;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace KixPlay_Backend.Controllers
 {
@@ -18,56 +19,62 @@ namespace KixPlay_Backend.Controllers
         
         private readonly IUserRepository _userRepository;
 
+        private readonly ILogger<AdminsController> _logger;
+
         public AdminsController(
             IMapper mapper,
             ITokenService tokenService,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            ILogger<AdminsController> logger
         ) {
             _mapper = mapper;
             _tokenService = tokenService;
             _userRepository = userRepository;
+            _logger = logger;
         }
 
         [HttpPost("create")]
         public async Task<ActionResult> Create([FromBody] UserRegisterRequestDto userRegisterDto)
         {
-            var createAdminResult = await _userRepository.CreateWithOptions(
-                _mapper.Map<User>(userRegisterDto),
-                new Services.Repositories.Implementations.UserOptions
-                {
-                    Password = userRegisterDto.Password,
-                    Roles = new List<string>()
+            try
+            {
+                var createAdminResult = await _userRepository.CreateWithOptionsAsync(
+                    _mapper.Map<User>(userRegisterDto),
+                    new Services.Repositories.Implementations.UserOptions
                     {
-                        "Admin",
-                        "Member"
-                    },
+                        Password = userRegisterDto.Password,
+                        Roles = new List<string>()
+                        {
+                            "Admin",
+                            "Member"
+                        },
+                    }
+                 );
+
+                if (!createAdminResult)
+                {
+                    return BadRequest(new ErrorResponse("Invalid admin creation request."));
                 }
-            );
 
-            if (!createAdminResult.IsSuccessful)
-            {
-                return BadRequest(new ErrorResponse
+                var findAdminResult = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
+
+                if (findAdminResult == null)
                 {
-                    Errors = createAdminResult.Errors,
+                    return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("Could not find the recent admin created."));
+                }
+
+                var token = await _tokenService.CreateToken(findAdminResult);
+
+                return Ok(new UserRegisterResponseDto
+                {
+                    Token = token,
                 });
             }
-
-            var findAdminResult = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
-
-            if (!findAdminResult.IsSuccessful)
+            catch (Exception ex)
             {
-                return BadRequest(new ErrorResponse
-                {
-                    Errors = findAdminResult.Errors,
-                });
+                _logger.LogError("Could not create admin from info {AdminRequest}. Exception: {Error}", userRegisterDto, ex);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error has occurred."));
             }
-
-            var token = await _tokenService.CreateToken(findAdminResult.Result);
-
-            return Ok(new UserRegisterResponseDto
-            {
-                Token = token,
-            });
         }
     }
 }

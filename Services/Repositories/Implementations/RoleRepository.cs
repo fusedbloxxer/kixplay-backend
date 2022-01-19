@@ -3,105 +3,107 @@ using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace KixPlay_Backend.Services.Repositories.Implementations
 {
     public class RoleRepository : IRoleRepository
     {
-        private readonly IMapper _mapper;
-
         private readonly RoleManager<Role> _roleManager;
 
+        private readonly ILogger<RoleRepository> _logger;
+
         public RoleRepository(
-            RoleManager<Role> roleManager,
-            IMapper mapper
-        )
-        {
+            ILogger<RoleRepository> logger,
+            RoleManager<Role> roleManager
+        ) {
+            _logger = logger;
             _roleManager = roleManager;
-            _mapper = mapper;
         }
 
-        public async Task<IOperationResult<IEnumerable<Role>>> GetAllAsync()
+        public async Task<IEnumerable<Role>> GetAllAsync()
         {
-            var roles = await _roleManager.Roles.ToListAsync();
-
-            return new OperationResult<IEnumerable<Role>>(roles);
+            return await _roleManager.Roles.ToListAsync();
         }
 
-        public async Task<IOperationResult<bool>> CreateAsync(Role role)
+        public async Task<bool> CreateAsync(Role role)
         {
             var roleCreateResult = await _roleManager.CreateAsync(role);
 
-            return _mapper.Map<OperationResult<bool>>(roleCreateResult);
-        }
-
-        public async Task<IOperationResult<bool>> DeleteAsync(Guid roleId)
-        {
-            var getRoleResult = await GetByIdAsync(roleId);
-
-            if (!getRoleResult.IsSuccessful)
+            if (!roleCreateResult.Succeeded)
             {
-                return new OperationResult<bool>(getRoleResult.Errors);
+                _logger.LogError("Could not create role. IdentityError occurred: {IdentityErrors}", roleCreateResult.Errors);
+                return false;
             }
 
-            var deleteRoleResult = await _roleManager.DeleteAsync(getRoleResult.Result);
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(Guid roleId)
+        {
+            var role = await GetByIdAsync(roleId);
+
+            if (role == null)
+            {
+                _logger.LogError("Could not delete role {RoleId}.", roleId);
+                return false;
+            }
+
+            var deleteRoleResult = await _roleManager.DeleteAsync(role);
 
             if (!deleteRoleResult.Succeeded)
             {
-                return _mapper.Map<OperationResult<bool>>(deleteRoleResult);
+                _logger.LogError("Could not delete role {RoleId}.", roleId);
+                return false;
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> ExistsAsync(Guid roleId)
-        {
-            var role = await _roleManager.FindByIdAsync(roleId.ToString());
-
-            return new OperationResult<bool>(role != null);
-        }
-
-        public async Task<IOperationResult<Role>> GetByIdAsync(Guid roleId)
+        public async Task<Role> GetByIdAsync(Guid roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId.ToString());
 
             if (role == null)
             {
-                return new OperationResult<Role>($"The role {roleId} does not exist.");
+                _logger.LogError("Could not find role {RoleId}.", roleId);
+                return null;
             }
 
-            return new OperationResult<Role>(role);
+            return role;
         }
 
-        public async Task<IOperationResult<bool>> UpdateAsync(Role role)
+        public async Task<bool> UpdateAsync(Role role)
         {
             var roleUpdateResult = await _roleManager.UpdateAsync(role);
 
             if (!roleUpdateResult.Succeeded)
             {
-                return _mapper.Map<OperationResult<bool>>(roleUpdateResult);
+                _logger.LogError("Could not update role: {Role}. IdentityError occurred: {IdentityErrors}", role, roleUpdateResult.Errors);
+                return false;
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<Role>> GetByNameAsync(string roleName)
+        public async Task<Role> GetByNameAsync(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
 
             if (role == null)
             {
-                return new OperationResult<Role>($"The role with the name {roleName} does not exist.");
+                _logger.LogError("Could not find role with name {RoleName}.", roleName);
+                return null;
             }
 
-            return new OperationResult<Role>(role);
+            return role;
         }
 
-        public async Task<IOperationResult<bool>> RolesExistAsync(IEnumerable<string> roleNames)
+        public async Task<bool> RolesExistAsync(IEnumerable<string> roleNames)
         {
             if (roleNames == null || !roleNames.Any())
             {
-                return new OperationResult<bool>($"No role names were specified.");
+                throw new ArgumentNullException(nameof(roleNames));
             }
 
             foreach (var roleName in roleNames)
@@ -110,18 +112,19 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
                 if (!roleExists)
                 {
-                    return new OperationResult<bool>($"The role with the name {roleName} does not exist.");
+                    _logger.LogError("Could not find role with name {RoleName}.", roleName);
+                    return false;
                 }
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<IEnumerable<Role>>> GetRolesByNames(IEnumerable<string> roleNames)
+        public async Task <IEnumerable<Role>> GetRolesByNamesAsync(IEnumerable<string> roleNames)
         {
             if (roleNames == null || !roleNames.Any())
             {
-                return new OperationResult<IEnumerable<Role>>($"No role names were specified.");
+                throw new ArgumentNullException(nameof(roleNames));
             }
 
             List<Role> roles = new(roleNames.Count());
@@ -132,13 +135,24 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             
                 if (role == null)
                 {
-                    return new OperationResult<IEnumerable<Role>>($"Role with name {roleName} does not exist.");
+                    _logger.LogError("Could not find role with name {RoleName}.", roleName);
+                    continue;
                 }
 
                 roles.Add(role);
             }
 
-            return new OperationResult<IEnumerable<Role>>(roles);
+            return roles;
+        }
+
+        public async Task<IEnumerable<Role>> FindAsync(Expression<Func<Role, bool>> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            
+            return await _roleManager.Roles.Where(predicate).ToListAsync();
         }
     }
 }

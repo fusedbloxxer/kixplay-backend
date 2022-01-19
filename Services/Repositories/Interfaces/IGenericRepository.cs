@@ -1,4 +1,5 @@
 ﻿using KixPlay_Backend.Data.Abstractions;
+using System.Linq.Expressions;
 
 namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
@@ -6,16 +7,16 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
         where TKey : IEquatable<TKey>
         where TEntity : IEntity<TKey>
     {
-        Task<IOperationResult<IEnumerable<TEntity>>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync();
         
-        Task<IOperationResult<TEntity>> GetByIdAsync(TKey id);
+        Task<TEntity> GetByIdAsync(TKey id);
         
-        Task<IOperationResult<bool>> ExistsAsync(TKey id);
+        Task<bool> CreateAsync(TEntity entity);
+        
+        Task<bool> UpdateAsync(TEntity entity);
 
-        Task<IOperationResult<bool>> DeleteAsync(TKey id);
-        
-        Task<IOperationResult<bool>> CreateAsync(TEntity entity);
-        
-        Task<IOperationResult<bool>> UpdateAsync(TEntity entity);
+        Task<bool> DeleteAsync(TKey id);
+
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

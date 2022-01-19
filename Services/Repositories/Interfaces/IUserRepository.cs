@@ -5,14 +5,14 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
     public interface IUserRepository : IGenericRepository<Guid, User>
     {
-        Task<IOperationResult<User>> GetByEmailAsync(string email);
+        Task<User> GetByEmailAsync(string email);
 
-        Task<IOperationResult<User>> GetByUsernameAsync(string username);
+        Task<User> GetByUsernameAsync(string username);
 
-        Task<IOperationResult<bool>> IsUserLoginValid(User user, string password);
+        Task<bool> CanUserLoginAsync(User user, string password);
 
-        Task<IOperationResult<bool>> CreateWithOptions(User user, UserOptions options);
+        Task<bool> CreateWithPasswordAsync(User user, string password);
 
-        Task<IOperationResult<bool>> CreateWithPasswordAsync(User user, string password);
+        Task<bool> CreateWithOptionsAsync(User user, UserOptions options);
     }
 }

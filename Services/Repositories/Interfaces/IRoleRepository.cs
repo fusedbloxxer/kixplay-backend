@@ -4,10 +4,10 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
     public interface IRoleRepository : IGenericRepository<Guid, Role>
     {
-        public Task<IOperationResult<Role>> GetByNameAsync(string roleName);
+        public Task<Role> GetByNameAsync(string roleName);
 
-        public Task<IOperationResult<bool>> RolesExistAsync(IEnumerable<string> roleNames);
+        public Task<bool> RolesExistAsync(IEnumerable<string> roleNames);
 
-        public Task<IOperationResult<IEnumerable<Role>>> GetRolesByNames(IEnumerable<string> roleNames);
+        public Task<IEnumerable<Role>> GetRolesByNamesAsync(IEnumerable<string> roleNames);
     }
 }

@@ -3,14 +3,15 @@ using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace KixPlay_Backend.Services.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IMapper _mapper;
-        
         private readonly UserManager<User> _userManager;
+
+        private readonly ILogger<UserRepository> _logger;
         
         private readonly IRoleRepository _roleRepository;
 
@@ -18,150 +19,169 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
         public UserRepository(
             SignInManager<User> signInManager,
+            ILogger<UserRepository> logger,
             IRoleRepository roleRepository,
-            UserManager<User> userManager,
-            IMapper mapper
+            UserManager<User> userManager
         ) {
             _roleRepository = roleRepository;
             _signInManager = signInManager;
             _userManager = userManager;
-            _mapper = mapper;
+            _logger = logger;
         }
 
-        public async Task<IOperationResult<bool>> CreateAsync(User user)
+        public async Task<bool> CreateAsync(User user)
         {
             user.Id = Guid.NewGuid();
 
-            var result = await _userManager.CreateAsync(user);
+            var userCreateResult = await _userManager.CreateAsync(user);
 
-            return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+            if (!userCreateResult.Succeeded)
+            {
+                _logger.LogError("Could not create user {User}. IdentityErrors occurred: {IdentityErrors}", user, userCreateResult.Errors);
+                return false;
+            }
+
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> CreateWithPasswordAsync(User user, string pass)
+        public async Task<bool> CreateWithPasswordAsync(User user, string pass)
         {
             user.Id = Guid.NewGuid();
 
-            var result = await _userManager.CreateAsync(user, pass);
+            var userCreateResult = await _userManager.CreateAsync(user, pass);
 
-            return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+            if (!userCreateResult.Succeeded)
+            {
+                _logger.LogError("Could not create user {User}. IdentityErrors occurred: {IdentityErrors}", user, userCreateResult.Errors);
+                return false;
+            }
+
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> CreateWithOptions(User user, UserOptions options)
+        public async Task<bool> CreateWithOptionsAsync(User user, UserOptions options)
         {
             // Check the validity of the requested roles
             var rolesExistResult = await _roleRepository.RolesExistAsync(options.Roles);
 
-            if (!rolesExistResult.IsSuccessful)
+            if (!rolesExistResult)
             {
-                return rolesExistResult;
+                _logger.LogError("Could not create user {User} with options {Options}.", user, options);
+                return false;
             }
 
-            IdentityResult result;
+            IdentityResult userCreateResult;
 
             user.Id = Guid.NewGuid();
 
             // Create the user with or without password
             if (!string.IsNullOrEmpty(options.Password))
             {
-                result = await _userManager.CreateAsync(user, options.Password);
-
-                if (!result.Succeeded)
-                {
-                    return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
-                }
+                userCreateResult = await _userManager.CreateAsync(user, options.Password);
             }
             else
             {
-                result = await _userManager.CreateAsync(user);
+                userCreateResult = await _userManager.CreateAsync(user);
             }
 
-            if (!result.Succeeded)
+            if (!userCreateResult.Succeeded)
             {
-                return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+                _logger.LogError("Could not create user {User} with options {Options}. IdentityErrors occured: {IdentityErrors}", user, options, userCreateResult.Errors);
+                return false;
             }
 
             // Add the requested roles to the user
             if (options.Roles != null && options.Roles.Any())
             {
-                result = await _userManager.AddToRolesAsync(
+                userCreateResult = await _userManager.AddToRolesAsync(
                     user,
                     options.Roles
                 );
 
-                if (!result.Succeeded)
+                if (!userCreateResult.Succeeded)
                 {
-                    return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+                    _logger.LogError("Could not create user {User} with options {Options}. IdentityErrors occured: {IdentityErrors}", user, options, userCreateResult.Errors);
+                    return false;
                 }
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
         
             if (user == null)
             {
-                return new OperationResult<bool>($"User with id {id} does not exist.");
+                _logger.LogError("Could not find user with id {UserId}", id);
+                return false;
             }
 
-            var result = await _userManager.DeleteAsync(user);
+            var userDeleteResult = await _userManager.DeleteAsync(user);
 
-            return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+            if (!userDeleteResult.Succeeded)
+            {
+                _logger.LogError("Could not delete user {User} with id {UserId}. IdentityErrors occured: {IdentityErrors}", user, id, userDeleteResult.Errors);
+                return false;
+            }
+
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> ExistsAsync(Guid id)
-        {
-            var user = await _userManager.FindByIdAsync(id.ToString());
-
-            return new OperationResult<bool>(user != null);
-        }
-
-        public async Task<IOperationResult<User>> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user == null)
             {
-                return new OperationResult<User>($"User with id {id} does not exist.");
+                _logger.LogError("Could not find user with id {UserId}", id);
+                return null;
             }
 
-            return new OperationResult<User>(user);
+            return user;
         }
 
-        public async Task<IOperationResult<User>> GetByUsernameAsync(string username)
+        public async Task<User> GetByUsernameAsync(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
 
             if (user == null)
             {
-                return new OperationResult<User>($"User with username {username} does not exist.");
+                _logger.LogError("Could not find user with username {Username}", username);
+                return null;
             }
 
-            return new OperationResult<User>(user);
+            return user;
         }
 
-        public async Task<IOperationResult<User>> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
-                return new OperationResult<User>($"User with email {email} does not exist.");
+                _logger.LogError("Could not find user with email {Email}", email);
+                return null;
             }
 
-            return new OperationResult<User>(user);
+            return user;
         }
 
-        public async Task<IOperationResult<bool>> UpdateAsync(User user)
+        public async Task<bool> UpdateAsync(User user)
         {
-            var result = await _userManager.UpdateAsync(user);
+            var updateUserResult = await _userManager.UpdateAsync(user);
 
-            return _mapper.Map<IdentityResult, OperationResult<bool>>(result);
+            if (!updateUserResult.Succeeded)
+            {
+                _logger.LogError("Could not update user {User}. IdentityErrors occured: {IdentityErrors}", user, updateUserResult.Errors);
+                return false;
+            }
+
+            return true;
         }
 
-        public async Task<IOperationResult<bool>> IsUserLoginValid(User user, string password)
+        public async Task<bool> CanUserLoginAsync(User user, string password)
         {
             var signInResult = await _signInManager.CheckPasswordSignInAsync(
                 user,
@@ -171,27 +191,33 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
             if (!signInResult.Succeeded)
             {
-                return new OperationResult<bool>($"Could not sign in the user with the email {user.Email}.");
+                _logger.LogInformation("User login information is invalid: {User}.", user);
+                return false;
             }
 
             if (signInResult.IsLockedOut)
             {
-                return new OperationResult<bool>($"Access to the user with the email {user.Email} is blocked temporarily.");
+                _logger.LogInformation("User login information is invalid: {User}.", user);
+                return false;
             }
 
             if (signInResult.IsNotAllowed)
             {
-                return new OperationResult<bool>($"The user with the email {user.Email} has not been authorized.");
+                _logger.LogInformation("User is not allowed to login: {User}.", user);
+                return false;
             }
 
-            return new OperationResult<bool>(true);
+            return true;
         }
 
-        public async Task<IOperationResult<IEnumerable<User>>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            var users = await _userManager.Users.ToListAsync();
+            return await _userManager.Users.ToListAsync();
+        }
 
-            return new OperationResult<IEnumerable<User>>(users);
+        public async Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)
+        {
+            return await _userManager.Users.Where(predicate).ToListAsync();
         }
     }
 }
