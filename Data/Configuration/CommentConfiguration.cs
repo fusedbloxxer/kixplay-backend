@@ -44,7 +44,7 @@ namespace KixPlay_Backend.Data.Configuration
         protected override void ConfigureTable(EntityTypeBuilder<Comment> builder)
         {
             builder
-                .ToTable($"{nameof(Comment)}s")
+                .ToTable($"{nameof(Comment)}s");
         }
     }
 }

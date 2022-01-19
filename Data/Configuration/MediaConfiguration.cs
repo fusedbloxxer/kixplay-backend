@@ -1,5 +1,6 @@
 ﻿using KixPlay_Backend.Data.Abstractions;
 using KixPlay_Backend.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
@@ -98,7 +99,8 @@ namespace KixPlay_Backend.Data.Configuration
 
         protected override void ConfigureTable(EntityTypeBuilder<Media> builder)
         {
-
+            builder
+                .ToTable($"{nameof(Media)}s");
         }
     }
 }

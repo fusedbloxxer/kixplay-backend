@@ -10,9 +10,6 @@ namespace KixPlay_Backend.Data.Configuration
         protected override void ConfigureProperties(EntityTypeBuilder<Movie> builder)
         {
             builder
-                .HasCheckConstraint("CK_VALID_AWARDS_COUNT", $"[{nameof(Movie.WonAwards)}] BETWEEN 0 AND 128");
-
-            builder
                 .Property(movie => movie.MetreageType)
                 .HasConversion<string>()
                 .IsRequired();

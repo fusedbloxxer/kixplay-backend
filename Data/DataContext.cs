@@ -13,11 +13,13 @@ namespace KixPlay_Backend.Data
 
         public DbSet<Genre> Genres { get; set; }
 
+        public DbSet<Movie> Movies { get; set; }
+
         public DbSet<Source> Sources { get; set; }
 
         public DbSet<MediaSource> MediaSources { get; set; }
 
-        public DbSet<Entities.RelatedMedia> RelatedMedias { get; set; }
+        public DbSet<RelatedMedia> RelatedMedias { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)

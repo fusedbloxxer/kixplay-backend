@@ -123,7 +123,7 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MediaInGenre",
+                name: "MediaInGenres",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -134,19 +134,37 @@ namespace KixPlay_Backend.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MediaInGenre", x => x.Id);
+                    table.PrimaryKey("PK_MediaInGenres", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MediaInGenre_Genres_GenreId",
+                        name: "FK_MediaInGenres_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MediaInGenre_Medias_MediaId",
+                        name: "FK_MediaInGenres_Medias_MediaId",
                         column: x => x.MediaId,
                         principalTable: "Medias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Movies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WonAwards = table.Column<int>(type: "int", nullable: false),
+                    MetreageType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Movies_Medias_Id",
+                        column: x => x.Id,
+                        principalTable: "Medias",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -225,7 +243,7 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -241,16 +259,16 @@ namespace KixPlay_Backend.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
-                    table.CheckConstraint("CK_Review_CK_VALID_RATING", "[Rating] BETWEEN 0 and 10");
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.CheckConstraint("CK_Reviews_CK_VALID_RATING", "[Rating] BETWEEN 0 and 10");
                     table.ForeignKey(
-                        name: "FK_Review_Medias_MediaId",
+                        name: "FK_Reviews_Medias_MediaId",
                         column: x => x.MediaId,
                         principalTable: "Medias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Review_Users_OriginalPosterId",
+                        name: "FK_Reviews_Users_OriginalPosterId",
                         column: x => x.OriginalPosterId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -371,7 +389,7 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -384,26 +402,26 @@ namespace KixPlay_Backend.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Comment_ParentId",
+                        name: "FK_Comments_Comments_ParentId",
                         column: x => x.ParentId,
-                        principalTable: "Comment",
+                        principalTable: "Comments",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Comment_Review_ReviewId",
+                        name: "FK_Comments_Reviews_ReviewId",
                         column: x => x.ReviewId,
-                        principalTable: "Review",
+                        principalTable: "Reviews",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Comment_Users_OriginalPosterId",
+                        name: "FK_Comments_Users_OriginalPosterId",
                         column: x => x.OriginalPosterId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReviewOpinion",
+                name: "ReviewOpinions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -417,14 +435,14 @@ namespace KixPlay_Backend.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReviewOpinion", x => x.Id);
+                    table.PrimaryKey("PK_ReviewOpinions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReviewOpinion_Review_ReviewId",
+                        name: "FK_ReviewOpinions_Reviews_ReviewId",
                         column: x => x.ReviewId,
-                        principalTable: "Review",
+                        principalTable: "Reviews",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ReviewOpinion_Users_UserId",
+                        name: "FK_ReviewOpinions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -435,38 +453,38 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("485cbfde-6dcd-4a3a-a2bb-a19bf86ab4d5"), "fc26077c-39ce-43e5-98e0-a6937b6a2076", "Admin", "ADMIN" },
-                    { new Guid("8c7e106d-b44e-49cf-9317-8af227002aba"), "31bb7c59-175d-46be-a6c5-fe564cee2eee", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("a00296a7-a2f6-41de-b76a-a2943bff8442"), "f2197097-482c-4e6f-91d3-50eab82afcfc", "Moderator", "MODERATOR" },
-                    { new Guid("b447cbd0-d103-49d3-b221-6696be849739"), "951c67b5-6af8-4bb0-9fcf-0d9a3b1884ab", "Member", "MEMBER" }
+                    { new Guid("785fb371-e93a-40fd-b1b6-b6c4723c2d71"), "466e996a-fa65-4e38-9b28-35ad560ed129", "Admin", "ADMIN" },
+                    { new Guid("9d82a50c-d0ea-4408-a0fd-bd68eb3a3897"), "31267b11-b1a5-458a-a0a6-463faa8613ef", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("da901306-4172-4a38-a619-f26c574a6bf0"), "49547210-e5c8-4730-80d0-3328fbc9dd2e", "Member", "MEMBER" },
+                    { new Guid("ed1237cc-1a4c-40c4-9f9a-622b9b127e7f"), "6402d309-1217-4eee-a76e-22af2eb1ca72", "Moderator", "MODERATOR" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_OriginalPosterId",
-                table: "Comment",
+                name: "IX_Comments_OriginalPosterId",
+                table: "Comments",
                 column: "OriginalPosterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_ParentId",
-                table: "Comment",
+                name: "IX_Comments_ParentId",
+                table: "Comments",
                 column: "ParentId",
                 unique: true,
                 filter: "[ParentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_ReviewId",
-                table: "Comment",
+                name: "IX_Comments_ReviewId",
+                table: "Comments",
                 column: "ReviewId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MediaInGenre_GenreId_MediaId",
-                table: "MediaInGenre",
+                name: "IX_MediaInGenres_GenreId_MediaId",
+                table: "MediaInGenres",
                 columns: new[] { "GenreId", "MediaId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MediaInGenre_MediaId",
-                table: "MediaInGenre",
+                name: "IX_MediaInGenres_MediaId",
+                table: "MediaInGenres",
                 column: "MediaId");
 
             migrationBuilder.CreateIndex(
@@ -506,26 +524,26 @@ namespace KixPlay_Backend.Data.Migrations
                 column: "MediaToId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_MediaId_OriginalPosterId",
-                table: "Review",
+                name: "IX_ReviewOpinions_ReviewId",
+                table: "ReviewOpinions",
+                column: "ReviewId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewOpinions_UserId_ReviewId",
+                table: "ReviewOpinions",
+                columns: new[] { "UserId", "ReviewId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_MediaId_OriginalPosterId",
+                table: "Reviews",
                 columns: new[] { "MediaId", "OriginalPosterId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_OriginalPosterId",
-                table: "Review",
+                name: "IX_Reviews_OriginalPosterId",
+                table: "Reviews",
                 column: "OriginalPosterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReviewOpinion_ReviewId",
-                table: "ReviewOpinion",
-                column: "ReviewId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReviewOpinion_UserId_ReviewId",
-                table: "ReviewOpinion",
-                columns: new[] { "UserId", "ReviewId" },
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -581,19 +599,22 @@ namespace KixPlay_Backend.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "MediaInGenre");
+                name: "MediaInGenres");
 
             migrationBuilder.DropTable(
                 name: "MediaSources");
 
             migrationBuilder.DropTable(
+                name: "Movies");
+
+            migrationBuilder.DropTable(
                 name: "RelatedMedias");
 
             migrationBuilder.DropTable(
-                name: "ReviewOpinion");
+                name: "ReviewOpinions");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
@@ -620,7 +641,7 @@ namespace KixPlay_Backend.Data.Migrations
                 name: "Sources");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Roles");

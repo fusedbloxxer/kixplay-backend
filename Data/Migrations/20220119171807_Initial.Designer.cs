@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220119163738_Initial")]
+    [Migration("20220119171807_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,7 +63,7 @@ namespace KixPlay_Backend.Data.Migrations
 
                     b.HasIndex("ReviewId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Genre", b =>
@@ -159,7 +159,7 @@ namespace KixPlay_Backend.Data.Migrations
                         .IsUnique()
                         .HasFilter("[PreviousId] IS NOT NULL");
 
-                    b.ToTable("Medias");
+                    b.ToTable("Medias", (string)null);
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.MediaInGenre", b =>
@@ -191,7 +191,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("GenreId", "MediaId")
                         .IsUnique();
 
-                    b.ToTable("MediaInGenre");
+                    b.ToTable("MediaInGenres", (string)null);
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.MediaSource", b =>
@@ -316,7 +316,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("MediaId", "OriginalPosterId")
                         .IsUnique();
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews", (string)null);
 
                     b.HasCheckConstraint("CK_VALID_RATING", "[Rating] BETWEEN 0 and 10");
                 });
@@ -365,7 +365,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("UserId", "ReviewId")
                         .IsUnique();
 
-                    b.ToTable("ReviewOpinion");
+                    b.ToTable("ReviewOpinions", (string)null);
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Role", b =>
@@ -408,8 +408,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8c7e106d-b44e-49cf-9317-8af227002aba"),
-                            ConcurrencyStamp = "31bb7c59-175d-46be-a6c5-fe564cee2eee",
+                            Id = new Guid("9d82a50c-d0ea-4408-a0fd-bd68eb3a3897"),
+                            ConcurrencyStamp = "31267b11-b1a5-458a-a0a6-463faa8613ef",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -417,8 +417,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a00296a7-a2f6-41de-b76a-a2943bff8442"),
-                            ConcurrencyStamp = "f2197097-482c-4e6f-91d3-50eab82afcfc",
+                            Id = new Guid("ed1237cc-1a4c-40c4-9f9a-622b9b127e7f"),
+                            ConcurrencyStamp = "6402d309-1217-4eee-a76e-22af2eb1ca72",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -426,8 +426,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b447cbd0-d103-49d3-b221-6696be849739"),
-                            ConcurrencyStamp = "951c67b5-6af8-4bb0-9fcf-0d9a3b1884ab",
+                            Id = new Guid("da901306-4172-4a38-a619-f26c574a6bf0"),
+                            ConcurrencyStamp = "49547210-e5c8-4730-80d0-3328fbc9dd2e",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -435,8 +435,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("485cbfde-6dcd-4a3a-a2bb-a19bf86ab4d5"),
-                            ConcurrencyStamp = "fc26077c-39ce-43e5-98e0-a6937b6a2076",
+                            Id = new Guid("785fb371-e93a-40fd-b1b6-b6c4723c2d71"),
+                            ConcurrencyStamp = "466e996a-fa65-4e38-9b28-35ad560ed129",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -714,6 +714,20 @@ namespace KixPlay_Backend.Data.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Movie", b =>
+                {
+                    b.HasBaseType("KixPlay_Backend.Data.Entities.Media");
+
+                    b.Property<string>("MetreageType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WonAwards")
+                        .HasColumnType("int");
+
+                    b.ToTable("Movies", (string)null);
+                });
+
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Comment", b =>
                 {
                     b.HasOne("KixPlay_Backend.Data.Entities.User", "OriginalPoster")
@@ -918,6 +932,15 @@ namespace KixPlay_Backend.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Movie", b =>
+                {
+                    b.HasOne("KixPlay_Backend.Data.Entities.Media", null)
+                        .WithOne()
+                        .HasForeignKey("KixPlay_Backend.Data.Entities.Movie", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
