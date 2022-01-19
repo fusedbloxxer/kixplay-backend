@@ -4,7 +4,11 @@ namespace KixPlay_Backend.Data.Entities
 {
     public class Review : BaseEntity
     {
+        public Guid OriginalPosterId { get; set; }
+
         public User OriginalPoster { get; set; }
+
+        public Guid MediaId { get; set; }
 
         public Media Media { get; set; }
 

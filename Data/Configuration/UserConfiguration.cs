@@ -13,11 +13,31 @@ namespace KixPlay_Backend.Data.Configuration
 
         protected override void ConfigureRelations(EntityTypeBuilder<User> builder)
         {
-            // Add One-To-Many: User -> UserRole
             builder
                 .HasMany(user => user.UserRoles)
                 .WithOne(userRole => userRole.User)
                 .HasForeignKey(userRole => userRole.UserId)
+                .IsRequired();
+
+            builder
+                .HasMany(user => user.Comments)
+                .WithOne(comment => comment.OriginalPoster)
+                .HasForeignKey(comment => comment.OriginalPosterId)
+                .HasPrincipalKey(user => user.Id)
+                .IsRequired();
+
+            builder
+                .HasMany(user => user.ReviewOpinions)
+                .WithOne(reviewOpinion => reviewOpinion.User)
+                .HasForeignKey(reviewOpinion => reviewOpinion.UserId)
+                .HasPrincipalKey(user => user.Id)
+                .IsRequired();
+
+            builder
+                .HasMany(user => user.Reviews)
+                .WithOne(review => review.OriginalPoster)
+                .HasForeignKey(review => review.OriginalPosterId)
+                .HasPrincipalKey(user => user.Id)
                 .IsRequired();
         }
 

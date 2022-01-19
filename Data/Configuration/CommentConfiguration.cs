@@ -20,6 +20,15 @@ namespace KixPlay_Backend.Data.Configuration
                 .WithMany(originalPoster => originalPoster.Comments)
                 .HasForeignKey(comment => comment.OriginalPosterId)
                 .HasPrincipalKey(originalPoster => originalPoster.Id)
+                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder
+                .HasOne(comment => comment.Review)
+                .WithMany(review => review.Comments)
+                .HasForeignKey(comment => comment.ReviewId)
+                .HasPrincipalKey(review => review.Id)
+                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
                 .IsRequired();
 
             builder

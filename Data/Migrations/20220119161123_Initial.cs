@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace KixPlay_Backend.Data.Migrations
 {
-    public partial class Initial1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -229,29 +229,32 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<float>(type: "real", nullable: false),
-                    HasSpoilers = table.Column<bool>(type: "bit", nullable: false),
-                    Recommended = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    HasSpoilers = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Recommended = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Review", x => x.Id);
+                    table.CheckConstraint("CK_Review_CK_VALID_RATING", "[Rating] BETWEEN 0 and 10");
                     table.ForeignKey(
                         name: "FK_Review_Medias_MediaId",
                         column: x => x.MediaId,
                         principalTable: "Medias",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Review_Users_OriginalPosterId",
                         column: x => x.OriginalPosterId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -346,10 +349,10 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
@@ -370,8 +373,7 @@ namespace KixPlay_Backend.Data.Migrations
                         name: "FK_Comment_Users_OriginalPosterId",
                         column: x => x.OriginalPosterId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -379,13 +381,13 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsFunny = table.Column<bool>(type: "bit", nullable: false),
-                    IsHelpful = table.Column<bool>(type: "bit", nullable: false),
-                    IsInteresting = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsFunny = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsHelpful = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsInteresting = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -407,10 +409,10 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("541634b0-19f4-4ec7-8f5a-5a2864c82f5f"), "b12131e0-20dc-47c2-a9ae-9837a90a0a63", "Moderator", "MODERATOR" },
-                    { new Guid("6cba6777-0b8f-46e6-9d56-db40077f0eaa"), "12d4c39d-8ed9-452c-a984-99625474befd", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("6dd2ed9f-ef4d-4903-b4af-da382fdabe4c"), "11daa95c-5e74-42b8-8647-663346b9b9ec", "Member", "MEMBER" },
-                    { new Guid("7769b68f-9495-4442-852a-c0dbe3628984"), "219d4197-8a47-4f00-9ebc-d38bb30ddc3d", "Admin", "ADMIN" }
+                    { new Guid("1972bb7d-84ca-4009-aad8-b17bab4468fb"), "56a0aba2-67c6-4174-9816-f6657f230a1a", "Moderator", "MODERATOR" },
+                    { new Guid("621471c1-9a89-4e6c-8514-f2d683148c64"), "031f6279-da3e-4bdc-b270-c6b0f59a845f", "Member", "MEMBER" },
+                    { new Guid("b512f479-8f2f-4b50-9383-daff763ab79b"), "5a26adc5-207e-4f88-97a2-94453639a07a", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("f97fefde-a01f-4da4-b5aa-8ff08f0785c4"), "a60cd0a9-db29-4a0a-940a-ecad8018e668", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -478,9 +480,10 @@ namespace KixPlay_Backend.Data.Migrations
                 column: "MediaToId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_MediaId",
+                name: "IX_Review_MediaId_OriginalPosterId",
                 table: "Review",
-                column: "MediaId");
+                columns: new[] { "MediaId", "OriginalPosterId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Review_OriginalPosterId",
@@ -493,9 +496,10 @@ namespace KixPlay_Backend.Data.Migrations
                 column: "ReviewId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReviewOpinion_UserId",
+                name: "IX_ReviewOpinion_UserId_ReviewId",
                 table: "ReviewOpinion",
-                column: "UserId");
+                columns: new[] { "UserId", "ReviewId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
