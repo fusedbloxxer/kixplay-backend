@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220119202134_Initial")]
+    [Migration("20220119211724_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,13 +57,81 @@ namespace KixPlay_Backend.Data.Migrations
 
                     b.HasIndex("OriginalPosterId");
 
-                    b.HasIndex("ParentId")
-                        .IsUnique()
-                        .HasFilter("[ParentId] IS NOT NULL");
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("ReviewId");
 
                     b.ToTable("Comments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d4b6ab4b-fdce-4790-96f2-074ac0061c69"),
+                            Content = "Root 1 Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c")
+                        },
+                        new
+                        {
+                            Id = new Guid("b2737562-1423-4a90-812f-9730bef8a656"),
+                            Content = "Child 1 Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
+                            ParentId = new Guid("d4b6ab4b-fdce-4790-96f2-074ac0061c69"),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c")
+                        },
+                        new
+                        {
+                            Id = new Guid("af5ebe4e-0c36-4e3c-8375-39efe513c760"),
+                            Content = "Child 1 Sibling Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
+                            ParentId = new Guid("d4b6ab4b-fdce-4790-96f2-074ac0061c69"),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c")
+                        },
+                        new
+                        {
+                            Id = new Guid("b42f6170-aedb-4046-8627-4c418d072124"),
+                            Content = "Child 2 Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            ParentId = new Guid("b2737562-1423-4a90-812f-9730bef8a656"),
+                            ReviewId = new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c")
+                        },
+                        new
+                        {
+                            Id = new Guid("1b2748c6-0b46-4437-b785-93351eba229a"),
+                            Content = "Root 2 Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
+                            ReviewId = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2")
+                        },
+                        new
+                        {
+                            Id = new Guid("f798ed71-46c2-47f0-9dda-fc97efdb0c49"),
+                            Content = "Child 1' Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
+                            ParentId = new Guid("1b2748c6-0b46-4437-b785-93351eba229a"),
+                            ReviewId = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2")
+                        },
+                        new
+                        {
+                            Id = new Guid("a023367a-8d82-4b5e-ac4d-8f305f14d647"),
+                            Content = "Child 2' Comment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OriginalPosterId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
+                            ParentId = new Guid("f798ed71-46c2-47f0-9dda-fc97efdb0c49"),
+                            ReviewId = new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2")
+                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Genre", b =>
@@ -560,7 +628,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("11931d93-a732-4bd0-b54f-72e2ebf5eee1"),
+                            Id = new Guid("9f34ad2f-0e8f-45c4-acd0-0ec1e05785e8"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = true,
                             IsHelpful = false,
@@ -571,7 +639,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("18935269-031d-4e7b-ac5a-f04171752e74"),
+                            Id = new Guid("01946419-c8d5-48e7-b0f9-6a0152e100dc"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = true,
                             IsHelpful = true,
@@ -582,7 +650,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f25cac52-c01e-4699-bb77-3babe2174b43"),
+                            Id = new Guid("1782add3-68b2-4ea1-966c-7b315846d59b"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = false,
@@ -593,7 +661,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c5255c73-c90c-4bf7-83d7-b8aad55bbde0"),
+                            Id = new Guid("a33d027b-1cfb-4462-86e1-e737ab9a8b86"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = true,
@@ -604,7 +672,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b59e0186-2979-4542-8b69-e6436ec34d9c"),
+                            Id = new Guid("c773b79e-429b-40a4-a2c1-e2060737c025"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = false,
@@ -615,7 +683,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6be51be4-cf10-43b9-861c-e58026125ef3"),
+                            Id = new Guid("ea9ca8d6-6eb3-43a9-a958-a55238a7c918"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = true,
@@ -626,7 +694,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e60f9fc3-1c62-46fc-8307-584d2c9eec1c"),
+                            Id = new Guid("73146899-48ce-4bf7-98d2-d0162877a6cc"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = false,
@@ -637,7 +705,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f385b814-ef3b-47e6-be49-f5b77059b4b9"),
+                            Id = new Guid("5743484a-1092-4e71-8d86-76b909e65d50"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = true,
@@ -689,7 +757,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            ConcurrencyStamp = "ba801f00-cc7b-48be-93dc-5e5bd063784a",
+                            ConcurrencyStamp = "75fca8e4-51ca-4e00-8afd-5aa4c3e4ebec",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -698,7 +766,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            ConcurrencyStamp = "296c14ab-1f86-48a5-b6ab-cfd89142ddc8",
+                            ConcurrencyStamp = "a523830f-014a-4206-8a93-dcaed3a0abb8",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -707,7 +775,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            ConcurrencyStamp = "5ca0a30b-ec61-4933-ad0a-34c81555e913",
+                            ConcurrencyStamp = "2420c572-ad3f-4293-8344-bad2a93d2ff6",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -716,7 +784,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            ConcurrencyStamp = "45f08f4a-44a1-4f24-a19d-2e5bd666db0f",
+                            ConcurrencyStamp = "f1cff2e2-1eda-4763-9455-a1faca335094",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -998,7 +1066,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f4f807ff-63ca-4893-bf3f-4c70cf9e988f",
+                            ConcurrencyStamp = "4d77f479-1118-49cf-9d72-3525c1d92f66",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "mikasa.ackerman@gmail.com",
@@ -1018,7 +1086,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ca436a3f-8207-4be0-8553-0abea9214a8d",
+                            ConcurrencyStamp = "fdf9238e-5f16-4eb6-8c07-5c279cee74a2",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "eren.yeager@gmail.com",
@@ -1038,7 +1106,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a28d974f-a0c1-461b-a911-9479a7922432",
+                            ConcurrencyStamp = "040c3f1b-c4b5-4301-aa70-194b44c4a33f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "levi.ivel@gmail.com",
@@ -1057,7 +1125,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "71107a72-50c9-4f45-9b4d-d31a38a84e21",
+                            ConcurrencyStamp = "8ed56bea-b55d-4bda-ac1d-8d84ee4f5dec",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "armin.arlert@gmail.com",
@@ -1077,7 +1145,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f38e2100-4be3-42e1-a296-84fab0cf52c6",
+                            ConcurrencyStamp = "09028145-8dca-41dc-88bf-cc2d607fad05",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "erwin.smith@gmail.com",
@@ -1340,9 +1408,9 @@ namespace KixPlay_Backend.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("KixPlay_Backend.Data.Entities.Comment", "Parent")
-                        .WithOne()
-                        .HasForeignKey("KixPlay_Backend.Data.Entities.Comment", "ParentId");
+                    b.HasOne("KixPlay_Backend.Data.Entities.Comment", null)
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("KixPlay_Backend.Data.Entities.Review", "Review")
                         .WithMany("Comments")
@@ -1351,8 +1419,6 @@ namespace KixPlay_Backend.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("OriginalPoster");
-
-                    b.Navigation("Parent");
 
                     b.Navigation("Review");
                 });
@@ -1546,6 +1612,11 @@ namespace KixPlay_Backend.Data.Migrations
                         .HasForeignKey("KixPlay_Backend.Data.Entities.Movie", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.Comment", b =>
+                {
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Genre", b =>

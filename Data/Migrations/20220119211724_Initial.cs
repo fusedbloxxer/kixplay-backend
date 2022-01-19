@@ -475,10 +475,10 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"), "45f08f4a-44a1-4f24-a19d-2e5bd666db0f", "Admin", "ADMIN" },
-                    { new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"), "ba801f00-cc7b-48be-93dc-5e5bd063784a", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"), "5ca0a30b-ec61-4933-ad0a-34c81555e913", "Member", "MEMBER" },
-                    { new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"), "296c14ab-1f86-48a5-b6ab-cfd89142ddc8", "Moderator", "MODERATOR" }
+                    { new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"), "f1cff2e2-1eda-4763-9455-a1faca335094", "Admin", "ADMIN" },
+                    { new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"), "75fca8e4-51ca-4e00-8afd-5aa4c3e4ebec", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"), "2420c572-ad3f-4293-8344-bad2a93d2ff6", "Member", "MEMBER" },
+                    { new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"), "a523830f-014a-4206-8a93-dcaed3a0abb8", "Moderator", "MODERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -496,11 +496,11 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"), 0, "ca436a3f-8207-4be0-8553-0abea9214a8d", new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "eren.yeager@gmail.com", false, "Eren", "Yeager", false, null, "EREN.YEAGER@GMAIL.COM", "ERENYEAGER", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ErenYeager" },
-                    { new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), 0, "f4f807ff-63ca-4893-bf3f-4c70cf9e988f", new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "mikasa.ackerman@gmail.com", false, "Mikasa", "Ackerman", false, null, "MIKASA.ACKERMAN@GMAIL.COM", "MIKASAACKERMAN", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "MikasaAckerman" },
-                    { new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"), 0, "71107a72-50c9-4f45-9b4d-d31a38a84e21", new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "armin.arlert@gmail.com", false, "Armin", "Arlert", false, null, "ARMIN.ARLERT@GMAIL.COM", "ARMINARLERT", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ArminArlert" },
-                    { new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"), 0, "f38e2100-4be3-42e1-a296-84fab0cf52c6", new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "erwin.smith@gmail.com", false, "Erwin", "Smith", false, null, "ERWIN.SMITH@GMAIL.COM", "ERWINSMITH", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ErwinSmith" },
-                    { new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"), 0, "a28d974f-a0c1-461b-a911-9479a7922432", new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "levi.ivel@gmail.com", false, "Levi", null, false, null, "LEVI.IVEL@GMAIL.COM", "LEVILEVI", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "LeviLevi" }
+                    { new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"), 0, "fdf9238e-5f16-4eb6-8c07-5c279cee74a2", new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "eren.yeager@gmail.com", false, "Eren", "Yeager", false, null, "EREN.YEAGER@GMAIL.COM", "ERENYEAGER", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ErenYeager" },
+                    { new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), 0, "4d77f479-1118-49cf-9d72-3525c1d92f66", new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "mikasa.ackerman@gmail.com", false, "Mikasa", "Ackerman", false, null, "MIKASA.ACKERMAN@GMAIL.COM", "MIKASAACKERMAN", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "MikasaAckerman" },
+                    { new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"), 0, "8ed56bea-b55d-4bda-ac1d-8d84ee4f5dec", new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "armin.arlert@gmail.com", false, "Armin", "Arlert", false, null, "ARMIN.ARLERT@GMAIL.COM", "ARMINARLERT", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ArminArlert" },
+                    { new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"), 0, "09028145-8dca-41dc-88bf-cc2d607fad05", new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "erwin.smith@gmail.com", false, "Erwin", "Smith", false, null, "ERWIN.SMITH@GMAIL.COM", "ERWINSMITH", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ErwinSmith" },
+                    { new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"), 0, "040c3f1b-c4b5-4301-aa70-194b44c4a33f", new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "levi.ivel@gmail.com", false, "Levi", null, false, null, "LEVI.IVEL@GMAIL.COM", "LEVILEVI", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "LeviLevi" }
                 });
 
             migrationBuilder.InsertData(
@@ -592,43 +592,78 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsFunny", "ReviewId", "UserId" },
-                values: new object[] { new Guid("11931d93-a732-4bd0-b54f-72e2ebf5eee1"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsFunny", "IsHelpful", "ReviewId", "UserId" },
-                values: new object[] { new Guid("18935269-031d-4e7b-ac5a-f04171752e74"), true, true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsHelpful", "IsInteresting", "ReviewId", "UserId" },
-                values: new object[] { new Guid("6be51be4-cf10-43b9-861c-e58026125ef3"), true, true, new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"), new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "ReviewId", "UserId" },
-                values: new object[] { new Guid("b59e0186-2979-4542-8b69-e6436ec34d9c"), new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsHelpful", "ReviewId", "UserId" },
-                values: new object[] { new Guid("c5255c73-c90c-4bf7-83d7-b8aad55bbde0"), true, new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsInteresting", "ReviewId", "UserId" },
+                table: "Comments",
+                columns: new[] { "Id", "Content", "OriginalPosterId", "ParentId", "ReviewId" },
                 values: new object[,]
                 {
-                    { new Guid("e60f9fc3-1c62-46fc-8307-584d2c9eec1c"), true, new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") },
-                    { new Guid("f25cac52-c01e-4699-bb77-3babe2174b43"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") }
+                    { new Guid("1b2748c6-0b46-4437-b785-93351eba229a"), "Root 2 Comment", new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), null, new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2") },
+                    { new Guid("d4b6ab4b-fdce-4790-96f2-074ac0061c69"), "Root 1 Comment", new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), null, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c") }
                 });
 
             migrationBuilder.InsertData(
                 table: "ReviewOpinions",
+                columns: new[] { "Id", "IsFunny", "IsHelpful", "ReviewId", "UserId" },
+                values: new object[] { new Guid("01946419-c8d5-48e7-b0f9-6a0152e100dc"), true, true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "IsInteresting", "ReviewId", "UserId" },
+                values: new object[] { new Guid("1782add3-68b2-4ea1-966c-7b315846d59b"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
                 columns: new[] { "Id", "IsHelpful", "ReviewId", "UserId" },
-                values: new object[] { new Guid("f385b814-ef3b-47e6-be49-f5b77059b4b9"), true, new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
+                values: new object[] { new Guid("5743484a-1092-4e71-8d86-76b909e65d50"), true, new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "IsInteresting", "ReviewId", "UserId" },
+                values: new object[] { new Guid("73146899-48ce-4bf7-98d2-d0162877a6cc"), true, new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "IsFunny", "ReviewId", "UserId" },
+                values: new object[] { new Guid("9f34ad2f-0e8f-45c4-acd0-0ec1e05785e8"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "IsHelpful", "ReviewId", "UserId" },
+                values: new object[] { new Guid("a33d027b-1cfb-4462-86e1-e737ab9a8b86"), true, new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "ReviewId", "UserId" },
+                values: new object[] { new Guid("c773b79e-429b-40a4-a2c1-e2060737c025"), new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602") });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "IsHelpful", "IsInteresting", "ReviewId", "UserId" },
+                values: new object[] { new Guid("ea9ca8d6-6eb3-43a9-a958-a55238a7c918"), true, true, new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"), new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985") });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "OriginalPosterId", "ParentId", "ReviewId" },
+                values: new object[] { new Guid("af5ebe4e-0c36-4e3c-8375-39efe513c760"), "Child 1 Sibling Comment", new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"), new Guid("d4b6ab4b-fdce-4790-96f2-074ac0061c69"), new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c") });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "OriginalPosterId", "ParentId", "ReviewId" },
+                values: new object[] { new Guid("b2737562-1423-4a90-812f-9730bef8a656"), "Child 1 Comment", new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"), new Guid("d4b6ab4b-fdce-4790-96f2-074ac0061c69"), new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c") });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "OriginalPosterId", "ParentId", "ReviewId" },
+                values: new object[] { new Guid("f798ed71-46c2-47f0-9dda-fc97efdb0c49"), "Child 1' Comment", new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"), new Guid("1b2748c6-0b46-4437-b785-93351eba229a"), new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2") });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "OriginalPosterId", "ParentId", "ReviewId" },
+                values: new object[] { new Guid("a023367a-8d82-4b5e-ac4d-8f305f14d647"), "Child 2' Comment", new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"), new Guid("f798ed71-46c2-47f0-9dda-fc97efdb0c49"), new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2") });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "Id", "Content", "OriginalPosterId", "ParentId", "ReviewId" },
+                values: new object[] { new Guid("b42f6170-aedb-4046-8627-4c418d072124"), "Child 2 Comment", new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), new Guid("b2737562-1423-4a90-812f-9730bef8a656"), new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_OriginalPosterId",
@@ -638,9 +673,7 @@ namespace KixPlay_Backend.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ParentId",
                 table: "Comments",
-                column: "ParentId",
-                unique: true,
-                filter: "[ParentId] IS NOT NULL");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ReviewId",
