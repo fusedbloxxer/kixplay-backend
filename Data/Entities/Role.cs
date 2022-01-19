@@ -25,5 +25,7 @@ namespace KixPlay_Backend.Data.Entities
         public ICollection<UserRole> UserRoles { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public DateTime LastUpdatedAt { get; set; }
     }
 }

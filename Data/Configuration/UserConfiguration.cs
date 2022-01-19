@@ -8,9 +8,6 @@ namespace KixPlay_Backend.Data.Configuration
     {
         protected override void ConfigureProperties(EntityTypeBuilder<User> builder)
         {
-            builder
-                .Property(user => user.LastUpdated)
-                .ValueGeneratedOnAddOrUpdate();
         }
 
         protected override void ConfigureRelations(EntityTypeBuilder<User> builder)

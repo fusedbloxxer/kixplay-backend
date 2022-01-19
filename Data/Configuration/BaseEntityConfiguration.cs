@@ -38,7 +38,13 @@ namespace KixPlay_Backend.Data.Configuration
 
         private static void ConfigureCommon(EntityTypeBuilder<TBaseEntity> builder)
         {
-            builder.Property(entity => entity.CreatedAt).HasDefaultValue(DateTime.Now);
+            builder
+                .Property(entity => entity.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            builder
+                .Property(entity => entity.LastUpdatedAt)
+                .HasDefaultValueSql("GETDATE()");
         }
     }
 }

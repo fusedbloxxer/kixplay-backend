@@ -10,12 +10,12 @@ namespace KixPlay_Backend.Data.Entities
 
         public string LastName { get; set; }
 
-        public DateTime? LastUpdated { get; set; }
-
         public DateTime? DateOfBirth { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public DateTime LastUpdatedAt { get; set; }
     }
 }

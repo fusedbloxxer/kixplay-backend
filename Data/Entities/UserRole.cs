@@ -9,6 +9,8 @@ namespace KixPlay_Backend.Data.Entities
 
         public Role Role { get; set; }
 
-        public DateTime AddedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime LastUpdatedAt { get; set; }
     }
 }
