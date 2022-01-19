@@ -39,6 +39,13 @@ namespace KixPlay_Backend.Data.Configuration
                 .HasForeignKey(review => review.OriginalPosterId)
                 .HasPrincipalKey(user => user.Id)
                 .IsRequired();
+
+            builder
+                .HasMany(user => user.TrackedMedias)
+                .WithOne(trackedMedia => trackedMedia.User)
+                .HasForeignKey(trackedMedia => trackedMedia.UserId)
+                .HasPrincipalKey(user => user.Id)
+                .IsRequired();
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<User> builder)

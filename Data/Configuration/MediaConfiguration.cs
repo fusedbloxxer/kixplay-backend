@@ -78,6 +78,18 @@ namespace KixPlay_Backend.Data.Configuration
                 .HasOne(media => media.Previous)
                 .WithOne()
                 .HasPrincipalKey<Media>(media => media.Id);
+
+            builder
+                .HasMany(media => media.Reviews)
+                .WithOne(review => review.Media)
+                .HasForeignKey(review => review.MediaId)
+                .HasPrincipalKey(media => media.Id);
+
+            builder
+                .HasMany(media => media.TrackedMedias)
+                .WithOne(trackedMedia => trackedMedia.Media)
+                .HasForeignKey(trackedMedia => trackedMedia.MediaId)
+                .HasPrincipalKey(media => media.Id);
         }
 
         protected override void ConfigureSeed(EntityTypeBuilder<Media> builder)

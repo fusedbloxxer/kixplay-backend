@@ -20,6 +20,8 @@ namespace KixPlay_Backend.Data.Entities
 
         public ICollection<ReviewOpinion> ReviewOpinions { get; set; }
 
+        public ICollection<TrackedMedia> TrackedMedias { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime LastUpdatedAt { get; set; }

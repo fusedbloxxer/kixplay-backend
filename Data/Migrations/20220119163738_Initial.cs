@@ -258,6 +258,32 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TrackedMedia",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrackedMedia", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrackedMedia_Medias_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Medias",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TrackedMedia_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserClaims",
                 columns: table => new
                 {
@@ -409,10 +435,10 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("1972bb7d-84ca-4009-aad8-b17bab4468fb"), "56a0aba2-67c6-4174-9816-f6657f230a1a", "Moderator", "MODERATOR" },
-                    { new Guid("621471c1-9a89-4e6c-8514-f2d683148c64"), "031f6279-da3e-4bdc-b270-c6b0f59a845f", "Member", "MEMBER" },
-                    { new Guid("b512f479-8f2f-4b50-9383-daff763ab79b"), "5a26adc5-207e-4f88-97a2-94453639a07a", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("f97fefde-a01f-4da4-b5aa-8ff08f0785c4"), "a60cd0a9-db29-4a0a-940a-ecad8018e668", "Admin", "ADMIN" }
+                    { new Guid("485cbfde-6dcd-4a3a-a2bb-a19bf86ab4d5"), "fc26077c-39ce-43e5-98e0-a6937b6a2076", "Admin", "ADMIN" },
+                    { new Guid("8c7e106d-b44e-49cf-9317-8af227002aba"), "31bb7c59-175d-46be-a6c5-fe564cee2eee", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("a00296a7-a2f6-41de-b76a-a2943bff8442"), "f2197097-482c-4e6f-91d3-50eab82afcfc", "Moderator", "MODERATOR" },
+                    { new Guid("b447cbd0-d103-49d3-b221-6696be849739"), "951c67b5-6af8-4bb0-9fcf-0d9a3b1884ab", "Member", "MEMBER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -514,6 +540,17 @@ namespace KixPlay_Backend.Data.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TrackedMedia_MediaId",
+                table: "TrackedMedia",
+                column: "MediaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrackedMedia_UserId_MediaId",
+                table: "TrackedMedia",
+                columns: new[] { "UserId", "MediaId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
                 table: "UserClaims",
                 column: "UserId");
@@ -560,6 +597,9 @@ namespace KixPlay_Backend.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "TrackedMedia");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");

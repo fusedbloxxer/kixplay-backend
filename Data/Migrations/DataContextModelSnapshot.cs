@@ -406,8 +406,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b512f479-8f2f-4b50-9383-daff763ab79b"),
-                            ConcurrencyStamp = "5a26adc5-207e-4f88-97a2-94453639a07a",
+                            Id = new Guid("8c7e106d-b44e-49cf-9317-8af227002aba"),
+                            ConcurrencyStamp = "31bb7c59-175d-46be-a6c5-fe564cee2eee",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -415,8 +415,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1972bb7d-84ca-4009-aad8-b17bab4468fb"),
-                            ConcurrencyStamp = "56a0aba2-67c6-4174-9816-f6657f230a1a",
+                            Id = new Guid("a00296a7-a2f6-41de-b76a-a2943bff8442"),
+                            ConcurrencyStamp = "f2197097-482c-4e6f-91d3-50eab82afcfc",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -424,8 +424,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("621471c1-9a89-4e6c-8514-f2d683148c64"),
-                            ConcurrencyStamp = "031f6279-da3e-4bdc-b270-c6b0f59a845f",
+                            Id = new Guid("b447cbd0-d103-49d3-b221-6696be849739"),
+                            ConcurrencyStamp = "951c67b5-6af8-4bb0-9fcf-0d9a3b1884ab",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -433,8 +433,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f97fefde-a01f-4da4-b5aa-8ff08f0785c4"),
-                            ConcurrencyStamp = "a60cd0a9-db29-4a0a-940a-ecad8018e668",
+                            Id = new Guid("485cbfde-6dcd-4a3a-a2bb-a19bf86ab4d5"),
+                            ConcurrencyStamp = "fc26077c-39ce-43e5-98e0-a6937b6a2076",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -480,6 +480,42 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sources");
+                });
+
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.TrackedMedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<Guid>("MediaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaId");
+
+                    b.HasIndex("UserId", "MediaId")
+                        .IsUnique();
+
+                    b.ToTable("TrackedMedia");
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.User", b =>
@@ -809,6 +845,25 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("KixPlay_Backend.Data.Entities.TrackedMedia", b =>
+                {
+                    b.HasOne("KixPlay_Backend.Data.Entities.Media", "Media")
+                        .WithMany("TrackedMedias")
+                        .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("KixPlay_Backend.Data.Entities.User", "User")
+                        .WithMany("TrackedMedias")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Media");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.UserRole", b =>
                 {
                     b.HasOne("KixPlay_Backend.Data.Entities.Role", "Role")
@@ -880,6 +935,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Navigation("RelatedTo");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("TrackedMedias");
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Review", b =>
@@ -906,6 +963,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Navigation("ReviewOpinions");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("TrackedMedias");
 
                     b.Navigation("UserRoles");
                 });

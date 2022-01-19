@@ -32,6 +32,8 @@ namespace KixPlay_Backend.Data.Entities
 
         public ICollection<RelatedMedia> RelatedFrom { get; set; }
 
+        public ICollection<TrackedMedia> TrackedMedias { get; set; }
+
         public ICollection<Review> Reviews { get; set; }
 
         public Media Previous { get; set; }

@@ -51,6 +51,8 @@ namespace KixPlay_Backend.Data.Configuration
 
         protected override void ConfigureTable(EntityTypeBuilder<ReviewOpinion> builder)
         {
+            builder
+                .ToTable($"{nameof(ReviewOpinion)}s");
         }
     }
 }
