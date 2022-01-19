@@ -2,7 +2,7 @@
 
 namespace KixPlay_Backend.Data.Entities
 {
-    public class UserReview : BaseEntity
+    public class ReviewOpinion : BaseEntity
     {
         public User User { get; set; }
 
