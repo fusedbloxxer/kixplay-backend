@@ -30,10 +30,22 @@ namespace KixPlay_Backend.Data.Configuration
         {
             builder.HasData(new List<Role>()
             {
-                new Role("Contributor") { Id=Guid.NewGuid() },
-                new Role("Moderator") { Id=Guid.NewGuid() },
-                new Role("Member") { Id=Guid.NewGuid() },
-                new Role("Admin") { Id=Guid.NewGuid() },
+                new Role("Contributor")
+                {
+                    Id = Guid.Parse("8e7640e4-8701-46e5-85b9-596e03db2944")
+                },
+                new Role("Moderator")
+                {
+                    Id = Guid.Parse("e98fc490-4589-4beb-a316-add18c8f3ddf")
+                },
+                new Role("Member")
+                {
+                    Id = Guid.Parse("92215649-862e-4c2f-a4c6-1c61cb245ad5")
+                },
+                new Role("Admin")
+                {
+                    Id = Guid.Parse("8c6d9a31-3e47-45b5-b940-9225fa539f15")
+                },
             });
         }
     }

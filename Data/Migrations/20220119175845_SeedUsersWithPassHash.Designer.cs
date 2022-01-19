@@ -4,6 +4,7 @@ using KixPlay_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220119175845_SeedUsersWithPassHash")]
+    partial class SeedUsersWithPassHash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,43 +89,6 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0faa2716-763a-46bd-aeb5-b731070edf23"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "horror"
-                        },
-                        new
-                        {
-                            Id = new Guid("63f38ef9-382c-4cca-b0fc-000a3aaa2e1e"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "action"
-                        },
-                        new
-                        {
-                            Id = new Guid("bb85ef16-0dfc-4cf8-a248-929920f775e3"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "thriller"
-                        },
-                        new
-                        {
-                            Id = new Guid("5d90f656-95b7-41e9-afbc-7f03564a2b16"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "slowburn"
-                        },
-                        new
-                        {
-                            Id = new Guid("3cf709a3-a95c-4d56-a8d6-2ee490ca7161"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "drama"
-                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Media", b =>
@@ -443,8 +408,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            ConcurrencyStamp = "baf56909-8eb4-4458-b7a4-ff1e027473db",
+                            Id = new Guid("a5e3ec25-c31d-4362-8e69-0e4d1a8b486a"),
+                            ConcurrencyStamp = "f8abbc53-373c-4135-b2e5-55f4c9f56a78",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -452,8 +417,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            ConcurrencyStamp = "75479b7c-e84b-4778-9e73-cf2a6d90acd8",
+                            Id = new Guid("e50caf86-d3af-47ce-a09e-2b0bb5d565eb"),
+                            ConcurrencyStamp = "3624e941-8905-4742-8795-e289f1142d2b",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -461,8 +426,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            ConcurrencyStamp = "e78648db-2635-47ce-9203-0c097f96c94d",
+                            Id = new Guid("e798d498-29b9-4672-a2a2-4c45ba028788"),
+                            ConcurrencyStamp = "1eb4fe79-6929-4271-a899-1c931caa2a7a",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -470,8 +435,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            ConcurrencyStamp = "cd743ea7-a389-4911-8365-ce4bed300697",
+                            Id = new Guid("f607b058-01e6-409c-be9b-990606f487c5"),
+                            ConcurrencyStamp = "4ad22e1b-eea0-4d57-93e8-360e45d96530",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -517,41 +482,6 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sources");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4a022ad0-e6e6-4df3-9b95-bf1aa05db9df"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "FSGratis este un site complet gratuit care contine link-uri catre site-uri de video sharing, mai exact site-uri ce gazduiesc fisiere video, filme, seriale si asa mai departe.",
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reliable = "Trustworthy",
-                            ThumbnailUrl = "https://filmeserialegratis.org/wp-content/uploads/2019/09/logofsgratis-2.png",
-                            Title = "FSGratis",
-                            Url = "https://filmeserialegratis.org/"
-                        },
-                        new
-                        {
-                            Id = new Guid("a573321a-5c27-4ba9-9903-ee00ca56b4c0"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Animepahe is a popular website for anime lovers. You can watch thousands of free anime from Drama, History, Action, Romance and more. Animepahe is confident ...",
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reliable = "Sussy",
-                            ThumbnailUrl = "http://wasabi-files.lbstatic.nu/files/users/large/9666248_logo-animepahe.jpg?1629794131",
-                            Title = "AnimePahe",
-                            Url = "https://animepahe.com/"
-                        },
-                        new
-                        {
-                            Id = new Guid("eee0f7d1-9080-452e-97e6-7773190a59a8"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Watch Anime for free in HD quality with English subbed or dubbed.",
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reliable = "Trustworthy",
-                            ThumbnailUrl = "https://i.imgur.com/RO2x9O5.png",
-                            Title = "AnimixPlay",
-                            Url = "https://animixplay.to/"
-                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.TrackedMedia", b =>
@@ -679,7 +609,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb28b210-bcb4-47e0-a165-163f43860a91",
+                            ConcurrencyStamp = "0ec18281-41d8-44f9-b106-9e7f7fcbcd07",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "mikasa.ackerman@gmail.com",
@@ -689,17 +619,15 @@ namespace KixPlay_Backend.Data.Migrations
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LockoutEnabled = false,
                             NormalizedEmail = "MIKASA.ACKERMAN@GMAIL.COM",
-                            NormalizedUserName = "MIKASAACKERMAN",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "MikasaAckerman"
+                            TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a5b83422-92ff-4fb7-946c-075af7b6ab46",
+                            ConcurrencyStamp = "bde69f3e-5cac-4aef-a404-e924c85487f0",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "eren.yeager@gmail.com",
@@ -709,17 +637,15 @@ namespace KixPlay_Backend.Data.Migrations
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LockoutEnabled = false,
                             NormalizedEmail = "EREN.YEAGER@GMAIL.COM",
-                            NormalizedUserName = "ERENYEAGER",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "ErenYeager"
+                            TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "afc78c88-878e-4263-b345-41f40201a95c",
+                            ConcurrencyStamp = "dfae3e13-d5f4-47bc-b309-2dfbc1b96ab8",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "levi.ivel@gmail.com",
@@ -728,17 +654,15 @@ namespace KixPlay_Backend.Data.Migrations
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LockoutEnabled = false,
                             NormalizedEmail = "LEVI.IVEL@GMAIL.COM",
-                            NormalizedUserName = "LEVILEVI",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "LeviLevi"
+                            TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2305fbbd-d8bf-473e-8c97-9781f9e6b598",
+                            ConcurrencyStamp = "0bcc75cb-032a-49ae-9010-8be2c8b6a881",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "armin.arlert@gmail.com",
@@ -748,31 +672,27 @@ namespace KixPlay_Backend.Data.Migrations
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LockoutEnabled = false,
                             NormalizedEmail = "ARMIN.ARLERT@GMAIL.COM",
-                            NormalizedUserName = "ARMINARLERT",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "ArminArlert"
+                            TwoFactorEnabled = false
                         },
                         new
                         {
                             Id = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5f5e8c7e-13da-40f6-a0f9-55e32bae9cdb",
+                            ConcurrencyStamp = "98dedf5c-c006-4489-b283-e431fd541ac8",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
-                            Email = "erwin.smith@gmail.com",
+                            Email = "eren.smith@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Erwin",
                             LastName = "Smith",
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LockoutEnabled = false,
-                            NormalizedEmail = "ERWIN.SMITH@GMAIL.COM",
-                            NormalizedUserName = "ERWINSMITH",
+                            NormalizedEmail = "EREN.SMITH@GMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "ErwinSmith"
+                            TwoFactorEnabled = false
                         });
                 });
 
@@ -795,64 +715,6 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
-                            RoleId = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
-                            RoleId = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
-                            RoleId = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
-                            RoleId = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
-                            RoleId = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
-                            RoleId = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
-                            RoleId = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
-                            RoleId = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
