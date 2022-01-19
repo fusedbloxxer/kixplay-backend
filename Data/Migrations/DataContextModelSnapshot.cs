@@ -31,7 +31,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 490, DateTimeKind.Local).AddTicks(1032));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(5019));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -54,7 +54,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 490, DateTimeKind.Local).AddTicks(2343));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(6259));
 
                     b.Property<string>("CurrentStatus")
                         .IsRequired()
@@ -65,6 +65,9 @@ namespace KixPlay_Backend.Data.Migrations
 
                     b.Property<TimeSpan?>("Duration")
                         .HasColumnType("time");
+
+                    b.Property<Guid?>("NextId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PreviewImageUrls")
                         .HasColumnType("nvarchar(max)");
@@ -94,6 +97,10 @@ namespace KixPlay_Backend.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NextId")
+                        .IsUnique()
+                        .HasFilter("[NextId] IS NOT NULL");
+
                     b.HasIndex("PreviousId")
                         .IsUnique()
                         .HasFilter("[PreviousId] IS NOT NULL");
@@ -110,7 +117,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(2037));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(7633));
 
                     b.Property<Guid>("GenreId")
                         .HasColumnType("uniqueidentifier");
@@ -137,7 +144,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(3830));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(9289));
 
                     b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
@@ -167,7 +174,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(8062));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(3535));
 
                     b.Property<Guid?>("MediaFromId")
                         .HasColumnType("uniqueidentifier");
@@ -203,7 +210,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(9761));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(5210));
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -225,32 +232,32 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d4625f93-e3be-4e73-b1f4-262a83b1effc"),
-                            ConcurrencyStamp = "9bf233d4-56b5-42e2-92b3-80c0adbc429e",
+                            Id = new Guid("2129be10-39df-423c-a30a-7d299a0f914b"),
+                            ConcurrencyStamp = "e1dcec39-50e2-4688-a4ea-081f6a42b0ac",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
                             NormalizedName = "CONTRIBUTOR"
                         },
                         new
                         {
-                            Id = new Guid("860d998f-83e2-4ad7-b495-647af17a51c2"),
-                            ConcurrencyStamp = "a69e6403-27b6-488e-a960-ee95688d5d2b",
+                            Id = new Guid("e1079099-9096-4b4d-8cd2-0c145216c02b"),
+                            ConcurrencyStamp = "4e77c6fa-d69d-40ae-ae24-29a431a003df",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = new Guid("a95ad0fe-2ddd-47d5-9e1c-40ba77f8c92a"),
-                            ConcurrencyStamp = "4bda57a2-2cb2-4801-b6b4-e455c0f4fc86",
+                            Id = new Guid("695bb53d-8c17-4493-ae9f-098382960615"),
+                            ConcurrencyStamp = "6e65877f-6628-45c4-94e7-f3fa0d79bc0f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = new Guid("4011435c-4b0b-4385-a831-f72e7c39a48e"),
-                            ConcurrencyStamp = "2bf4892f-e3c2-41db-a88c-7ec70bf8ae8f",
+                            Id = new Guid("93e08d06-57c0-47da-949f-8186f2ae93ba"),
+                            ConcurrencyStamp = "1ac6cb3d-cbfb-4c53-b520-4ae9ae05dc68",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -266,7 +273,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 494, DateTimeKind.Local).AddTicks(3096));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(8568));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -308,7 +315,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 1, 19, 1, 31, 43, 494, DateTimeKind.Local).AddTicks(3761));
+                        .HasDefaultValue(new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(9230));
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -484,9 +491,15 @@ namespace KixPlay_Backend.Data.Migrations
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.Media", b =>
                 {
+                    b.HasOne("KixPlay_Backend.Data.Entities.Media", "Next")
+                        .WithOne()
+                        .HasForeignKey("KixPlay_Backend.Data.Entities.Media", "NextId");
+
                     b.HasOne("KixPlay_Backend.Data.Entities.Media", "Previous")
-                        .WithOne("Next")
+                        .WithOne()
                         .HasForeignKey("KixPlay_Backend.Data.Entities.Media", "PreviousId");
+
+                    b.Navigation("Next");
 
                     b.Navigation("Previous");
                 });
@@ -611,8 +624,6 @@ namespace KixPlay_Backend.Data.Migrations
                     b.Navigation("InGenres");
 
                     b.Navigation("MediaSources");
-
-                    b.Navigation("Next");
 
                     b.Navigation("RelatedFrom");
 

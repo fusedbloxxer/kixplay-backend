@@ -70,11 +70,13 @@ namespace KixPlay_Backend.Data.Configuration
 
             builder
                 .HasOne(media => media.Next)
-                .WithOne(nextMedia => nextMedia.Previous);
+                .WithOne()
+                .HasPrincipalKey<Media>(media => media.Id);
 
             builder
                 .HasOne(media => media.Previous)
-                .WithOne(previousMedia => previousMedia.Next);
+                .WithOne()
+                .HasPrincipalKey<Media>(media => media.Id);
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<Media> builder)

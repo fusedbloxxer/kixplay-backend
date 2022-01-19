@@ -15,7 +15,7 @@ namespace KixPlay_Backend.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 490, DateTimeKind.Local).AddTicks(1032))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(5019))
                 },
                 constraints: table =>
                 {
@@ -38,11 +38,17 @@ namespace KixPlay_Backend.Data.Migrations
                     PreviewImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreviewVideoUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreviousId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 490, DateTimeKind.Local).AddTicks(2343))
+                    NextId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 374, DateTimeKind.Local).AddTicks(6259))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Medias_Medias_NextId",
+                        column: x => x.NextId,
+                        principalTable: "Medias",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Medias_Medias_PreviousId",
                         column: x => x.PreviousId,
@@ -55,7 +61,7 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(9761)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(5210)),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -75,7 +81,7 @@ namespace KixPlay_Backend.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThumbnailUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reliable = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 494, DateTimeKind.Local).AddTicks(3096))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(8568))
                 },
                 constraints: table =>
                 {
@@ -91,7 +97,7 @@ namespace KixPlay_Backend.Data.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 494, DateTimeKind.Local).AddTicks(3761)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(9230)),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -119,7 +125,7 @@ namespace KixPlay_Backend.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GenreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(2037))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(7633))
                 },
                 constraints: table =>
                 {
@@ -146,7 +152,7 @@ namespace KixPlay_Backend.Data.Migrations
                     Relationship = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MediaFromId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     MediaToId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(8062))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 377, DateTimeKind.Local).AddTicks(3535))
                 },
                 constraints: table =>
                 {
@@ -192,7 +198,7 @@ namespace KixPlay_Backend.Data.Migrations
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 1, 31, 43, 493, DateTimeKind.Local).AddTicks(3830))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 1, 19, 8, 35, 48, 376, DateTimeKind.Local).AddTicks(9289))
                 },
                 constraints: table =>
                 {
@@ -302,10 +308,10 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("4011435c-4b0b-4385-a831-f72e7c39a48e"), "2bf4892f-e3c2-41db-a88c-7ec70bf8ae8f", "Admin", "ADMIN" },
-                    { new Guid("860d998f-83e2-4ad7-b495-647af17a51c2"), "a69e6403-27b6-488e-a960-ee95688d5d2b", "Moderator", "MODERATOR" },
-                    { new Guid("a95ad0fe-2ddd-47d5-9e1c-40ba77f8c92a"), "4bda57a2-2cb2-4801-b6b4-e455c0f4fc86", "Member", "MEMBER" },
-                    { new Guid("d4625f93-e3be-4e73-b1f4-262a83b1effc"), "9bf233d4-56b5-42e2-92b3-80c0adbc429e", "Contributor", "CONTRIBUTOR" }
+                    { new Guid("2129be10-39df-423c-a30a-7d299a0f914b"), "e1dcec39-50e2-4688-a4ea-081f6a42b0ac", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("695bb53d-8c17-4493-ae9f-098382960615"), "6e65877f-6628-45c4-94e7-f3fa0d79bc0f", "Member", "MEMBER" },
+                    { new Guid("93e08d06-57c0-47da-949f-8186f2ae93ba"), "1ac6cb3d-cbfb-4c53-b520-4ae9ae05dc68", "Admin", "ADMIN" },
+                    { new Guid("e1079099-9096-4b4d-8cd2-0c145216c02b"), "4e77c6fa-d69d-40ae-ae24-29a431a003df", "Moderator", "MODERATOR" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -318,6 +324,13 @@ namespace KixPlay_Backend.Data.Migrations
                 name: "IX_MediaInGenre_MediaId",
                 table: "MediaInGenre",
                 column: "MediaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medias_NextId",
+                table: "Medias",
+                column: "NextId",
+                unique: true,
+                filter: "[NextId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medias_PreviousId",
