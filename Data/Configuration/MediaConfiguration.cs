@@ -54,7 +54,10 @@ namespace KixPlay_Backend.Data.Configuration
 
             builder
                 .HasMany(media => media.MediaSources)
-                .WithOne(mediaSources => mediaSources.Media);
+                .WithOne(mediaSource => mediaSource.Media)
+                .HasForeignKey(mediaSources => mediaSources.MediaId)
+                .HasPrincipalKey(media => media.Id)
+                .IsRequired();
 
             builder
                 .HasMany(media => media.RelatedTo)

@@ -27,7 +27,10 @@ namespace KixPlay_Backend.Data.Configuration
         {
             builder
                 .HasMany(source => source.MediaSources)
-                .WithOne(mediaSource => mediaSource.Source);
+                .WithOne(mediaSource => mediaSource.Source)
+                .HasForeignKey(mediaSource => mediaSource.SourceId)
+                .HasPrincipalKey(source => source.Id)
+                .IsRequired();
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<Source> builder)

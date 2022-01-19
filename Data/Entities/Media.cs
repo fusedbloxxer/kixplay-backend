@@ -50,6 +50,7 @@ namespace KixPlay_Backend.Data.Entities
             Finished,
             Unknown,
             Airing,
+            Aired,
             Soon,
         }
     }

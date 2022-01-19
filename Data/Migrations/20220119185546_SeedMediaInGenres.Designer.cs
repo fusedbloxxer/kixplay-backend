@@ -4,6 +4,7 @@ using KixPlay_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220119185546_SeedMediaInGenres")]
+    partial class SeedMediaInGenres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,26 +330,6 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasIndex("SourceId");
 
                     b.ToTable("MediaSources");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2f5ba7de-9a8f-434b-a61e-764dfe656bfb"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MediaId = new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"),
-                            SourceId = new Guid("4a022ad0-e6e6-4df3-9b95-bf1aa05db9df"),
-                            Url = "https://filmeserialegratis.org/fractured/"
-                        },
-                        new
-                        {
-                            Id = new Guid("f0c5a927-2ac3-4fd9-b31b-88b4d377325d"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MediaId = new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"),
-                            SourceId = new Guid("4a022ad0-e6e6-4df3-9b95-bf1aa05db9df"),
-                            Url = "https://filmeserialegratis.org/the-invitation-invitatia/"
-                        });
                 });
 
             modelBuilder.Entity("KixPlay_Backend.Data.Entities.RelatedMedia", b =>
@@ -530,7 +512,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            ConcurrencyStamp = "5100986f-740d-4950-8dba-8d279d49c122",
+                            ConcurrencyStamp = "24b1f082-676c-4b30-be16-b9afcda227c7",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -539,7 +521,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            ConcurrencyStamp = "e1aedf32-6b50-46ef-b803-566adb78658a",
+                            ConcurrencyStamp = "50cd1aae-bacf-4b0f-94ec-60af05907a78",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -548,7 +530,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            ConcurrencyStamp = "ef1a2f67-3abb-4205-8bcb-f35bfc929936",
+                            ConcurrencyStamp = "d76f3421-f0d2-41d9-97f6-803ceb5c2492",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -557,7 +539,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            ConcurrencyStamp = "07185fe7-4b15-49dc-b209-84398c90d5b7",
+                            ConcurrencyStamp = "f48ac4fe-ff22-4c95-9f24-a971d2d62ae8",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -765,7 +747,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c5b96a11-e30e-406c-8409-0020c6b4d8ac",
+                            ConcurrencyStamp = "00891ca4-b132-4656-a6ec-638faf1a5c9c",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "mikasa.ackerman@gmail.com",
@@ -785,7 +767,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f2f7297-514b-4e88-a12f-d1801be8c3c5",
+                            ConcurrencyStamp = "e801b19e-fbde-430f-8af4-469ba673f6b5",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "eren.yeager@gmail.com",
@@ -805,7 +787,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0f416b8f-26e7-4725-a7ab-51ddaf25e8fc",
+                            ConcurrencyStamp = "c45b9e3e-b005-4c73-a26c-5b87bf65b98c",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "levi.ivel@gmail.com",
@@ -824,7 +806,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f22c7556-24fe-407a-ad94-91eed1a4c44f",
+                            ConcurrencyStamp = "7f60e0e4-ba9a-4398-ba12-4c302ffb4cf3",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "armin.arlert@gmail.com",
@@ -844,7 +826,7 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4e4c42cf-0287-4464-8712-9d725d717d55",
+                            ConcurrencyStamp = "ca612520-9df0-4685-9ad4-41876d27e7a9",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "erwin.smith@gmail.com",
