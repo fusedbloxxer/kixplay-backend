@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace KixPlay_Backend.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -346,12 +346,12 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OriginalPosterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -370,7 +370,8 @@ namespace KixPlay_Backend.Data.Migrations
                         name: "FK_Comment_Users_OriginalPosterId",
                         column: x => x.OriginalPosterId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -406,10 +407,10 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("6efa8737-dc3f-4ea1-8a7e-673dc349effd"), "13247d98-cd5f-4f93-8e23-e9460b858e35", "Moderator", "MODERATOR" },
-                    { new Guid("88567a60-3e6d-480b-85d6-8f74f321107b"), "03b52ccc-9680-49ef-aceb-70cb962f5419", "Member", "MEMBER" },
-                    { new Guid("9a3f7342-fd1a-41b2-8039-71644882b2fa"), "e32fba3d-6d3a-424f-a385-2f058b82e8d4", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("a9a2d31f-ae0d-457d-ac8c-89767c07ebc7"), "6af854f2-6066-46ee-aecf-3725b297a246", "Admin", "ADMIN" }
+                    { new Guid("541634b0-19f4-4ec7-8f5a-5a2864c82f5f"), "b12131e0-20dc-47c2-a9ae-9837a90a0a63", "Moderator", "MODERATOR" },
+                    { new Guid("6cba6777-0b8f-46e6-9d56-db40077f0eaa"), "12d4c39d-8ed9-452c-a984-99625474befd", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("6dd2ed9f-ef4d-4903-b4af-da382fdabe4c"), "11daa95c-5e74-42b8-8647-663346b9b9ec", "Member", "MEMBER" },
+                    { new Guid("7769b68f-9495-4442-852a-c0dbe3628984"), "219d4197-8a47-4f00-9ebc-d38bb30ddc3d", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -420,7 +421,9 @@ namespace KixPlay_Backend.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_ParentId",
                 table: "Comment",
-                column: "ParentId");
+                column: "ParentId",
+                unique: true,
+                filter: "[ParentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_ReviewId",

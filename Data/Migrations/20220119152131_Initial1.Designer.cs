@@ -4,6 +4,7 @@ using KixPlay_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220119152131_Initial1")]
+    partial class Initial1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,8 +384,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4c1d70af-468b-4d05-9f84-a46fcea08ae1"),
-                            ConcurrencyStamp = "f14c191b-a4f6-478d-a63a-b23d6bc50771",
+                            Id = new Guid("6cba6777-0b8f-46e6-9d56-db40077f0eaa"),
+                            ConcurrencyStamp = "12d4c39d-8ed9-452c-a984-99625474befd",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -391,8 +393,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7ef0287e-f22b-434b-b59c-6e23f339abf3"),
-                            ConcurrencyStamp = "a2284cf3-d42b-4fdc-a749-880445153253",
+                            Id = new Guid("541634b0-19f4-4ec7-8f5a-5a2864c82f5f"),
+                            ConcurrencyStamp = "b12131e0-20dc-47c2-a9ae-9837a90a0a63",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -400,8 +402,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c5a4336-5897-4280-8821-62e088758f5c"),
-                            ConcurrencyStamp = "81d7708c-1bb7-4bdf-8693-2de25f376323",
+                            Id = new Guid("6dd2ed9f-ef4d-4903-b4af-da382fdabe4c"),
+                            ConcurrencyStamp = "11daa95c-5e74-42b8-8647-663346b9b9ec",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -409,8 +411,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b843cf77-4877-4b2f-b961-9dfa76c92b03"),
-                            ConcurrencyStamp = "2f6d748f-78e3-42d7-8f5d-30f6b2f3dcc0",
+                            Id = new Guid("7769b68f-9495-4442-852a-c0dbe3628984"),
+                            ConcurrencyStamp = "219d4197-8a47-4f00-9ebc-d38bb30ddc3d",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",

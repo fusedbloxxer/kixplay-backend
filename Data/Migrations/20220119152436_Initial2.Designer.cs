@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KixPlay_Backend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220119150844_Initial")]
-    partial class Initial
+    [Migration("20220119152436_Initial2")]
+    partial class Initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,15 +31,20 @@ namespace KixPlay_Backend.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<Guid?>("OriginalPosterId")
+                    b.Property<Guid>("OriginalPosterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ParentId")
@@ -52,7 +57,9 @@ namespace KixPlay_Backend.Data.Migrations
 
                     b.HasIndex("OriginalPosterId");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentId")
+                        .IsUnique()
+                        .HasFilter("[ParentId] IS NOT NULL");
 
                     b.HasIndex("ReviewId");
 
@@ -377,8 +384,8 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9a3f7342-fd1a-41b2-8039-71644882b2fa"),
-                            ConcurrencyStamp = "e32fba3d-6d3a-424f-a385-2f058b82e8d4",
+                            Id = new Guid("4c1d70af-468b-4d05-9f84-a46fcea08ae1"),
+                            ConcurrencyStamp = "f14c191b-a4f6-478d-a63a-b23d6bc50771",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -386,8 +393,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6efa8737-dc3f-4ea1-8a7e-673dc349effd"),
-                            ConcurrencyStamp = "13247d98-cd5f-4f93-8e23-e9460b858e35",
+                            Id = new Guid("7ef0287e-f22b-434b-b59c-6e23f339abf3"),
+                            ConcurrencyStamp = "a2284cf3-d42b-4fdc-a749-880445153253",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -395,8 +402,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("88567a60-3e6d-480b-85d6-8f74f321107b"),
-                            ConcurrencyStamp = "03b52ccc-9680-49ef-aceb-70cb962f5419",
+                            Id = new Guid("2c5a4336-5897-4280-8821-62e088758f5c"),
+                            ConcurrencyStamp = "81d7708c-1bb7-4bdf-8693-2de25f376323",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -404,8 +411,8 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a9a2d31f-ae0d-457d-ac8c-89767c07ebc7"),
-                            ConcurrencyStamp = "6af854f2-6066-46ee-aecf-3725b297a246",
+                            Id = new Guid("b843cf77-4877-4b2f-b961-9dfa76c92b03"),
+                            ConcurrencyStamp = "2f6d748f-78e3-42d7-8f5d-30f6b2f3dcc0",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -651,11 +658,13 @@ namespace KixPlay_Backend.Data.Migrations
                 {
                     b.HasOne("KixPlay_Backend.Data.Entities.User", "OriginalPoster")
                         .WithMany("Comments")
-                        .HasForeignKey("OriginalPosterId");
+                        .HasForeignKey("OriginalPosterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("KixPlay_Backend.Data.Entities.Comment", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
+                        .WithOne()
+                        .HasForeignKey("KixPlay_Backend.Data.Entities.Comment", "ParentId");
 
                     b.HasOne("KixPlay_Backend.Data.Entities.Review", null)
                         .WithMany("Comments")
