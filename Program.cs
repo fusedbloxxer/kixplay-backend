@@ -41,14 +41,19 @@ builder.Services.AddAuthorizationCore(options =>
     });
 });
 
+// Add logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // Add authorization handlers
 builder.Services.AddSingleton<IAuthorizationHandler, IsSameUserHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, AdminHandler>();
 
-// Add Services
+// Add services
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Build the application using the configured services
 var app = builder.Build();

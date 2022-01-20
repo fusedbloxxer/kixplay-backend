@@ -17,19 +17,19 @@ namespace KixPlay_Backend.Controllers
 
         private readonly ITokenService _tokenService;
 
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         
         private readonly ILogger<UsersController> _logger;
 
         public UsersController(
             IMapper mapper,
+            IUnitOfWork unitOfWork,
             ITokenService tokenService,
-            IUserRepository userRepository,
             ILogger<UsersController> logger
         )
         {
-            _userRepository = userRepository;
             _tokenService = tokenService;
+            _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
         }
@@ -40,7 +40,7 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var users = await _userRepository.GetAllAsync();
+                var users = await _unitOfWork.UserRepository.GetAllAsync();
 
                 var usersDto = _mapper.ProjectTo<UserGetResponseDto>(users.AsQueryable());
 
@@ -59,7 +59,7 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var user = await _userRepository.GetByIdAsync(userId);
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
 
                 if (user == null)
                 {
@@ -101,7 +101,7 @@ namespace KixPlay_Backend.Controllers
                     return BadRequest(new ErrorResponse("You can search a user only by either userId, email or username."));
                 }
 
-                var users = await _userRepository.GetAllAsync();
+                var users = await _unitOfWork.UserRepository.GetAllAsync();
 
                 var user = users.FirstOrDefault(user =>
                 {
@@ -140,7 +140,7 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var createResult = await _userRepository.CreateWithOptionsAsync(
+                var createResult = await _unitOfWork.UserRepository.CreateWithOptionsAsync(
                     _mapper.Map<UserRegisterRequestDto, User>(userRegisterDto),
                     new Services.Repositories.Implementations.UserOptions
                     {
@@ -156,7 +156,7 @@ namespace KixPlay_Backend.Controllers
                     return BadRequest(new ErrorResponse("Invalid user registration."));
                 }
 
-                var user = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
+                var user = await _unitOfWork.UserRepository.GetByUsernameAsync(userRegisterDto.UserName);
 
                 if (user == null)
                 {
@@ -164,6 +164,8 @@ namespace KixPlay_Backend.Controllers
                 }
 
                 var token = await _tokenService.CreateToken(user);
+
+                await _unitOfWork.CompleteAsync();
 
                 return StatusCode(StatusCodes.Status201Created, new UserRegisterResponseDto { Token = token, });
             }
@@ -180,14 +182,14 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var user = await _userRepository.GetByEmailAsync(userLoginDto.Email);
+                var user = await _unitOfWork.UserRepository.GetByEmailAsync(userLoginDto.Email);
 
                 if (user == null)
                 {
                     return NotFound(new ErrorResponse($"The user with the email {userLoginDto.Email} does not exist."));
                 }
 
-                var signInResult = await _userRepository.CanUserLoginAsync(
+                var signInResult = await _unitOfWork.UserRepository.CanUserLoginAsync(
                     user,
                     userLoginDto.Password
                 );
@@ -219,19 +221,21 @@ namespace KixPlay_Backend.Controllers
                     return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
                 }
 
-                var user = await _userRepository.GetByIdAsync(userId);
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
 
                 if (user == null)
                 {
                     return NotFound(new ErrorResponse($"The user with the id {userId} does not exist."));
                 }
 
-                var deleteResult = await _userRepository.DeleteAsync(userId);
+                var deleteResult = await _unitOfWork.UserRepository.DeleteAsync(userId);
 
                 if (!deleteResult)
                 {
                     return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse($"Could not delete user {userId}."));
                 }
+
+                await _unitOfWork.CompleteAsync();
 
                 return Ok();
             }
@@ -251,7 +255,7 @@ namespace KixPlay_Backend.Controllers
                 if (userId == Guid.Empty)
                     return BadRequest(new ErrorResponse("The user id route param must have a proper value."));
 
-                var user = await _userRepository.GetByIdAsync(userId);
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
 
                 if (user == null)
                 {
@@ -260,12 +264,14 @@ namespace KixPlay_Backend.Controllers
 
                 var updatedUser = _mapper.Map(userUpdateDto, user);
 
-                var updateResult = await _userRepository.UpdateAsync(updatedUser);
+                var updateResult = await _unitOfWork.UserRepository.UpdateAsync(updatedUser);
 
                 if (!updateResult)
                 {
                     return BadRequest(new ErrorResponse($"Could not update the user with id {userId}."));
                 }
+
+                await _unitOfWork.CompleteAsync();
 
                 return NoContent();
             }

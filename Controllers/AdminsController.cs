@@ -15,21 +15,21 @@ namespace KixPlay_Backend.Controllers
     {
         private readonly IMapper _mapper;
 
+        private readonly IUnitOfWork _unitOfWork;
+
         private readonly ITokenService _tokenService;
-        
-        private readonly IUserRepository _userRepository;
 
         private readonly ILogger<AdminsController> _logger;
 
         public AdminsController(
             IMapper mapper,
+            IUnitOfWork unitOfWork,
             ITokenService tokenService,
-            IUserRepository userRepository,
             ILogger<AdminsController> logger
         ) {
-            _mapper = mapper;
             _tokenService = tokenService;
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -38,7 +38,7 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var createAdminResult = await _userRepository.CreateWithOptionsAsync(
+                var createAdminResult = await _unitOfWork.UserRepository.CreateWithOptionsAsync(
                     _mapper.Map<User>(userRegisterDto),
                     new Services.Repositories.Implementations.UserOptions
                     {
@@ -56,7 +56,7 @@ namespace KixPlay_Backend.Controllers
                     return BadRequest(new ErrorResponse("Invalid admin creation request."));
                 }
 
-                var findAdminResult = await _userRepository.GetByUsernameAsync(userRegisterDto.UserName);
+                var findAdminResult = await _unitOfWork.UserRepository.GetByUsernameAsync(userRegisterDto.UserName);
 
                 if (findAdminResult == null)
                 {
@@ -64,6 +64,8 @@ namespace KixPlay_Backend.Controllers
                 }
 
                 var token = await _tokenService.CreateToken(findAdminResult);
+
+                await _unitOfWork.CompleteAsync();
 
                 return Ok(new UserRegisterResponseDto
                 {

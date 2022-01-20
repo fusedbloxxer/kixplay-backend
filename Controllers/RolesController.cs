@@ -10,18 +10,18 @@ namespace KixPlay_Backend.Controllers
 {
     public class RolesController : BaseApiController
     {
+        private readonly ILogger<RolesController> _logger;
+        
+        private readonly IUnitOfWork _unitOfWork;
+
         private readonly IMapper _mapper;
 
-        private readonly ILogger<RolesController> _logger;
-
-        private readonly IUserRoleRepository _userRoleRepository;
-
         public RolesController(
-            IUserRoleRepository userRoleRepository,
             ILogger<RolesController> logger,
+            IUnitOfWork unitOfWork,
             IMapper mapper
         ) {
-            _userRoleRepository = userRoleRepository;
+            _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
         }
@@ -32,7 +32,7 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var roles = await _userRoleRepository.RoleRepository.GetAllAsync();
+                var roles = await _unitOfWork.RoleRepository.GetAllAsync();
                 return Ok(roles.Select(role => _mapper.Map<RoleGetResponseDto>(role)));
             }
             catch (Exception ex)
@@ -48,25 +48,27 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var grantResult = await _userRoleRepository.GrantRolesToUser(userId, roleGrantRequest.Roles);
+                var grantResult = await _unitOfWork.UserRoleRepository.GrantRolesToUser(userId, roleGrantRequest.Roles);
 
                 if (!grantResult)
                 {
                     return BadRequest(new ErrorResponse($"Could not grant roles to user {userId}."));
                 }
 
-                var user = await _userRoleRepository.UserRepository.GetByIdAsync(userId);
+                var user = await _unitOfWork.UserRoleRepository.UserRepository.GetByIdAsync(userId);
 
                 if (user == null)
                 {
                     return BadRequest(new ErrorResponse($"User {userId} not found."));
                 }
 
-                var roles = await _userRoleRepository.GetRolesFromUser(user.Id);
+                var roles = await _unitOfWork.UserRoleRepository.GetRolesFromUser(user.Id);
 
                 var grantResponseDto = _mapper.Map<RoleGrantResponseDto>(user);
 
                 grantResponseDto.Roles = _mapper.Map<IEnumerable<RoleGetResponseDto>>(roles);
+
+                await _unitOfWork.CompleteAsync();
 
                 return Ok(grantResponseDto);
             }
@@ -83,25 +85,27 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var revokeResult = await _userRoleRepository.RevokeRolesFromUser(userId, roleRevokeRequest.Roles);
+                var revokeResult = await _unitOfWork.UserRoleRepository.RevokeRolesFromUser(userId, roleRevokeRequest.Roles);
 
                 if (!revokeResult)
                 {
                     return BadRequest(new ErrorResponse($"Invalid revoke roles request for {userId}."));
                 }
 
-                var user = await _userRoleRepository.UserRepository.GetByIdAsync(userId);
+                var user = await _unitOfWork.UserRoleRepository.UserRepository.GetByIdAsync(userId);
 
                 if (user == null)
                 {
                     return BadRequest(new ErrorResponse($"User {userId} was not found."));
                 }
 
-                var roles = await _userRoleRepository.GetRolesFromUser(user.Id);
+                var roles = await _unitOfWork.UserRoleRepository.GetRolesFromUser(user.Id);
 
                 var grantResponseDto = _mapper.Map<RoleGrantResponseDto>(user);
 
                 grantResponseDto.Roles = _mapper.Map<IEnumerable<RoleGetResponseDto>>(roles);
+
+                await _unitOfWork.CompleteAsync();
 
                 return Ok(grantResponseDto);
             }
@@ -118,7 +122,7 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var roles = await _userRoleRepository.GetRolesFromUser(userId);
+                var roles = await _unitOfWork.UserRoleRepository.GetRolesFromUser(userId);
 
                 var rolesDto = _mapper.Map<IEnumerable<RoleGetResponseDto>>(roles);
 
