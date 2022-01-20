@@ -21,6 +21,8 @@ namespace KixPlay_Backend.Data
 
         public DbSet<RelatedMedia> RelatedMedias { get; set; }
 
+        public DbSet<MediaInGenre> MediaInGenres { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {

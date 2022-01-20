@@ -15,6 +15,8 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
         protected readonly IMapper _mapper;
 
+        private protected readonly TContext _context;
+        
         private protected readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(
@@ -23,6 +25,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             IMapper mapper
         ) {
             _dbSet = context.Set<TEntity>();
+            _context = context;
             _logger = logger;
             _mapper = mapper;
         }
