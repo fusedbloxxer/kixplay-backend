@@ -6,6 +6,8 @@
 
         IMovieRepository MovieRepository { get; }
 
+        IWatchRepository WatchRepository { get; }
+
         IUserRepository UserRepository { get; }
 
         IRoleRepository RoleRepository { get; }

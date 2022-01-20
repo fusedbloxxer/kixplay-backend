@@ -14,6 +14,8 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
         public IMovieRepository MovieRepository { get; }
 
+        public IWatchRepository WatchRepository { get; }
+
         public IUserRoleRepository UserRoleRepository { get; }
 
         public UnitOfWork(
@@ -29,6 +31,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
 
             // Create repositories
             MovieRepository = new MovieRepository(_context, logger, mapper);
+            WatchRepository = new WatchRepository(_context, logger, mapper);
 
             // Group self-managed repositories
             UserRoleRepository = userRoleRepository;

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Requests;
+using KixPlay_Backend.DTOs.Responses;
 
 namespace KixPlay_Backend.Mappers
 {
@@ -30,6 +31,18 @@ namespace KixPlay_Backend.Mappers
                 .ForMember(
                     movie => movie.MetreageType,
                     config => config.MapFrom(movieDto => Enum.Parse<Movie.Metreage>(movieDto.MetreageType))
+                );
+
+            CreateMap<Media, MediaResponseDto>()
+                .ForMember(
+                    mediaDto => mediaDto.CurrentStatus,
+                    config => config.MapFrom(media => media.CurrentStatus.ToString())
+                )
+                .IncludeAllDerived();
+            CreateMap<Movie, MovieResponseDto>()
+                .ForMember(
+                    movieDto => movieDto.MetreageType,
+                    config => config.MapFrom(movie => movie.MetreageType.ToString())
                 );
         }
     }
