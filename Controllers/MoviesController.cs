@@ -1,4 +1,7 @@
-﻿using KixPlay_Backend.DTOs.Responses;
+﻿using AutoMapper;
+using KixPlay_Backend.Data.Entities;
+using KixPlay_Backend.DTOs.Requests;
+using KixPlay_Backend.DTOs.Responses;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,33 +12,143 @@ namespace KixPlay_Backend.Controllers
 {
     public class MoviesController : BaseApiController
     {
+        private readonly IMapper _mapper;
+
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly ILogger<MoviesController> _logger;
 
-        public MoviesController(IUnitOfWork unitOfWork, ILogger<MoviesController> logger)
-        {
+        public MoviesController(
+            ILogger<MoviesController> logger,
+            IUnitOfWork unitOfWork,
+            IMapper mapper
+        ){
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllMovies()
         {
             try
             {
-                var movies = await _unitOfWork.MovieRepository.GetMoviesWithGenresAsync();
+                var movies = await _unitOfWork.MovieRepository.GetAllAsync();
 
-                var response = JsonConvert.SerializeObject(movies, Formatting.Indented, new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
-                });
-
-                return Ok(response);
+                return Ok(movies);
             }
             catch (Exception ex)
             {
                 _logger.LogError("Could not retrieve all movies. Exception: {Message}", ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("find/{movieId}")]
+        public async Task<IActionResult> GetMovieById([FromRoute] Guid movieId)
+        {
+            try
+            {
+                var movie = await _unitOfWork.MovieRepository.GetByIdAsync(movieId);
+
+                if (movie == null)
+                {
+                    return NotFound(new ErrorResponse($"Could not find movie {movieId}."));
+                }
+
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not retrieve movie with id {MovieId}. Exception: {Message}", movieId, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        [Authorize(Roles = "Admin,Contributor")]
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateMovie([FromBody] MovieCreateRequestDto movieDto)
+        {
+            try
+            {
+                var movie = _mapper.Map<Movie>(movieDto);
+
+                bool movieCreateRequest = await _unitOfWork.MovieRepository.CreateAsync(movie);
+
+                if (!movieCreateRequest)
+                {
+                    return BadRequest(new ErrorResponse($"Invalid movie create request."));
+                }
+
+                await _unitOfWork.CompleteAsync();
+
+                return NoContent();
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                _logger.LogError("Could not create movie from {Request}. Exception: {Message}", movieDto, ex.Message);
+                return BadRequest(new ErrorResponse("Invalid movie create values."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not create movie from {Request}. Exception: {Message}", movieDto, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        [Authorize(Roles = "Admin,Contributor")]
+        [HttpPut("update/{movieId}")]
+        public async Task<IActionResult> UpdateMovie([FromRoute] Guid movieId, [FromBody] MovieUpdateRequestDto movieDto)
+        {
+            try
+            {
+                var movie = _mapper.Map<Movie>(movieDto);
+
+                bool movieUpdateResult = await _unitOfWork.MovieRepository.UpdateAsync(movie);
+
+                if (!movieUpdateResult)
+                {
+                    return BadRequest(new ErrorResponse($"Invalid movie update request."));
+                }
+
+                await _unitOfWork.CompleteAsync();
+
+                return NoContent();
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                _logger.LogError("Could not update movie from {Request}. Exception: {Message}", movieDto, ex.Message);
+                return BadRequest(new ErrorResponse("Invalid movie update values."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not update movie from {Request}. Exception: {Message}", movieDto, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        [Authorize(Roles = "Admin,Contributor")]
+        [HttpDelete("delete/{movieId}")]
+        public async Task<IActionResult> DeleteMovie([FromRoute] Guid movieId)
+        {
+            try
+            {
+                bool movieDeleteResult = await _unitOfWork.MovieRepository.DeleteAsync(movieId);
+
+                if (!movieDeleteResult)
+                {
+                    return BadRequest(new ErrorResponse($"Invalid movie delete request."));
+                }
+
+                await _unitOfWork.CompleteAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not delete movie {MovieId}. Exception: {Message}", movieId, ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
             }
         }
