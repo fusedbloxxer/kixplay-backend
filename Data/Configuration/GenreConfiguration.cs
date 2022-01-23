@@ -22,6 +22,10 @@ namespace KixPlay_Backend.Data.Configuration
                 .WithOne(mediaInGenre => mediaInGenre.Genre)
                 .HasForeignKey(mediaInGenre => mediaInGenre.GenreId)
                 .HasPrincipalKey(genre => genre.Id);
+
+            builder
+                .HasIndex(genre => genre.Name)
+                .IsUnique();
         }
 
         protected override void ConfigureTable(EntityTypeBuilder<Genre> builder)

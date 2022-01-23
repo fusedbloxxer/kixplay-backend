@@ -18,7 +18,7 @@ namespace KixPlay_Backend.Data.Entities
 
         public DateTime? ReleaseDate { get; set; }
 
-        public Status CurrentStatus { get; set; }
+        public AirStatus AiringStatus { get; set; }
 
         public ICollection<string> PreviewImageUrls { get; set; }
 
@@ -43,7 +43,7 @@ namespace KixPlay_Backend.Data.Entities
 
     public partial class Media : IEntity<Guid>
     {
-        public enum Status
+        public enum AirStatus
         {
             Unreleased,
             Abandoned,

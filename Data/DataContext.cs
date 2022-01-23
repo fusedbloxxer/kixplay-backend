@@ -15,13 +15,21 @@ namespace KixPlay_Backend.Data
 
         public DbSet<Movie> Movies { get; set; }
 
-        public DbSet<Source> Sources { get; set; }
+        public DbSet<Provider> Providers { get; set; }
 
         public DbSet<MediaSource> MediaSources { get; set; }
 
         public DbSet<RelatedMedia> RelatedMedias { get; set; }
 
         public DbSet<MediaInGenre> MediaInGenres { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<ReviewOpinion> ReviewsOpinions { get; set; }
+
+        public DbSet<TrackedMedia> TrackedMedias { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)

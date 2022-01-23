@@ -1,9 +1,9 @@
 ﻿using KixPlay_Backend.Data.Entities;
+using KixPlay_Backend.Models;
 
 namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
-    public interface IMovieRepository : IMediaRepository<Movie>
+    public interface IMovieRepository : IMediaRepository<Movie, MovieModel>
     {
-        Task<IEnumerable<object>> GetMoviesWithGenresAsync();
     }
 }

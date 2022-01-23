@@ -36,6 +36,25 @@ namespace KixPlay_Backend.Controllers
             {
                 var movies = await _unitOfWork.MovieRepository.GetAllAsync();
 
+                var moviesDto = _mapper.ProjectTo<MovieResponseDto>(movies.AsQueryable());
+
+                return Ok(moviesDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not retrieve all movies. Exception: {Message}", ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("all/details")]
+        public async Task<IActionResult> GetAllMoviesWithDetails()
+        {
+            try
+            {
+                var movies = await _unitOfWork.MovieRepository.GetAllDetailsAsync();
+
                 return Ok(movies);
             }
             catch (Exception ex)
@@ -58,7 +77,31 @@ namespace KixPlay_Backend.Controllers
                     return NotFound(new ErrorResponse($"Could not find movie {movieId}."));
                 }
 
-                return Ok(movie);
+                var movieDto = _mapper.Map<MovieResponseDto>(movie);
+
+                return Ok(movieDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not retrieve movie with id {MovieId}. Exception: {Message}", movieId, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("find/{movieId}/details")]
+        public async Task<IActionResult> GetMovieByIdWithDetails([FromRoute] Guid movieId)
+        {
+            try
+            {
+                var movieModel = await _unitOfWork.MovieRepository.GetByIdWithDetailsAsync(movieId);
+
+                if (movieModel == null)
+                {
+                    return NotFound(new ErrorResponse($"Could not find movie {movieId}."));
+                }
+
+                return Ok(movieModel);
             }
             catch (Exception ex)
             {

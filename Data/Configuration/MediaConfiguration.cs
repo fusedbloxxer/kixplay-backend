@@ -26,7 +26,7 @@ namespace KixPlay_Backend.Data.Configuration
                 .IsRequired();
 
             builder
-                .Property(media => media.CurrentStatus)
+                .Property(media => media.AiringStatus)
                 .HasConversion<string>()
                 .IsRequired();
 

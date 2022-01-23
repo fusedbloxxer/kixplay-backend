@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data;
 using KixPlay_Backend.Data.Entities;
+using KixPlay_Backend.Mappers.Helpers;
+using KixPlay_Backend.Models;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,22 +17,30 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         ) : base(context, logger, mapper)
         { }
 
-        public async Task<IEnumerable<TMedia>> GetWatchListAsync<TMedia>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses) where TMedia : Media
+        public async Task<IEnumerable<TMediaModel>> GetWatchListAsync<TMedia, TMediaModel>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses)
+            where TMediaModel : MediaModel
+            where TMedia : Media
         {
-            // TODO: Write with LINQ
-            var trackedMedias = _context.Set<TrackedMedia>();
+            // Give tables an alias
+            var TrackedMedias = _context.Set<TrackedMedia>();
+            var Medias = _context.Set<TMedia>();
 
-            IEnumerable<TrackedMedia> filteredTrackedMedias = await trackedMedias.ToListAsync();
+            // Get the movies watched by a user
+            // Along with their status
+            var query = from tm in TrackedMedias
+                        where tm.UserId == userId && statuses.Contains(tm.Status)
+                        join media in Medias on tm.MediaId equals media.Id
+                        select new MediaWithStatusHelper<TMedia>
+                        {
+                            Media = media,
+                            WatchingStatus = tm.Status,
+                        };
 
-            filteredTrackedMedias = filteredTrackedMedias
-                .Where(trackedMedia => statuses.AsQueryable().Contains(trackedMedia.Status))
-                .Where(trackedMedia => trackedMedia.UserId == userId);
+            // Transform to corresponding output
+            var mediaModels = query.Select(x => _mapper.Map<TMediaModel>(x)).ToList();
 
-            var medias = await _context.Set<TMedia>().ToListAsync();
-
-            var filteredMedias = medias.Where(media => filteredTrackedMedias.Any(trackedMedia => trackedMedia.MediaId == media.Id));
-
-            return filteredMedias;
+            // Perform the query and return the result
+            return await Task.FromResult(mediaModels);
         }
     }
 }

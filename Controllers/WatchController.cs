@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Responses;
+using KixPlay_Backend.Models;
 using KixPlay_Backend.Services.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Web.Http;
 
 namespace KixPlay_Backend.Controllers
 {
@@ -27,9 +28,6 @@ namespace KixPlay_Backend.Controllers
         }
 
         /*
-        /users/{userId}/watchlist/{watchStatus}/
-        /users/{userId}/watchlist/
-
         /users/{userId}/watchlist/{watchStatus}/add/movie/{movieId}
         /users/{userId}/watchlist/{watchStatus}/update/movie/{movieId}
         /users/{userId}/watchlist/{watchStatus}/remove/movie/{movieId}
@@ -39,18 +37,16 @@ namespace KixPlay_Backend.Controllers
         */
 
         [AllowAnonymous]
-        [Microsoft.AspNetCore.Mvc.HttpGet("/api/users/{userId}/watchlist")]
+        [HttpGet("/api/users/{userId}/watchlist")]
         public async Task<IActionResult> GetWatchList([FromRoute] Guid userId, [FromQuery(Name = "status")] List<string> watchStatusQuery)
         {
             try
             {
                 var watchStatuses = watchStatusQuery.Select(status => Enum.Parse<TrackedMedia.WatchStatus>(status, true));
 
-                var watchList = await _unitOfWork.WatchRepository.GetWatchListAsync<Movie>(userId, watchStatuses);
-            
-                var movieResponseDto = _mapper.ProjectTo<MovieResponseDto>(watchList.AsQueryable());
+                var watchList = await _unitOfWork.WatchRepository.GetWatchListAsync<Movie, MovieModel>(userId, watchStatuses);
 
-                return Ok(movieResponseDto);
+                return Ok(watchList);
             }
             catch (ArgumentException ex)
             {

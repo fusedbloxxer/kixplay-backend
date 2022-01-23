@@ -3,11 +3,11 @@ using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Requests;
 using KixPlay_Backend.DTOs.Responses;
 
-namespace KixPlay_Backend.Mappers
+namespace KixPlay_Backend.Mappers.DTOs
 {
-    public class DtoProfile : Profile
+    public class UserDtoProfile : Profile
     {
-        public DtoProfile()
+        public UserDtoProfile()
         {
             CreateMap<User, UserRegisterRequestDto>();
             CreateMap<UserRegisterRequestDto, User>();

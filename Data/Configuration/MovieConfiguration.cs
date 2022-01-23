@@ -40,7 +40,7 @@ namespace KixPlay_Backend.Data.Configuration
                         ThumbnailUrl = "https://m.media-amazon.com/images/M/MV5BZTE0MWE4NzMtMzc4Ny00NWE4LTg2OTQtZmIyNDdhZjdiZmJhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg",
                         Duration = TimeSpan.FromHours(1).Add(TimeSpan.FromMinutes(40)),
                         ReleaseDate = DateTime.Parse("2019-09-22"),
-                        CurrentStatus = Media.Status.Aired,
+                        AiringStatus = Media.AirStatus.Aired,
                         MetreageType = Movie.Metreage.Long,
                         PreviewImageUrls = new List<string>()
                         {
@@ -64,7 +64,7 @@ namespace KixPlay_Backend.Data.Configuration
                         ThumbnailUrl = "https://pics.filmaffinity.com/The_Northman-208868927-large.jpg",
                         Duration = TimeSpan.FromHours(2).Add(TimeSpan.FromMinutes(20)),
                         ReleaseDate = DateTime.Parse("2022-04-22"),
-                        CurrentStatus = Media.Status.Unreleased,
+                        AiringStatus = Media.AirStatus.Unreleased,
                         MetreageType = Movie.Metreage.Long,
                         PreviewImageUrls = new List<string>()
                         {
@@ -88,7 +88,7 @@ namespace KixPlay_Backend.Data.Configuration
                         ThumbnailUrl = "https://m.media-amazon.com/images/M/MV5BMTkzODMwNDkzOF5BMl5BanBnXkFtZTgwNDA4NzA1ODE@._V1_.jpg",
                         Duration = TimeSpan.FromHours(1).Add(TimeSpan.FromMinutes(40)),
                         ReleaseDate = DateTime.Parse("2015-03-13"),
-                        CurrentStatus = Media.Status.Aired,
+                        AiringStatus = Media.AirStatus.Aired,
                         MetreageType = Movie.Metreage.Long,
                         PreviewImageUrls = new List<string>()
                         {

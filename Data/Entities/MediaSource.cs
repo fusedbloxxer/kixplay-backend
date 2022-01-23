@@ -10,8 +10,8 @@ namespace KixPlay_Backend.Data.Entities
 
         public Media Media { get; set; }
 
-        public Guid SourceId { get; set; }
+        public Guid ProviderId { get; set; }
 
-        public Source Source { get; set; }
+        public Provider Provider { get; set; }
     }
 }

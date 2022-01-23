@@ -2,7 +2,7 @@
 
 namespace KixPlay_Backend.Data.Entities
 {
-    public partial class Source : BaseEntity
+    public partial class Provider : BaseEntity
     {
         public string Url { get; set; }
 
@@ -17,7 +17,7 @@ namespace KixPlay_Backend.Data.Entities
         public ICollection<MediaSource> MediaSources { get; set; }
     }
 
-    public partial class Source : BaseEntity
+    public partial class Provider : BaseEntity
     {
         public enum Reliability
         {

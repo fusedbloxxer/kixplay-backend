@@ -1,7 +1,11 @@
-﻿namespace KixPlay_Backend.DTOs.Responses
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KixPlay_Backend.DTOs.Responses
 {
     public class MediaResponseDto : BaseResponse
     {
+        public Guid Id { get; set; }
+
         public string Title { get; set; }
 
         public string Synopsis { get; set; }

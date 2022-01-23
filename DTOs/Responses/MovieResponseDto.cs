@@ -1,4 +1,6 @@
-﻿namespace KixPlay_Backend.DTOs.Responses
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KixPlay_Backend.DTOs.Responses
 {
     public class MovieResponseDto : MediaResponseDto
     {
