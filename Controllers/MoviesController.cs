@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Requests;
-using KixPlay_Backend.DTOs.Responses;
+using KixPlay_Backend.DTOs.Responses.Abstractions;
+using KixPlay_Backend.DTOs.Responses.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,9 +54,11 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var movies = await _unitOfWork.MovieRepository.GetAllDetailsAsync();
+                var moviesDetails = await _unitOfWork.MovieRepository.GetAllDetailsAsync();
 
-                return Ok(movies);
+                var moviesDetailsDto = _mapper.ProjectTo<MovieDetailsResponseDto>(moviesDetails.AsQueryable());
+
+                return Ok(moviesDetailsDto);
             }
             catch (Exception ex)
             {
@@ -94,14 +97,16 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
-                var movieModel = await _unitOfWork.MovieRepository.GetByIdWithDetailsAsync(movieId);
+                var movieDetails = await _unitOfWork.MovieRepository.GetByIdWithDetailsAsync(movieId);
 
-                if (movieModel == null)
+                if (movieDetails == null)
                 {
                     return NotFound(new ErrorResponse($"Could not find movie {movieId}."));
                 }
 
-                return Ok(movieModel);
+                var movieDetailsDto = _mapper.Map<MovieDetailsResponseDto>(movieDetails);
+
+                return Ok(movieDetailsDto);
             }
             catch (Exception ex)
             {

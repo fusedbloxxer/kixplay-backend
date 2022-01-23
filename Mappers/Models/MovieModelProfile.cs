@@ -2,6 +2,7 @@
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Mappers.Helpers;
 using KixPlay_Backend.Models;
+using KixPlay_Backend.Models.Implementations;
 
 namespace KixPlay_Backend.Mappers.Models
 {
@@ -9,9 +10,11 @@ namespace KixPlay_Backend.Mappers.Models
     {
         public MovieModelProfile()
         {
-            CreateMap<Movie, MovieModel>();
+            CreateMap<Movie, MovieDetailsModel>();
 
-            CreateMap<MediaWithStatusHelper<Movie>, MovieModel>()
+            CreateMap<Movie, MovieWatchStatusModel>();
+
+            CreateMap<MediaWithStatusHelper<Movie>, MovieWatchStatusModel>()
                 .IncludeMembers(mediaWithStatus => mediaWithStatus.Media);
         }
     }

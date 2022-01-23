@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Responses;
+using KixPlay_Backend.DTOs.Responses.Implementations;
 using KixPlay_Backend.Models;
+using KixPlay_Backend.Models.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +46,11 @@ namespace KixPlay_Backend.Controllers
             {
                 var watchStatuses = watchStatusQuery.Select(status => Enum.Parse<TrackedMedia.WatchStatus>(status, true));
 
-                var watchList = await _unitOfWork.WatchRepository.GetWatchListAsync<Movie, MovieModel>(userId, watchStatuses);
+                var watchList = await _unitOfWork.WatchRepository.GetWatchListAsync<Media, MediaWatchStatusModel>(userId, watchStatuses);
 
-                return Ok(watchList);
+                var watchListDto = _mapper.ProjectTo<MediaWatchStatusResponseDto>(watchList.AsQueryable());
+
+                return Ok(watchListDto);
             }
             catch (ArgumentException ex)
             {

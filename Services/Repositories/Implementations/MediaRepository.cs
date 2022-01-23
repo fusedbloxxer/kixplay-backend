@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data;
 using KixPlay_Backend.Data.Entities;
-using KixPlay_Backend.Models;
+using KixPlay_Backend.Models.Abstractions;
+using KixPlay_Backend.Models.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace KixPlay_Backend.Services.Repositories.Implementations
 {
     public class MediaRepository<TMedia, TMediaModel> : GenericRepository<Guid, TMedia, DataContext>, IMediaRepository<TMedia, TMediaModel>
-        where TMediaModel : MediaModel
+        where TMediaModel : IMediaDetailsModel
         where TMedia : Media
     {
         public MediaRepository(
@@ -39,7 +40,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
                                          join genre in Genres on inGenre.GenreId equals genre.Id
                                          select genre.Name);
 
-                    mediaModel.Sources = (from mediaSource in MediaSources
+                    mediaModel.Providers = (from mediaSource in MediaSources
                                           where mediaSource.MediaId == media.Id
                                           join provider in Providers on mediaSource.ProviderId equals provider.Id
                                           group mediaSource by provider.Id into grouping
@@ -48,8 +49,8 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
                                               Provider = (from provider in Providers
                                                           where provider.Id == grouping.Key
                                                           select _mapper.Map<ProviderModel>(provider)).First(),
-                                              Urls = from mediaSource in grouping
-                                                     select mediaSource.Url
+                                              Sources = from mediaSource in grouping
+                                                        select _mapper.Map<MediaSourceModel>(mediaSource)
                                           });
 
                     return mediaModel;
@@ -80,7 +81,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
                                  select genre.Name);
 
             // Get its sources
-            mediaModel.Sources = (from mediaSource in MediaSources
+            mediaModel.Providers = (from mediaSource in MediaSources
                                   where mediaSource.MediaId == id
                                   join provider in Providers on mediaSource.ProviderId equals provider.Id
                                   group mediaSource by provider.Id into grouping
@@ -89,8 +90,8 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
                                       Provider = (from provider in Providers
                                                   where provider.Id == grouping.Key
                                                   select _mapper.Map<ProviderModel>(provider)).First(),
-                                      Urls = from mediaSource in grouping
-                                             select mediaSource.Url
+                                      Sources = from mediaSource in grouping
+                                                select _mapper.Map<MediaSourceModel>(mediaSource)
                                   });
 
             // Return the result

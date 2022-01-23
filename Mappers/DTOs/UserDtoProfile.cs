@@ -2,6 +2,7 @@
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Requests;
 using KixPlay_Backend.DTOs.Responses;
+using KixPlay_Backend.DTOs.Responses.Abstractions;
 
 namespace KixPlay_Backend.Mappers.DTOs
 {

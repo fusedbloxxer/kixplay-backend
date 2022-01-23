@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace KixPlay_Backend.DTOs.Responses
+﻿namespace KixPlay_Backend.DTOs.Responses.Abstractions
 {
-    public class MediaResponseDto : BaseResponse
+    public interface IMediaResponseDto
     {
         public Guid Id { get; set; }
 
@@ -20,6 +18,6 @@ namespace KixPlay_Backend.DTOs.Responses
 
         public DateTime? ReleaseDate { get; set; }
 
-        public string CurrentStatus { get; set; }
+        public string AiringStatus { get; set; }
     }
 }

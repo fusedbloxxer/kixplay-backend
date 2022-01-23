@@ -1,10 +1,8 @@
-﻿using KixPlay_Backend.Data.Entities;
-using static KixPlay_Backend.Data.Entities.Media;
-using static KixPlay_Backend.Data.Entities.TrackedMedia;
+﻿using static KixPlay_Backend.Data.Entities.Media;
 
-namespace KixPlay_Backend.Models
+namespace KixPlay_Backend.Models.Abstractions
 {
-    public class MediaModel : BaseModel
+    public interface IMediaModel
     {
         public Guid Id { get; set; }
 
@@ -23,11 +21,5 @@ namespace KixPlay_Backend.Models
         public DateTime? ReleaseDate { get; set; }
 
         public AirStatus AiringStatus { get; set; }
-
-        public WatchStatus WatchingStatus { get; set; }
-
-        public IEnumerable<string> Genres { get; set; }
-
-        public IEnumerable<MediaSourcesModel> Sources { get; set; }
     }
 }

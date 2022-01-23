@@ -1,12 +1,12 @@
 ﻿using KixPlay_Backend.Data.Entities;
-using KixPlay_Backend.Models;
+using KixPlay_Backend.Models.Abstractions;
 
 namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
     public interface IWatchRepository : IGenericRepository<Guid, TrackedMedia>
     {
-        public Task<IEnumerable<TMediaModel>> GetWatchListAsync<TMedia, TMediaModel>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses)
-            where TMediaModel : MediaModel
+        public Task<IEnumerable<TMediaWatch>> GetWatchListAsync<TMedia, TMediaWatch>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses)
+            where TMediaWatch : IMediaWatchStatusModel
             where TMedia : Media;
     }
 }

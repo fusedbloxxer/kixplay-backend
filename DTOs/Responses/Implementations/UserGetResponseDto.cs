@@ -1,4 +1,6 @@
-﻿namespace KixPlay_Backend.DTOs.Responses
+﻿using KixPlay_Backend.DTOs.Responses.Implementations;
+
+namespace KixPlay_Backend.DTOs.Responses
 {
     public class UserGetResponseDto : BaseResponse
     {

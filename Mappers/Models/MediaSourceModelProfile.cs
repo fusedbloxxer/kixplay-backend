@@ -4,11 +4,11 @@ using KixPlay_Backend.Models.Implementations;
 
 namespace KixPlay_Backend.Mappers.Models
 {
-    public class ProviderModelProfile : Profile
+    public class MediaSourceModelProfile : Profile
     {
-        public ProviderModelProfile()
+        public MediaSourceModelProfile()
         {
-            CreateMap<Provider, ProviderModel>();
+            CreateMap<MediaSource, MediaSourceModel>();
         }
     }
 }

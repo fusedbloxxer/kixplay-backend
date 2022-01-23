@@ -3,7 +3,7 @@ using KixPlay_Backend.Models;
 
 namespace KixPlay_Backend.Services.Repositories.Interfaces
 {
-    public interface IMovieRepository : IMediaRepository<Movie, MovieModel>
+    public interface IMovieRepository : IMediaRepository<Movie, MovieDetailsModel>
     {
     }
 }

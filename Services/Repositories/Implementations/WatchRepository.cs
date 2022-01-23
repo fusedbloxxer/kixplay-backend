@@ -3,6 +3,7 @@ using KixPlay_Backend.Data;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Mappers.Helpers;
 using KixPlay_Backend.Models;
+using KixPlay_Backend.Models.Abstractions;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +18,8 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         ) : base(context, logger, mapper)
         { }
 
-        public async Task<IEnumerable<TMediaModel>> GetWatchListAsync<TMedia, TMediaModel>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses)
-            where TMediaModel : MediaModel
+        public async Task<IEnumerable<TMediaWatch>> GetWatchListAsync<TMedia, TMediaWatch>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses)
+            where TMediaWatch : IMediaWatchStatusModel
             where TMedia : Media
         {
             // Give tables an alias
@@ -37,7 +38,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
                         };
 
             // Transform to corresponding output
-            var mediaModels = query.Select(x => _mapper.Map<TMediaModel>(x)).ToList();
+            var mediaModels = query.Select(x => _mapper.Map<TMediaWatch>(x)).ToList();
 
             // Perform the query and return the result
             return await Task.FromResult(mediaModels);

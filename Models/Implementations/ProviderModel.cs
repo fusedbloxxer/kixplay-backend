@@ -1,6 +1,6 @@
 ﻿using static KixPlay_Backend.Data.Entities.Provider;
 
-namespace KixPlay_Backend.Models
+namespace KixPlay_Backend.Models.Implementations
 {
     public class ProviderModel : BaseModel
     {

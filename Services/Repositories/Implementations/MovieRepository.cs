@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KixPlay_Backend.Services.Repositories.Implementations
 {
-    public class MovieRepository : MediaRepository<Movie, MovieModel>, IMovieRepository
+    public class MovieRepository : MediaRepository<Movie, MovieDetailsModel>, IMovieRepository
     {
         public MovieRepository(
             DataContext context,

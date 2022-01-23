@@ -2,6 +2,7 @@
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Requests;
 using KixPlay_Backend.DTOs.Responses;
+using KixPlay_Backend.DTOs.Responses.Implementations;
 using KixPlay_Backend.Services.Interfaces;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;

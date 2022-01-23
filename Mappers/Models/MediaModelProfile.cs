@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Mappers.Helpers;
-using KixPlay_Backend.Models;
+using KixPlay_Backend.Models.Implementations;
 
 namespace KixPlay_Backend.Mappers.Models
 {
@@ -9,10 +9,12 @@ namespace KixPlay_Backend.Mappers.Models
     {
         public MediaModelProfile()
         {
-            CreateMap<Media, MediaModel>()
+            CreateMap<Media, MediaDetailsModel>()
                 .IncludeAllDerived();
 
-            CreateMap<MediaWithStatusHelper<Media>, MediaModel>()
+            CreateMap<Media, MediaWatchStatusModel>();
+
+            CreateMap<MediaWithStatusHelper<Media>, MediaWatchStatusModel>()
                 .IncludeMembers(mediaWithStatus => mediaWithStatus.Media);
         }
     }

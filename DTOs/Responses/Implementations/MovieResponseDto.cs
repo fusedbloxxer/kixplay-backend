@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KixPlay_Backend.DTOs.Responses
+namespace KixPlay_Backend.DTOs.Responses.Abstractions
 {
-    public class MovieResponseDto : MediaResponseDto
+    public class MovieResponseDto : MediaResponseDto, IMovieResponseDto
     {
         public int WonAwards { get; set; }
 
