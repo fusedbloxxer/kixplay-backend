@@ -70,6 +70,7 @@ namespace KixPlay_Backend.Data.Configuration
                         NormalizedEmail = "MIKASA.ACKERMAN@GMAIL.COM",
                         DateOfBirth = DateTime.Today.AddYears(-24),
                         PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
                     },
                     new User()
                     {
@@ -82,6 +83,7 @@ namespace KixPlay_Backend.Data.Configuration
                         NormalizedEmail = "EREN.YEAGER@GMAIL.COM",
                         DateOfBirth = DateTime.Today.AddYears(-27),
                         PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
                     },
                     new User()
                     {
@@ -93,6 +95,7 @@ namespace KixPlay_Backend.Data.Configuration
                         NormalizedEmail = "LEVI.IVEL@GMAIL.COM",
                         DateOfBirth = DateTime.Today.AddYears(-25),
                         PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
                     },
                     new User()
                     {
@@ -105,6 +108,7 @@ namespace KixPlay_Backend.Data.Configuration
                         NormalizedEmail = "ARMIN.ARLERT@GMAIL.COM",
                         DateOfBirth = DateTime.Today.AddYears(-18),
                         PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
                     },
                     new User()
                     {
@@ -117,6 +121,7 @@ namespace KixPlay_Backend.Data.Configuration
                         NormalizedEmail = "ERWIN.SMITH@GMAIL.COM",
                         DateOfBirth = DateTime.Today.AddYears(-22),
                         PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
+                        SecurityStamp = Guid.NewGuid().ToString(),
                     }
                 });
         }

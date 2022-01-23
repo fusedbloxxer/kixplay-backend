@@ -17,6 +17,8 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 
         Task<bool> DeleteAsync(TKey id);
 
+        Task<bool> ExistsAsync(TKey id);
+
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

@@ -69,6 +69,8 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             }
 
             entry = _mapper.Map(entity, entry);
+
+            entry.LastUpdatedAt = DateTime.UtcNow;
             
             _dbSet.Update(entry);
 
@@ -78,6 +80,11 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
+        }
+
+        public async Task<bool> ExistsAsync(TKey id)
+        {
+            return await _dbSet.AnyAsync(entry => entry.Id.Equals(id));
         }
     }
 }

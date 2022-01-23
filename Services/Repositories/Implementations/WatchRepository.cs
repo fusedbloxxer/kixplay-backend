@@ -2,7 +2,6 @@
 using KixPlay_Backend.Data;
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Mappers.Helpers;
-using KixPlay_Backend.Models;
 using KixPlay_Backend.Models.Abstractions;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +17,21 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         ) : base(context, logger, mapper)
         { }
 
+        public async Task<TrackedMedia> FindAsync(Guid userId, Guid mediaId)
+        {
+            var TrackedMedias = _dbSet;
+
+            var query = from trackedMedia in TrackedMedias
+                        where trackedMedia.UserId == userId && trackedMedia.MediaId == mediaId
+                        select trackedMedia;
+
+            query = query
+                .Include(trackedMedia => trackedMedia.Media)
+                .Include(trackedMedia => trackedMedia.User);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<TMediaWatch>> GetWatchListAsync<TMedia, TMediaWatch>(Guid userId, IEnumerable<TrackedMedia.WatchStatus> statuses)
             where TMediaWatch : IMediaWatchStatusModel
             where TMedia : Media
@@ -31,6 +45,7 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             var query = from tm in TrackedMedias
                         where tm.UserId == userId && statuses.Contains(tm.Status)
                         join media in Medias on tm.MediaId equals media.Id
+                        orderby tm.LastUpdatedAt descending, tm.CreatedAt descending
                         select new MediaWithStatusHelper<TMedia>
                         {
                             Media = media,

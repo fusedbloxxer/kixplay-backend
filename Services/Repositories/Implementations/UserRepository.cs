@@ -219,5 +219,10 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         {
             return await _userManager.Users.Where(predicate).ToListAsync();
         }
+
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _userManager.Users.AnyAsync(x => x.Id == id);
+        }
     }
 }

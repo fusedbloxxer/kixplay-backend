@@ -33,6 +33,7 @@ namespace KixPlay_Backend.Mappers.DTOs
                 )
                 .IncludeAllDerived();
 
+            CreateMap<Media, MediaWatchStatusResponseDto>();
 
             CreateMap<MediaDetailsModel, MediaDetailsResponseDto>();
 

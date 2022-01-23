@@ -42,21 +42,12 @@ namespace KixPlay_Backend.Data
 
             ConfigureTables(builder);
 
-            AddRelations(builder);
-
             RenameTables(builder);
-
-            SeedWithData(builder);
         }
 
         private static void ConfigureTables(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
-
-        private static void AddRelations(ModelBuilder builder)
-        {
-
         }
 
         private static void RenameTables(ModelBuilder builder)
@@ -72,10 +63,6 @@ namespace KixPlay_Backend.Data
 
             builder.Entity<IdentityUserToken<Guid>>()
                 .ToTable("UserTokens");
-        }
-
-        private static void SeedWithData(ModelBuilder builder)
-        {
         }
     }
 }

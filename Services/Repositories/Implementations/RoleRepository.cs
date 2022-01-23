@@ -154,5 +154,10 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
             
             return await _roleManager.Roles.Where(predicate).ToListAsync();
         }
+
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _roleManager.Roles.AnyAsync(x => x.Id == id);
+        }
     }
 }

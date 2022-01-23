@@ -97,6 +97,13 @@ namespace KixPlay_Backend.Controllers
         {
             try
             {
+                var movieExists = await _unitOfWork.MovieRepository.ExistsAsync(movieId);
+
+                if (!movieExists)
+                {
+                    return NotFound(new ErrorResponse($"Could not find movie {movieId}."));
+                }
+
                 var movieDetails = await _unitOfWork.MovieRepository.GetByIdWithDetailsAsync(movieId);
 
                 if (movieDetails == null)
@@ -153,6 +160,15 @@ namespace KixPlay_Backend.Controllers
             try
             {
                 var movie = _mapper.Map<Movie>(movieDto);
+
+                var movieExists = await _unitOfWork.MovieRepository.ExistsAsync(movieId);
+
+                if (!movieExists)
+                {
+                    return BadRequest(new ErrorResponse($"Movie {movieId} does not exist."));
+                }
+
+                movie.Id = movieId;
 
                 bool movieUpdateResult = await _unitOfWork.MovieRepository.UpdateAsync(movie);
 
