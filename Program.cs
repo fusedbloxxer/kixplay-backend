@@ -1,12 +1,10 @@
 using KixPlay_Backend.Authorization.Handlers;
 using KixPlay_Backend.Authorization.Requirements;
 using KixPlay_Backend.Data;
-using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.Extensions;
 using KixPlay_Backend.Services.Repositories.Implementations;
 using KixPlay_Backend.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,6 +44,20 @@ builder.Services.AddAuthorizationCore(options =>
     });
 });
 
+// Add CORS for Angular Client
+const string CorsPolicy = "AngularClientOriginPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: CorsPolicy, cors =>
+    {
+        cors
+            .WithOrigins(builder.Configuration["AppSettings:ClientHostUrl"])
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 // Add logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -71,6 +83,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseCors(CorsPolicy);
 
 app.UseAuthentication();
 

@@ -29,6 +29,7 @@ namespace KixPlay_Backend.Controllers
             _mapper = mapper;
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MovieResponseDto>))]
         [AllowAnonymous]
         [HttpGet("all")]
         public async Task<IActionResult> GetAllMovies()
@@ -48,6 +49,7 @@ namespace KixPlay_Backend.Controllers
             }
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MovieDetailsResponseDto>))]
         [AllowAnonymous]
         [HttpGet("all/details")]
         public async Task<IActionResult> GetAllMoviesWithDetails()
@@ -67,6 +69,7 @@ namespace KixPlay_Backend.Controllers
             }
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MovieResponseDto))]
         [AllowAnonymous]
         [HttpGet("find/{movieId}")]
         public async Task<IActionResult> GetMovieById([FromRoute] Guid movieId)
@@ -91,6 +94,7 @@ namespace KixPlay_Backend.Controllers
             }
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MovieDetailsResponseDto))]
         [AllowAnonymous]
         [HttpGet("find/{movieId}/details")]
         public async Task<IActionResult> GetMovieByIdWithDetails([FromRoute] Guid movieId)
