@@ -2,7 +2,7 @@
 
 namespace KixPlay_Backend.DTOs.Responses
 {
-    public class UserRegisterResponseDto : BaseResponse
+    public class UserRegisterResponseDto : UserGetResponseDto
     {
         public string Token { get; set; }
     }

@@ -135,6 +135,7 @@ namespace KixPlay_Backend.Controllers
 
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserRegisterResponseDto))]
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> CreateUser([FromBody] UserRegisterRequestDto userRegisterDto)
@@ -168,7 +169,12 @@ namespace KixPlay_Backend.Controllers
 
                 await _unitOfWork.CompleteAsync();
 
-                return StatusCode(StatusCodes.Status201Created, new UserRegisterResponseDto { Token = token, });
+                var responseDto = _mapper.Map(user, new UserRegisterResponseDto()
+                {
+                    Token = token,
+                });
+
+                return StatusCode(StatusCodes.Status201Created, responseDto);
             }
             catch (Exception ex)
             {
@@ -177,6 +183,7 @@ namespace KixPlay_Backend.Controllers
             }
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserLoginResponseDto))]
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> LoginUser([FromBody] UserLoginRequestDto userLoginDto)
@@ -202,7 +209,12 @@ namespace KixPlay_Backend.Controllers
 
                 var token = await _tokenService.CreateToken(user);
 
-                return Ok(new UserLoginResponseDto { Token = token, });
+                var responseDto = _mapper.Map(user, new UserLoginResponseDto()
+                {
+                    Token = token,
+                });
+
+                return Ok(responseDto);
             }
             catch (Exception ex)
             {
