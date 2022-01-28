@@ -2,7 +2,7 @@
 using KixPlay_Backend.Data.Entities;
 using KixPlay_Backend.DTOs.Requests;
 using KixPlay_Backend.DTOs.Responses;
-using KixPlay_Backend.DTOs.Responses.Abstractions;
+using KixPlay_Backend.DTOs.Responses.Implementations;
 
 namespace KixPlay_Backend.Mappers.DTOs
 {
@@ -16,6 +16,7 @@ namespace KixPlay_Backend.Mappers.DTOs
             CreateMap<User, UserLoginRequestDto>();
             CreateMap<UserLoginRequestDto, User>();
 
+            CreateMap<User, UserUpdateResponseDto>();
             CreateMap<User, UserUpdateRequestDto>();
             CreateMap<UserUpdateRequestDto, User>()
                 .ForAllMembers(options =>

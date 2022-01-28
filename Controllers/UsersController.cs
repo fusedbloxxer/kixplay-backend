@@ -155,7 +155,7 @@ namespace KixPlay_Backend.Controllers
 
                 if (!createResult)
                 {
-                    return BadRequest(new ErrorResponse("Invalid user registration."));
+                    return BadRequest(new ErrorResponse("Invalid username or email."));
                 }
 
                 var user = await _unitOfWork.UserRepository.GetByUsernameAsync(userRegisterDto.UserName);
@@ -286,7 +286,15 @@ namespace KixPlay_Backend.Controllers
 
                 await _unitOfWork.CompleteAsync();
 
-                return NoContent();
+                var dbUpdatedUser = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+
+                var userResponseDto = _mapper.Map<UserUpdateResponseDto>(dbUpdatedUser);
+
+                var token = await _tokenService.CreateToken(dbUpdatedUser);
+
+                userResponseDto.Token = token;
+
+                return Ok(userResponseDto);
             }
             catch (Exception ex)
             {

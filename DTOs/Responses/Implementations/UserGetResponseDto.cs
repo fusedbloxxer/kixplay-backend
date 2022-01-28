@@ -1,6 +1,4 @@
-﻿using KixPlay_Backend.DTOs.Responses.Implementations;
-
-namespace KixPlay_Backend.DTOs.Responses
+﻿namespace KixPlay_Backend.DTOs.Responses.Implementations
 {
     public class UserGetResponseDto : BaseResponse
     {
