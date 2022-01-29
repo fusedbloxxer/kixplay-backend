@@ -61,7 +61,7 @@ namespace KixPlay_Backend.Data.Configuration
                         Synopsis = "Written by Eggers and Icelandic poet and novelist Sjón Sigurdsson, Northman is described as a grounded story set in Iceland at the turn of the 10th century that centres on a Nordic prince who seeks revenge for the death of his father.",
                         Description = "From acclaimed director Robert Eggers, The Northman is an epic revenge thriller that explores how far a Viking prince will go to seek justice for his murdered father.",
                         BannerUrl = "https://i.ytimg.com/vi/oMSdFM12hOw/maxresdefault.jpg",
-                        ThumbnailUrl = "https://pics.filmaffinity.com/The_Northman-208868927-large.jpg",
+                        ThumbnailUrl = "https://images.justwatch.com/poster/257876484/s718c",
                         Duration = TimeSpan.FromHours(2).Add(TimeSpan.FromMinutes(20)),
                         ReleaseDate = DateTime.Parse("2022-04-22"),
                         AiringStatus = Media.AirStatus.Unreleased,

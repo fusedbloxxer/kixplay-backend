@@ -15,14 +15,14 @@ namespace KixPlay_Backend.Mappers.DTOs
             CreateMap<MediaCreateRequestDto, Media>()
                 .ForMember(
                     media => media.AiringStatus,
-                    config => config.MapFrom(mediaDto => Enum.Parse<Media.AirStatus>(mediaDto.CurrentStatus))
+                    config => config.MapFrom(mediaDto => Enum.Parse<Media.AirStatus>(mediaDto.AiringStatus))
                 )
                 .IncludeAllDerived();
 
             CreateMap<MediaUpdateRequestDto, Media>()
                 .ForMember(
                     media => media.AiringStatus,
-                    config => config.MapFrom(mediaDto => Enum.Parse<Media.AirStatus>(mediaDto.CurrentStatus))
+                    config => config.MapFrom(mediaDto => Enum.Parse<Media.AirStatus>(mediaDto.AiringStatus))
                 )
                 .IncludeAllDerived();
 

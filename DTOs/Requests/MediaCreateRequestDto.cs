@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static KixPlay_Backend.Data.Entities.Media;
 
 namespace KixPlay_Backend.DTOs.Requests
 {
@@ -27,6 +26,6 @@ namespace KixPlay_Backend.DTOs.Requests
         public DateTime? ReleaseDate { get; set; }
 
         [Required]
-        public string CurrentStatus { get; set; }
+        public string AiringStatus { get; set; }
     }
 }

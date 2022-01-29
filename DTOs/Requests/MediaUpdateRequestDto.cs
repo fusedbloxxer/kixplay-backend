@@ -23,6 +23,6 @@ namespace KixPlay_Backend.DTOs.Requests
 
         public DateTime? ReleaseDate { get; set; }
 
-        public string CurrentStatus { get; set; }
+        public string AiringStatus { get; set; }
     }
 }
