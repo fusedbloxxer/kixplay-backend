@@ -224,5 +224,21 @@ namespace KixPlay_Backend.Services.Repositories.Implementations
         {
             return await _userManager.Users.AnyAsync(x => x.Id == id);
         }
+
+        public async Task<bool> UpdateUserPasswordAsync(User user, string password)
+        {
+            var newPasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
+
+            user.PasswordHash = newPasswordHash;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

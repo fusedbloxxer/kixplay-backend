@@ -284,6 +284,16 @@ namespace KixPlay_Backend.Controllers
                     return BadRequest(new ErrorResponse($"Could not update the user with id {userId}."));
                 }
 
+                if (userUpdateDto.Password != null)
+                {
+                    var result = await _unitOfWork.UserRepository.UpdateUserPasswordAsync(user, userUpdateDto.Password);
+                
+                    if (!result)
+                    {
+                        return BadRequest(new ErrorResponse($"Could not update the user {userId}'s password."));
+                    }
+                }
+
                 await _unitOfWork.CompleteAsync();
 
                 var dbUpdatedUser = await _unitOfWork.UserRepository.GetByIdAsync(userId);

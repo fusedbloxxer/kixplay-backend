@@ -11,6 +11,8 @@ namespace KixPlay_Backend.Services.Repositories.Interfaces
 
         Task<bool> CanUserLoginAsync(User user, string password);
 
+        Task<bool> UpdateUserPasswordAsync(User user, string password);
+
         Task<bool> CreateWithPasswordAsync(User user, string password);
 
         Task<bool> CreateWithOptionsAsync(User user, UserOptions options);
