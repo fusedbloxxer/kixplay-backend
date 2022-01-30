@@ -20,6 +20,10 @@ namespace KixPlay_Backend.Models.Abstractions
 
         public DateTime? ReleaseDate { get; set; }
 
+        public ICollection<string> PreviewImageUrls { get; set; }
+
+        public ICollection<string> PreviewVideoUrls { get; set; }
+
         public AirStatus AiringStatus { get; set; }
     }
 }

@@ -1,8 +1,9 @@
-﻿using static KixPlay_Backend.Data.Entities.Media;
+﻿using KixPlay_Backend.Models.Abstractions;
+using static KixPlay_Backend.Data.Entities.Media;
 
 namespace KixPlay_Backend.Models.Implementations
 {
-    public class MediaModel : BaseModel
+    public class MediaModel : BaseModel, IMediaModel
     {
         public Guid Id { get; set; }
 
@@ -19,6 +20,10 @@ namespace KixPlay_Backend.Models.Implementations
         public TimeSpan? Duration { get; set; }
 
         public DateTime? ReleaseDate { get; set; }
+
+        public ICollection<string> PreviewImageUrls { get; set; }
+
+        public ICollection<string> PreviewVideoUrls { get; set; }
 
         public AirStatus AiringStatus { get; set; }
     }

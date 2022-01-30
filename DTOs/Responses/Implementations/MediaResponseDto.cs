@@ -21,6 +21,10 @@ namespace KixPlay_Backend.DTOs.Responses.Abstractions
 
         public DateTime? ReleaseDate { get; set; }
 
+        public ICollection<string> PreviewImageUrls { get; set; }
+
+        public ICollection<string> PreviewVideoUrls { get; set; }
+
         public string AiringStatus { get; set; }
     }
 }
