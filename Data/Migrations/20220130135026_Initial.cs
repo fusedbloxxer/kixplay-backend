@@ -14,7 +14,7 @@ namespace KixPlay_Backend.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
@@ -35,7 +35,7 @@ namespace KixPlay_Backend.Data.Migrations
                     ThumbnailUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CurrentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AiringStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PreviewImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreviewVideoUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreviousId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -59,23 +59,7 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sources",
+                name: "Providers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -89,7 +73,23 @@ namespace KixPlay_Backend.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sources", x => x.Id);
+                    table.PrimaryKey("PK_Providers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,6 +194,34 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MediaSources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaSources", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MediaSources_Medias_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Medias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MediaSources_Providers_ProviderId",
+                        column: x => x.ProviderId,
+                        principalTable: "Providers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -210,34 +238,6 @@ namespace KixPlay_Backend.Data.Migrations
                         name: "FK_RoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MediaSources",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MediaSources", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MediaSources_Medias_MediaId",
-                        column: x => x.MediaId,
-                        principalTable: "Medias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MediaSources_Sources_SourceId",
-                        column: x => x.SourceId,
-                        principalTable: "Sources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -462,27 +462,16 @@ namespace KixPlay_Backend.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Medias",
-                columns: new[] { "Id", "BannerUrl", "CurrentStatus", "Description", "Duration", "NextId", "PreviewImageUrls", "PreviewVideoUrls", "PreviousId", "ReleaseDate", "Synopsis", "ThumbnailUrl", "Title" },
+                columns: new[] { "Id", "AiringStatus", "BannerUrl", "Description", "Duration", "NextId", "PreviewImageUrls", "PreviewVideoUrls", "PreviousId", "ReleaseDate", "Synopsis", "ThumbnailUrl", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"), "https://i2-prod.mirror.co.uk/incoming/article20584611.ece/ALTERNATES/s1200b/1_Fractured_00_10_38_22_R.jpg", "Aired", "Driving cross-country, Ray and his wife and daughter stop at a highway rest area where his daughter falls and breaks her arm. After a frantic rush to the hospital and a clash with the check-in nurse, Ray is finally able to get her to a doctor. While the wife and daughter go downstairs for an MRI, Ray, exhausted, passes out in a chair in the lobby. Upon waking up, they have no record or knowledge of Ray's family ever being checked in.—Alan B. McElroy", new TimeSpan(0, 1, 40, 0, 0), null, "[\r\n  \"https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABSrkPHFHFt3JHfZOtaq2Naho-W8R0qxyTgNmDuM5etrbqvn_8hBS34qp5co6gh9EeW9I61LmTGx_yGG3ytieoDgjuHdF.jpg?r=054\",\r\n  \"https://www.refinery29.com/images/8556165.jpg?crop=2000%2C1051%2Cx0%2Cy133\",\r\n  \"https://d2e111jq13me73.cloudfront.net/sites/default/files/styles/share_link_image_large/public/screenshots/csm-movie/fractured-screenshot-1.jpg?itok=eLiXNoOY\"\r\n]", "[\r\n  \"https://www.youtube.com/watch?v=S8obCz5NSog\"\r\n]", null, new DateTime(2019, 9, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "A couple stops at a gas station, where their 6 y.o. daughter's arm is fractured. They hurry to a hospital. Something strange is going on there. The wife and daughter go missing.", "https://m.media-amazon.com/images/M/MV5BZTE0MWE4NzMtMzc4Ny00NWE4LTg2OTQtZmIyNDdhZjdiZmJhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg", "Fractured" },
-                    { new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"), "https://i.ytimg.com/vi/oMSdFM12hOw/maxresdefault.jpg", "Unreleased", "From acclaimed director Robert Eggers, The Northman is an epic revenge thriller that explores how far a Viking prince will go to seek justice for his murdered father.", new TimeSpan(0, 2, 20, 0, 0), null, "[\r\n  \"https://decider.com/wp-content/uploads/2021/12/The-Northman.jpg?quality=80\\u0026strip=all\",\r\n  \"https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/12/Alexander-Skarsgard-and-Anya-Taylor-Joy-The-Northman-social.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BYjA3NjkyZjYtN2UwZC00MWM5LTk4MDUtMzcxNDU4ZDE3OWZkXkEyXkFqcGdeQWpnYW1i._V1_QL75_UX500_CR0,0,500,281_.jpg\"\r\n]", "[\r\n  \"https://www.youtube.com/watch?v=oMSdFM12hOw\"\r\n]", null, new DateTime(2022, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Written by Eggers and Icelandic poet and novelist Sjón Sigurdsson, Northman is described as a grounded story set in Iceland at the turn of the 10th century that centres on a Nordic prince who seeks revenge for the death of his father.", "https://pics.filmaffinity.com/The_Northman-208868927-large.jpg", "The Northman" },
-                    { new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"), "https://s3.amazonaws.com/static.rogerebert.com/uploads/review/primary_image/reviews/the-invitation-2016/The-Invitation-2016.jpg", "Aired", "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions. A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.", new TimeSpan(0, 1, 40, 0, 0), null, "[\r\n  \"https://static01.nyt.com/images/2016/04/08/arts/08INVITE/08INVITE-superJumbo.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BMTgzMTU1NjE4N15BMl5BanBnXkFtZTgwOTU3ODM1ODE@._V1_.jpg\",\r\n  \"http://www.moriareviews.com/rongulator/wp-content/uploads/Invitation-2015-8.jpg\"\r\n]", "[\r\n  \"https://www.youtube.com/watch?v=0-mp77SZ_0M\"\r\n]", null, new DateTime(2015, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.", "https://m.media-amazon.com/images/M/MV5BMTkzODMwNDkzOF5BMl5BanBnXkFtZTgwNDA4NzA1ODE@._V1_.jpg", "The Invitation" }
+                    { new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"), "Aired", "https://i2-prod.mirror.co.uk/incoming/article20584611.ece/ALTERNATES/s1200b/1_Fractured_00_10_38_22_R.jpg", "Driving cross-country, Ray and his wife and daughter stop at a highway rest area where his daughter falls and breaks her arm. After a frantic rush to the hospital and a clash with the check-in nurse, Ray is finally able to get her to a doctor. While the wife and daughter go downstairs for an MRI, Ray, exhausted, passes out in a chair in the lobby. Upon waking up, they have no record or knowledge of Ray's family ever being checked in.—Alan B. McElroy", new TimeSpan(0, 1, 40, 0, 0), null, "[\r\n  \"https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABSrkPHFHFt3JHfZOtaq2Naho-W8R0qxyTgNmDuM5etrbqvn_8hBS34qp5co6gh9EeW9I61LmTGx_yGG3ytieoDgjuHdF.jpg?r=054\",\r\n  \"https://www.refinery29.com/images/8556165.jpg?crop=2000%2C1051%2Cx0%2Cy133\",\r\n  \"https://d2e111jq13me73.cloudfront.net/sites/default/files/styles/share_link_image_large/public/screenshots/csm-movie/fractured-screenshot-1.jpg?itok=eLiXNoOY\"\r\n]", "[\r\n  \"https://www.youtube.com/embed/S8obCz5NSog\"\r\n]", null, new DateTime(2019, 9, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "A couple stops at a gas station, where their 6 y.o. daughter's arm is fractured. They hurry to a hospital. Something strange is going on there. The wife and daughter go missing.", "https://m.media-amazon.com/images/M/MV5BZTE0MWE4NzMtMzc4Ny00NWE4LTg2OTQtZmIyNDdhZjdiZmJhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg", "Fractured" },
+                    { new Guid("732e75d1-baa5-43bd-8636-8f91262545b2"), "Unreleased", "https://i.ytimg.com/vi/oMSdFM12hOw/maxresdefault.jpg", "From acclaimed director Robert Eggers, The Northman is an epic revenge thriller that explores how far a Viking prince will go to seek justice for his murdered father.", new TimeSpan(0, 2, 20, 0, 0), null, "[\r\n  \"https://decider.com/wp-content/uploads/2021/12/The-Northman.jpg?quality=80\\u0026strip=all\",\r\n  \"https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/12/Alexander-Skarsgard-and-Anya-Taylor-Joy-The-Northman-social.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BYjA3NjkyZjYtN2UwZC00MWM5LTk4MDUtMzcxNDU4ZDE3OWZkXkEyXkFqcGdeQWpnYW1i._V1_QL75_UX500_CR0,0,500,281_.jpg\"\r\n]", "[\r\n  \"https://www.youtube.com/embed/oMSdFM12hOw\"\r\n]", null, new DateTime(2022, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Written by Eggers and Icelandic poet and novelist Sjón Sigurdsson, Northman is described as a grounded story set in Iceland at the turn of the 10th century that centres on a Nordic prince who seeks revenge for the death of his father.", "https://images.justwatch.com/poster/257876484/s718", "The Northman" },
+                    { new Guid("e33f7813-258e-4c6c-bf4a-06bfdcdd1095"), "Aired", "https://s3.amazonaws.com/static.rogerebert.com/uploads/review/primary_image/reviews/the-invitation-2016/The-Invitation-2016.jpg", "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions. A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.", new TimeSpan(0, 1, 40, 0, 0), null, "[\r\n  \"https://static01.nyt.com/images/2016/04/08/arts/08INVITE/08INVITE-superJumbo.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BMTgzMTU1NjE4N15BMl5BanBnXkFtZTgwOTU3ODM1ODE@._V1_.jpg\",\r\n  \"http://www.moriareviews.com/rongulator/wp-content/uploads/Invitation-2015-8.jpg\"\r\n]", "[\r\n  \"https://www.youtube.com/embed/0-mp77SZ_0M\"\r\n]", null, new DateTime(2015, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.", "https://m.media-amazon.com/images/M/MV5BMTkzODMwNDkzOF5BMl5BanBnXkFtZTgwNDA4NzA1ODE@._V1_.jpg", "The Invitation" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"), "f1cff2e2-1eda-4763-9455-a1faca335094", "Admin", "ADMIN" },
-                    { new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"), "75fca8e4-51ca-4e00-8afd-5aa4c3e4ebec", "Contributor", "CONTRIBUTOR" },
-                    { new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"), "2420c572-ad3f-4293-8344-bad2a93d2ff6", "Member", "MEMBER" },
-                    { new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"), "a523830f-014a-4206-8a93-dcaed3a0abb8", "Moderator", "MODERATOR" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Sources",
+                table: "Providers",
                 columns: new[] { "Id", "Description", "Reliable", "ThumbnailUrl", "Title", "Url" },
                 values: new object[,]
                 {
@@ -492,15 +481,26 @@ namespace KixPlay_Backend.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"), "a732e8ec-e4c7-40a6-bfad-0659ef83af63", "Admin", "ADMIN" },
+                    { new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"), "5d1452ea-bae6-4a73-8b6d-18f5fe5ac1ec", "Contributor", "CONTRIBUTOR" },
+                    { new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"), "72d62e0d-d30a-4928-8c41-30e2d95d7892", "Member", "MEMBER" },
+                    { new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"), "36f55382-c42f-42fb-9b93-cd58b8b3265d", "Moderator", "MODERATOR" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"), 0, "fdf9238e-5f16-4eb6-8c07-5c279cee74a2", new DateTime(1995, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "eren.yeager@gmail.com", false, "Eren", "Yeager", false, null, "EREN.YEAGER@GMAIL.COM", "ERENYEAGER", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ErenYeager" },
-                    { new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), 0, "4d77f479-1118-49cf-9d72-3525c1d92f66", new DateTime(1998, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "mikasa.ackerman@gmail.com", false, "Mikasa", "Ackerman", false, null, "MIKASA.ACKERMAN@GMAIL.COM", "MIKASAACKERMAN", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "MikasaAckerman" },
-                    { new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"), 0, "8ed56bea-b55d-4bda-ac1d-8d84ee4f5dec", new DateTime(2004, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "armin.arlert@gmail.com", false, "Armin", "Arlert", false, null, "ARMIN.ARLERT@GMAIL.COM", "ARMINARLERT", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ArminArlert" },
-                    { new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"), 0, "09028145-8dca-41dc-88bf-cc2d607fad05", new DateTime(2000, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "erwin.smith@gmail.com", false, "Erwin", "Smith", false, null, "ERWIN.SMITH@GMAIL.COM", "ERWINSMITH", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "ErwinSmith" },
-                    { new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"), 0, "040c3f1b-c4b5-4301-aa70-194b44c4a33f", new DateTime(1997, 1, 19, 0, 0, 0, 0, DateTimeKind.Local), "levi.ivel@gmail.com", false, "Levi", null, false, null, "LEVI.IVEL@GMAIL.COM", "LEVILEVI", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, null, false, "LeviLevi" }
+                    { new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"), 0, "2a2e7e70-8b8d-46c8-b57e-a43e8b6c6fbb", new DateTime(1995, 1, 30, 0, 0, 0, 0, DateTimeKind.Local), "eren.yeager@gmail.com", false, "Eren", "Yeager", false, null, "EREN.YEAGER@GMAIL.COM", "ERENYEAGER", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, "3b7823e1-275a-4815-b582-281fdb0405f9", false, "ErenYeager" },
+                    { new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"), 0, "9a517922-1e63-4839-8a81-ee6dfb5065b7", new DateTime(1998, 1, 30, 0, 0, 0, 0, DateTimeKind.Local), "mikasa.ackerman@gmail.com", false, "Mikasa", "Ackerman", false, null, "MIKASA.ACKERMAN@GMAIL.COM", "MIKASAACKERMAN", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, "7c1a17c0-f553-49ad-95ac-c51f23fbbd81", false, "MikasaAckerman" },
+                    { new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"), 0, "bb1e7f8a-14cb-452c-94ae-82ebc82865c4", new DateTime(2004, 1, 30, 0, 0, 0, 0, DateTimeKind.Local), "armin.arlert@gmail.com", false, "Armin", "Arlert", false, null, "ARMIN.ARLERT@GMAIL.COM", "ARMINARLERT", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, "8ac3d93a-65a3-4865-9b2b-026c7b691e4c", false, "ArminArlert" },
+                    { new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"), 0, "30a8fe74-9805-4d8c-8236-dd486a675e72", new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Local), "erwin.smith@gmail.com", false, "Erwin", "Smith", false, null, "ERWIN.SMITH@GMAIL.COM", "ERWINSMITH", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, "5fb71531-fab0-47ee-8e06-52b15c700bbe", false, "ErwinSmith" },
+                    { new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"), 0, "e50337a9-8d25-427f-bac7-2149abc0b4b7", new DateTime(1997, 1, 30, 0, 0, 0, 0, DateTimeKind.Local), "levi.ivel@gmail.com", false, "Levi", null, false, null, "LEVI.IVEL@GMAIL.COM", "LEVILEVI", "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==", null, false, "84537bd0-8188-4d73-a267-8dce24d10640", false, "LeviLevi" }
                 });
 
             migrationBuilder.InsertData(
@@ -520,7 +520,7 @@ namespace KixPlay_Backend.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "MediaSources",
-                columns: new[] { "Id", "MediaId", "SourceId", "Url" },
+                columns: new[] { "Id", "MediaId", "ProviderId", "Url" },
                 values: new object[,]
                 {
                     { new Guid("2f5ba7de-9a8f-434b-a61e-764dfe656bfb"), new Guid("0c36c9b3-d576-4213-8318-49e1882daa38"), new Guid("4a022ad0-e6e6-4df3-9b95-bf1aa05db9df"), "https://filmeserialegratis.org/fractured/" },
@@ -602,43 +602,41 @@ namespace KixPlay_Backend.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "ReviewOpinions",
-                columns: new[] { "Id", "IsFunny", "IsHelpful", "ReviewId", "UserId" },
-                values: new object[] { new Guid("01946419-c8d5-48e7-b0f9-6a0152e100dc"), true, true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
+                columns: new[] { "Id", "IsHelpful", "IsInteresting", "ReviewId", "UserId" },
+                values: new object[] { new Guid("0efe14a4-7b27-42fc-affd-d226d30342e1"), true, true, new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"), new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985") });
 
             migrationBuilder.InsertData(
                 table: "ReviewOpinions",
                 columns: new[] { "Id", "IsInteresting", "ReviewId", "UserId" },
-                values: new object[] { new Guid("1782add3-68b2-4ea1-966c-7b315846d59b"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
+                values: new object[,]
+                {
+                    { new Guid("144d1d21-c2c6-4334-8e07-092f14338817"), true, new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") },
+                    { new Guid("2cc6060e-c4ac-4a02-828d-16439099cfeb"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReviewOpinions",
+                columns: new[] { "Id", "IsFunny", "IsHelpful", "ReviewId", "UserId" },
+                values: new object[] { new Guid("3f7193b4-4151-4d8d-b115-ce8e19bf8fb4"), true, true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
 
             migrationBuilder.InsertData(
                 table: "ReviewOpinions",
                 columns: new[] { "Id", "IsHelpful", "ReviewId", "UserId" },
-                values: new object[] { new Guid("5743484a-1092-4e71-8d86-76b909e65d50"), true, new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsInteresting", "ReviewId", "UserId" },
-                values: new object[] { new Guid("73146899-48ce-4bf7-98d2-d0162877a6cc"), true, new Guid("a2862e81-a1ff-4084-90dd-ce8827ce27e2"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") });
+                values: new object[,]
+                {
+                    { new Guid("7a1da828-99be-4d1a-94ee-a40a34dc7c40"), true, new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") },
+                    { new Guid("88b496a3-25d8-49a2-ae6f-0bb21fce7b0e"), true, new Guid("2fe24bcb-afa2-42df-bf28-5ea04172e783"), new Guid("a6a707c8-9d67-4b36-8036-86e085670b36") }
+                });
 
             migrationBuilder.InsertData(
                 table: "ReviewOpinions",
                 columns: new[] { "Id", "IsFunny", "ReviewId", "UserId" },
-                values: new object[] { new Guid("9f34ad2f-0e8f-45c4-acd0-0ec1e05785e8"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsHelpful", "ReviewId", "UserId" },
-                values: new object[] { new Guid("a33d027b-1cfb-4462-86e1-e737ab9a8b86"), true, new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976") });
+                values: new object[] { new Guid("9acc57a6-1b6e-4f7f-af25-f8a6758052e2"), true, new Guid("80d6a3a4-2209-41c5-a826-c2cd87dca72c"), new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8") });
 
             migrationBuilder.InsertData(
                 table: "ReviewOpinions",
                 columns: new[] { "Id", "ReviewId", "UserId" },
-                values: new object[] { new Guid("c773b79e-429b-40a4-a2c1-e2060737c025"), new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602") });
-
-            migrationBuilder.InsertData(
-                table: "ReviewOpinions",
-                columns: new[] { "Id", "IsHelpful", "IsInteresting", "ReviewId", "UserId" },
-                values: new object[] { new Guid("ea9ca8d6-6eb3-43a9-a958-a55238a7c918"), true, true, new Guid("b2ed2f69-e6c7-482d-b146-ec7d14cde0fb"), new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985") });
+                values: new object[] { new Guid("fffef60d-c469-4385-ac7f-0c3f2d12d92c"), new Guid("ab6f6d95-695d-41a2-9fc5-648bc83b16cb"), new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602") });
 
             migrationBuilder.InsertData(
                 table: "Comments",
@@ -681,6 +679,12 @@ namespace KixPlay_Backend.Data.Migrations
                 column: "ReviewId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Genres_Name",
+                table: "Genres",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MediaInGenres_GenreId_MediaId",
                 table: "MediaInGenres",
                 columns: new[] { "GenreId", "MediaId" },
@@ -711,9 +715,9 @@ namespace KixPlay_Backend.Data.Migrations
                 column: "MediaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MediaSources_SourceId",
+                name: "IX_MediaSources_ProviderId",
                 table: "MediaSources",
-                column: "SourceId");
+                column: "ProviderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RelatedMedias_MediaFromId_MediaToId",
@@ -842,7 +846,7 @@ namespace KixPlay_Backend.Data.Migrations
                 name: "Genres");
 
             migrationBuilder.DropTable(
-                name: "Sources");
+                name: "Providers");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

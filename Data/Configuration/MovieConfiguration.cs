@@ -50,7 +50,7 @@ namespace KixPlay_Backend.Data.Configuration
                         },
                         PreviewVideoUrls = new List<string>()
                         {
-                            "https://www.youtube.com/watch?v=S8obCz5NSog",
+                            "https://www.youtube.com/embed/S8obCz5NSog",
                         },
                         WonAwards = 15,
                     },
@@ -61,7 +61,7 @@ namespace KixPlay_Backend.Data.Configuration
                         Synopsis = "Written by Eggers and Icelandic poet and novelist Sjón Sigurdsson, Northman is described as a grounded story set in Iceland at the turn of the 10th century that centres on a Nordic prince who seeks revenge for the death of his father.",
                         Description = "From acclaimed director Robert Eggers, The Northman is an epic revenge thriller that explores how far a Viking prince will go to seek justice for his murdered father.",
                         BannerUrl = "https://i.ytimg.com/vi/oMSdFM12hOw/maxresdefault.jpg",
-                        ThumbnailUrl = "https://images.justwatch.com/poster/257876484/s718c",
+                        ThumbnailUrl = "https://images.justwatch.com/poster/257876484/s718",
                         Duration = TimeSpan.FromHours(2).Add(TimeSpan.FromMinutes(20)),
                         ReleaseDate = DateTime.Parse("2022-04-22"),
                         AiringStatus = Media.AirStatus.Unreleased,
@@ -74,7 +74,7 @@ namespace KixPlay_Backend.Data.Configuration
                         },
                         PreviewVideoUrls = new List<string>()
                         {
-                            "https://www.youtube.com/watch?v=oMSdFM12hOw",
+                            "https://www.youtube.com/embed/oMSdFM12hOw",
                         },
                         WonAwards = 0,
                     },
@@ -98,7 +98,7 @@ namespace KixPlay_Backend.Data.Configuration
                         },
                         PreviewVideoUrls = new List<string>()
                         {
-                            "https://www.youtube.com/watch?v=0-mp77SZ_0M",
+                            "https://www.youtube.com/embed/0-mp77SZ_0M",
                         },
                         WonAwards = 10,
                     },

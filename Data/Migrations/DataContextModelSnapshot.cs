@@ -704,7 +704,7 @@ namespace KixPlay_Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("797c3368-e96b-4338-9f35-73008368d2ee"),
+                            Id = new Guid("9acc57a6-1b6e-4f7f-af25-f8a6758052e2"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = true,
                             IsHelpful = false,
@@ -715,7 +715,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3bd6aed4-a7f4-4382-9de3-9670ad222472"),
+                            Id = new Guid("3f7193b4-4151-4d8d-b115-ce8e19bf8fb4"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = true,
                             IsHelpful = true,
@@ -726,7 +726,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a410da6f-8b92-4c00-83d7-957dbe0a5137"),
+                            Id = new Guid("2cc6060e-c4ac-4a02-828d-16439099cfeb"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = false,
@@ -737,7 +737,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c6b730c-07d7-4591-8e95-683f985b4761"),
+                            Id = new Guid("7a1da828-99be-4d1a-94ee-a40a34dc7c40"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = true,
@@ -748,7 +748,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5d2a4c82-a7f0-48c7-8de7-180322cf43e7"),
+                            Id = new Guid("fffef60d-c469-4385-ac7f-0c3f2d12d92c"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = false,
@@ -759,7 +759,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5ddcada1-42fe-40fe-949d-0ef7f96c9351"),
+                            Id = new Guid("0efe14a4-7b27-42fc-affd-d226d30342e1"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = true,
@@ -770,7 +770,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b820e5c0-fff6-447f-a3c3-3beaa22d6a41"),
+                            Id = new Guid("144d1d21-c2c6-4334-8e07-092f14338817"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = false,
@@ -781,7 +781,7 @@ namespace KixPlay_Backend.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("87dfa4d3-1214-40fa-a262-ad80312ee950"),
+                            Id = new Guid("88b496a3-25d8-49a2-ae6f-0bb21fce7b0e"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsFunny = false,
                             IsHelpful = true,
@@ -833,7 +833,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8e7640e4-8701-46e5-85b9-596e03db2944"),
-                            ConcurrencyStamp = "6614cce7-921b-4185-8841-23f195266cf0",
+                            ConcurrencyStamp = "5d1452ea-bae6-4a73-8b6d-18f5fe5ac1ec",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contributor",
@@ -842,7 +842,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("e98fc490-4589-4beb-a316-add18c8f3ddf"),
-                            ConcurrencyStamp = "cf2f3452-951e-4427-b65d-68f40c39861f",
+                            ConcurrencyStamp = "36f55382-c42f-42fb-9b93-cd58b8b3265d",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moderator",
@@ -851,7 +851,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("92215649-862e-4c2f-a4c6-1c61cb245ad5"),
-                            ConcurrencyStamp = "f5eb9185-345a-41c3-a3b7-2f1fdff38f19",
+                            ConcurrencyStamp = "72d62e0d-d30a-4928-8c41-30e2d95d7892",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Member",
@@ -860,7 +860,7 @@ namespace KixPlay_Backend.Data.Migrations
                         new
                         {
                             Id = new Guid("8c6d9a31-3e47-45b5-b940-9225fa539f15"),
-                            ConcurrencyStamp = "2e876782-f20a-448a-948d-574fb41314df",
+                            ConcurrencyStamp = "a732e8ec-e4c7-40a6-bfad-0659ef83af63",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Admin",
@@ -1067,9 +1067,9 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("71a7ed13-227f-4a94-aa9a-c0813c60f602"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6b6632a1-8e3a-4bda-a253-f9626455de6a",
+                            ConcurrencyStamp = "9a517922-1e63-4839-8a81-ee6dfb5065b7",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1998, 1, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(1998, 1, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "mikasa.ackerman@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Mikasa",
@@ -1080,7 +1080,7 @@ namespace KixPlay_Backend.Data.Migrations
                             NormalizedUserName = "MIKASAACKERMAN",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9444d048-2853-4735-a55c-94896b3d2c18",
+                            SecurityStamp = "7c1a17c0-f553-49ad-95ac-c51f23fbbd81",
                             TwoFactorEnabled = false,
                             UserName = "MikasaAckerman"
                         },
@@ -1088,9 +1088,9 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("3ca625e3-0648-4d1b-a456-c1c6ee0e0da8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0c8178d7-7b4a-49c1-8c86-91919d0eae14",
+                            ConcurrencyStamp = "2a2e7e70-8b8d-46c8-b57e-a43e8b6c6fbb",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1995, 1, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(1995, 1, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "eren.yeager@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Eren",
@@ -1101,7 +1101,7 @@ namespace KixPlay_Backend.Data.Migrations
                             NormalizedUserName = "ERENYEAGER",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b77b8332-c349-448a-a5e9-1e122c1be451",
+                            SecurityStamp = "3b7823e1-275a-4815-b582-281fdb0405f9",
                             TwoFactorEnabled = false,
                             UserName = "ErenYeager"
                         },
@@ -1109,9 +1109,9 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("fc4ce336-fac9-49dc-88f6-f60ff4231985"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9539f0dd-4d07-4739-a96b-0a7ee4f2158c",
+                            ConcurrencyStamp = "e50337a9-8d25-427f-bac7-2149abc0b4b7",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1997, 1, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(1997, 1, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "levi.ivel@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Levi",
@@ -1121,7 +1121,7 @@ namespace KixPlay_Backend.Data.Migrations
                             NormalizedUserName = "LEVILEVI",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a6c58e3d-91b8-46ee-afc7-0653138cae82",
+                            SecurityStamp = "84537bd0-8188-4d73-a267-8dce24d10640",
                             TwoFactorEnabled = false,
                             UserName = "LeviLevi"
                         },
@@ -1129,9 +1129,9 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("9b0795d2-46f0-493f-b37a-f80cc4700976"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a40735e7-c473-48ce-be4d-e8b86a1312e8",
+                            ConcurrencyStamp = "bb1e7f8a-14cb-452c-94ae-82ebc82865c4",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(2004, 1, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(2004, 1, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "armin.arlert@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Armin",
@@ -1142,7 +1142,7 @@ namespace KixPlay_Backend.Data.Migrations
                             NormalizedUserName = "ARMINARLERT",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b9f941b4-2052-4473-930b-3553a8d4afa4",
+                            SecurityStamp = "8ac3d93a-65a3-4865-9b2b-026c7b691e4c",
                             TwoFactorEnabled = false,
                             UserName = "ArminArlert"
                         },
@@ -1150,9 +1150,9 @@ namespace KixPlay_Backend.Data.Migrations
                         {
                             Id = new Guid("a6a707c8-9d67-4b36-8036-86e085670b36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "88a7961a-e481-47f1-83e0-8d4e7a2f77cb",
+                            ConcurrencyStamp = "30a8fe74-9805-4d8c-8236-dd486a675e72",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(2000, 1, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfBirth = new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "erwin.smith@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Erwin",
@@ -1163,7 +1163,7 @@ namespace KixPlay_Backend.Data.Migrations
                             NormalizedUserName = "ERWINSMITH",
                             PasswordHash = "AQAAAAEAACcQAAAAEEbyCLf0/2GiiFd4R5D9mAIjPW2Coeg095H59UongM3Osns/UWXnDJ2Rub5PFO9+JQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6d32361d-0d92-4036-b477-9d93e014de87",
+                            SecurityStamp = "5fb71531-fab0-47ee-8e06-52b15c700bbe",
                             TwoFactorEnabled = false,
                             UserName = "ErwinSmith"
                         });
@@ -1360,7 +1360,7 @@ namespace KixPlay_Backend.Data.Migrations
                             Duration = new TimeSpan(0, 1, 40, 0, 0),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PreviewImageUrls = "[\r\n  \"https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABSrkPHFHFt3JHfZOtaq2Naho-W8R0qxyTgNmDuM5etrbqvn_8hBS34qp5co6gh9EeW9I61LmTGx_yGG3ytieoDgjuHdF.jpg?r=054\",\r\n  \"https://www.refinery29.com/images/8556165.jpg?crop=2000%2C1051%2Cx0%2Cy133\",\r\n  \"https://d2e111jq13me73.cloudfront.net/sites/default/files/styles/share_link_image_large/public/screenshots/csm-movie/fractured-screenshot-1.jpg?itok=eLiXNoOY\"\r\n]",
-                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/watch?v=S8obCz5NSog\"\r\n]",
+                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/embed/S8obCz5NSog\"\r\n]",
                             ReleaseDate = new DateTime(2019, 9, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Synopsis = "A couple stops at a gas station, where their 6 y.o. daughter's arm is fractured. They hurry to a hospital. Something strange is going on there. The wife and daughter go missing.",
                             ThumbnailUrl = "https://m.media-amazon.com/images/M/MV5BZTE0MWE4NzMtMzc4Ny00NWE4LTg2OTQtZmIyNDdhZjdiZmJhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_.jpg",
@@ -1378,10 +1378,10 @@ namespace KixPlay_Backend.Data.Migrations
                             Duration = new TimeSpan(0, 2, 20, 0, 0),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PreviewImageUrls = "[\r\n  \"https://decider.com/wp-content/uploads/2021/12/The-Northman.jpg?quality=80\\u0026strip=all\",\r\n  \"https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/12/Alexander-Skarsgard-and-Anya-Taylor-Joy-The-Northman-social.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BYjA3NjkyZjYtN2UwZC00MWM5LTk4MDUtMzcxNDU4ZDE3OWZkXkEyXkFqcGdeQWpnYW1i._V1_QL75_UX500_CR0,0,500,281_.jpg\"\r\n]",
-                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/watch?v=oMSdFM12hOw\"\r\n]",
+                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/embed/oMSdFM12hOw\"\r\n]",
                             ReleaseDate = new DateTime(2022, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Synopsis = "Written by Eggers and Icelandic poet and novelist Sjón Sigurdsson, Northman is described as a grounded story set in Iceland at the turn of the 10th century that centres on a Nordic prince who seeks revenge for the death of his father.",
-                            ThumbnailUrl = "https://images.justwatch.com/poster/257876484/s718c",
+                            ThumbnailUrl = "https://images.justwatch.com/poster/257876484/s718",
                             Title = "The Northman",
                             MetreageType = "Long",
                             WonAwards = 0
@@ -1396,7 +1396,7 @@ namespace KixPlay_Backend.Data.Migrations
                             Duration = new TimeSpan(0, 1, 40, 0, 0),
                             LastUpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PreviewImageUrls = "[\r\n  \"https://static01.nyt.com/images/2016/04/08/arts/08INVITE/08INVITE-superJumbo.jpg\",\r\n  \"https://m.media-amazon.com/images/M/MV5BMTgzMTU1NjE4N15BMl5BanBnXkFtZTgwOTU3ODM1ODE@._V1_.jpg\",\r\n  \"http://www.moriareviews.com/rongulator/wp-content/uploads/Invitation-2015-8.jpg\"\r\n]",
-                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/watch?v=0-mp77SZ_0M\"\r\n]",
+                            PreviewVideoUrls = "[\r\n  \"https://www.youtube.com/embed/0-mp77SZ_0M\"\r\n]",
                             ReleaseDate = new DateTime(2015, 3, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Synopsis = "A man accepts an invitation to a dinner party hosted by his ex-wife, an unsettling affair that reopens old wounds and creates new tensions.",
                             ThumbnailUrl = "https://m.media-amazon.com/images/M/MV5BMTkzODMwNDkzOF5BMl5BanBnXkFtZTgwNDA4NzA1ODE@._V1_.jpg",

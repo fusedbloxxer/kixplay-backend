@@ -95,7 +95,7 @@ namespace KixPlay_Backend.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MovieDetailsResponseDto))]
-        [AllowAnonymous]
+        [Authorize(Roles = "Contributor")]
         [HttpGet("find/{movieId}/details")]
         public async Task<IActionResult> GetMovieByIdWithDetails([FromRoute] Guid movieId)
         {
